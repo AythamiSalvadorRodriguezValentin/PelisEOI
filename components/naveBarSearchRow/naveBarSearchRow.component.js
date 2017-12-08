@@ -12,10 +12,10 @@
     // diferentes vistas y buscar en la página web.
     ////////////////////////////////////////////////////////////
     angular
-        .module('Agend_User')
-        .component('naveBarSearch', {
-            templateUrl: '/components/naveBarSearch/naveBarSearch.html',
-            controller: NavBarSearchController,
+        .module('PelisEOI')
+        .component('naveBarSearchRow', {
+            templateUrl: '/components/naveBarSearchRow/naveBarSearchRow.html',
+            controller: NavBarSearchRowController,
             controllerAs: '$ctrl',
             bindings: {
                 logoImg: '@',
@@ -29,8 +29,8 @@
             },
         });
     ////////////////////////////////////////////////////////////
-    NavBarSearchController.$inject = [];
-    function NavBarSearchController() {
+    NavBarSearchRowController.$inject = [];
+    function NavBarSearchRowController() {
         var $ctrl = this;
         ////////////////////////////////////////////////////////////
         $ctrl.$onInit = function() { };

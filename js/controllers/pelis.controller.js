@@ -14,6 +14,7 @@
         vm.listGenero = [];
         vm.load = false;
         vm.navList = [];
+        vm.showView = '';
         /////////////////////// FUCTION vm ////////////////////////
         vm.getPeli = getPeli;
         vm.selectGenero = selectGenero;

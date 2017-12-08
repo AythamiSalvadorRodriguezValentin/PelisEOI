@@ -1,65 +1,68 @@
 /*_nav_bar_search_style_*/
+.wrapper--row{
+    width: 1170px;
+    height: 68px;
+    display: flex;
+    flex-flow: row;
+}
 .component__nav__bar__row--nav{
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row nowrap;
     justify-content: space-around;
     align-items: center;
+    background-color: #1b2126;
 }
 .component__nav__bar__row__img--start{
-    width: 20%;
-    /* width: 15%; */
+    width: 100%;
     height: 100%;
     background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
 }
 .component__nav__bar__row--middle{
-    width: 60%;
-    /* width: 55%; */
+    width: 100%;
     height: 100%;
     display: inline-flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
     list-style-type: none;
-    margin: 0;
 }
 .component__nav__bar__row__search--end{
-    width: 20%;
-    /* width: 30%; */
+    width: 100%;
     height: 100%;
     display: flex;
     flex-flow: row;
     justify-content: center;
     align-items: center;
-    margin: 0;
 }
 .component__nav__bar__row__img--start img{
-    width: 90%;
-    height: 75%;
+    height: 68px;
     background-color: transparent;
     object-fit: contain;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
 }
 .component__nav__bar__row--middle li{
-    width: 90%;
-    height: 100%;
-    padding: 30px;
+    padding:15px;
     color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    font-family: NunitoSans Regular;
+    font-size: 14px;
+}
+.component__nav__bar__search{
+    width: 370px;
+    height: 38px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0;
-}
-.component__nav__bar__row__search{
-    width: 80%;
-    height: 55%;
     border-width: 0px;
     padding-left: 50px;
     border-radius: 6px 6px 6px 6px;
@@ -68,12 +71,10 @@
     background-repeat: no-repeat;
     background-position: left center;
     background-position-x: 15px;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
+    font-family: NunitoSans Regular;
+    font-size: 14px;
+    color: whitesmoke;
 }
-.component__nav__bar__row__search::-webkit-input-placeholder{
-    color: white;
+.component__nav__bar__search::-webkit-input-placeholder{
+    color: #1b2126;
 }

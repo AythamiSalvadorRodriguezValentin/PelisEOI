@@ -3,45 +3,9 @@
     margin:0 auto;
 }
 /*_________Navegador______________________*/
-nav{
-    background-color: #1b2126;
-}
-.nav{
+.nav__bar__search--directive{
+    width: 100%;
     height: 68px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.nav_list{ 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    list-style-type: none;
-    font-family: NunitoSans Regular;
-    color: #b1b5b8;
-    font-size: 13px;
-    margin: 0;
-}
-.nav_list li{
-    margin: 5px;
-}
-.search_text{
-    width: 370px;
-    height: 38px;
-    border-radius: 6px 6px 6px 6px;
-    border-width: 0px;
-    padding-left: 50px;
-    font-size: 15px;
-    font-family: NunitoSans Regular;
-    color: black;
-    background-color: #5c6269;
-    background-image: url('../img/lupa.png');
-    background-repeat: no-repeat;
-    background-position: left center;
-    background-position-x: 15px;
-}
-.search_text::-webkit-input-placeholder{
-    color: #1b2126;
 }
 /*_________Barra lateral__________________*/
 .bar_left{

@@ -1,10 +1,8 @@
 <div class="container-fluid" ng-cloak>
-    <nav class="wrapper">
-        <nave-bar-search-row
-            class="nav__bar__search--directive" logo-img="none" logo-alt="" show-logo="false" nav-list="HomeCtrl.navList" 
-            search="HomeCtrl.search" search-placeholder="Search User" show-search="false" show-view="HomeCtrl.showView">
-        </nave-bar-search-row>
-    </nav>
+    <nave-bar-search-row
+        class="nav__bar__search--directive" logo-img="/img/logo.png" logo-alt="logotipo" show-logo="true" nav-list="$PelisEOI.navList" 
+        search="$PelisEOI.search.Title" search-placeholder="Encuentra tu pelicula favorita" show-search="true" show-view="$PelisEOI.showView">
+    </nave-bar-search-row>
     <div class="row">
         <div class="wrapper">
             <aside class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
