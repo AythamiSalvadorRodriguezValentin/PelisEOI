@@ -1,0 +1,57 @@
+<div class="container-fluid" ng-cloak>
+    <nav class="wrapper">
+        <nave-bar-search-row
+            class="nav__bar__search--directive" logo-img="none" logo-alt="" show-logo="false" nav-list="HomeCtrl.navList" 
+            search="HomeCtrl.search" search-placeholder="Search User" show-search="false" show-view="HomeCtrl.showView">
+        </nave-bar-search-row>
+    </nav>
+    <div class="row">
+        <div class="wrapper">
+            <aside class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <div class="bar_left">
+                    <div class="bar_left_1">
+                        <img src="img/filter.png" alt="filter">
+                        <span class="pushFilter">Filter</span>
+                        <span class="pushBorrarFilter">Borrar</span>
+                    </div>
+                    <div class="bar_left_2">
+                        <span class="years">Año</span>
+                        <span class="years_text"></span>
+                    </div>
+                    <div class="bar_left_3">
+                        <input type="range" min="1960" max="2030" step="1" value="2000">
+                    </div>
+                    <div class="bar_left_4">
+                        <span class="generos">Géneros</span>
+                    </div>
+                    <div class="bar_left_5">
+                        <div class="ContainerGeneros" ng-repeat="genero in $PelisEOI.listGenero" ng-cloak>
+                            <button class="btnGenero" ng-click="selectGenero(genero)">{{genero}}</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <div class="bar_top_Pelis">
+                    <div ng-if="$PelisEOI.totalPelis.length>0" class="pelisFind">{{$PelisEOI.totalPelis}}<span class="pelisFind_text"> películas encontradas </span></div>
+                    <!-- <select name="oderPelis" ng-model="search">
+                        <option ng-repeat=""></option>
+                    </select> -->
+                </div>
+                <div class="padre_ficha">
+                    <div class="fichasPelis" ng-repeat="peli in $PelisEOI.pelisList | filter:search track by $index">
+                        <img class="image" ng-src="{{peli.Poster}}" onerror="this.src='/img/no-image-peli.gif'" ng-click="">
+                        <div class="overlay">
+                            <div class="text">
+                                <img ng-if="peli.Ratings[0].Value" ng-src="/img/star.png" onerror="this.src='/img/no-image.png'"> {{peli.Ratings[0].Value}}
+                                <img ng-if="peli.Ratings[1].Value" ng-src="/img/tomato.png" onerror="this.src='/img/no-image.png'"> {{peli.Ratings[1].Value}}
+                                <img ng-if="peli.Ratings[2].Value" ng-src="/img/palomitas.png" onerror="this.src='/img/no-image.png'"> {{peli.Ratings[2].Value}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="$PelisEOI.load" class="loading"><img ng-src="/img/load.gif"></div>
+            </section>
+        </div>
+    </div>
+</div>
