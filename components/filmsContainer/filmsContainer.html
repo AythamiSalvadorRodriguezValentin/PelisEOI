@@ -1,0 +1,26 @@
+<div class="component__films__ombD--general">
+    <div class="bar_top_Pelis">
+        <div ng-if="$ctrl.totalFilms.length > 0" class="pelisFind">
+            {{$PelisEOI.totalPelis}}
+            <span class="pelisFind_text"> películas encontradas </span>
+        </div>
+        <!-- <select name="oderPelis" ng-model="search">
+            <option ng-repeat=""></option>
+        </select> -->
+    </div>
+    <div class="padre_ficha">
+        <div class="fichasPelis" ng-repeat="film in $ctrl.films | filter:$ctrl.filter track by $index">
+            <img class="image" ng-src="{{film.Poster}}" onerror="this.src='/img/no-image-peli.gif'" ng-click="">
+            <div class="overlay">
+                <div class="text">
+                    <img ng-if="film.Ratings[0].Value" ng-src="/img/star.png" onerror="this.src='/img/no-image.png'"> {{film.Ratings[0].Value}}
+                    <img ng-if="film.Ratings[1].Value" ng-src="/img/tomato.png" onerror="this.src='/img/no-image.png'"> {{film.Ratings[1].Value}}
+                    <img ng-if="film.Ratings[2].Value" ng-src="/img/palomitas.png" onerror="this.src='/img/no-image.png'"> {{film.Ratings[2].Value}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="$ctrl.boolLoad" class="loading">
+        <img ng-src="$ctrl.srcLoad">
+    </div>
+</div>
