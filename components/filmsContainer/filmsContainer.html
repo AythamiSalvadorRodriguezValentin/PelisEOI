@@ -9,7 +9,7 @@
         </select> -->
     </div>
     <div class="padre_ficha">
-        <div class="fichasPelis" ng-repeat="film in $ctrl.films | filter:$ctrl.filter track by $index">
+        <div class="fichasPelis" ng-repeat="film in $ctrl.films | filter:$ctrl.filter track by film.imdbID">
             <img class="image" ng-src="{{film.Poster}}" onerror="this.src='/img/no-image-peli.gif'" ng-click="">
             <div class="overlay">
                 <div class="text">
