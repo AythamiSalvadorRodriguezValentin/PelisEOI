@@ -18,14 +18,15 @@
             controller: NavBarSearchRowController,
             controllerAs: '$ctrl',
             bindings: {
+                boolSearch: '<',
+                boolLogo: '<',
+                navList: '<',
                 logoImg: '@',
                 logoAlt: '@',
-                showLogo: '<',
-                navList: '<',
+                placeholder: '@',
                 search: '=',
-                showSearch: '<',
-                searchPlaceholder: '@',
-                showView: '=',
+                changeView: '=',
+                changeSearch: '&',
             },
         });
     ////////////////////////////////////////////////////////////
