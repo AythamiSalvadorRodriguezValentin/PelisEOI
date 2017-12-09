@@ -15,19 +15,9 @@
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
-            vm.object = {
-                Ok:'True',
-                Title:'',
-                Type:'movie',
-                Plot:'full',
-                Index:0,
-                Page:1,
-                Data:[],
-            };
-            vm.films = {
-                Total:0,
-                Data:[]
-            }
+            vm.object = {Ok:'True',Title:'',Type:'movie',Plot:'full',
+                        Index:0,Page:1,Data:[]};
+            vm.films = {Total:0,Data:[]}
         }
         ///////////////// FUCTION FILM SERVICE /////////////////////
         var service = {
@@ -52,14 +42,11 @@
             return $http
                     .get(url + id + apiKey + plot)
                     .then(loadedID)
-                    .catch(loadedIDError);
+                    .catch(e => {return e});
         };
         function loadedID(response){
             return response;
         };
-        function loadedIDError(response){
-            return response;
-        }
         //////////////////////// FUCTION FILMS /////////////////////
         /**
          * 
@@ -70,26 +57,25 @@
             let url = 'http://www.omdbapi.com/?';
             let title = 's=' + object.Title;
             let apiKey = '&apikey=3370463f';
-            let plot = '&plot=' + object.Plot;
-            let type = '&type=' + object.Type;
+            let plot = '&plot=full';
+            let type = '&type=movie';
             let page = '&page=' + object.Page;
             return $http
                     .get(url + title + apiKey + plot + type + page)
                     .then(loadedFilms)
-                    .catch(loadedFilmsError);
+                    .catch(e => {return e});
         };
         function loadedFilms(response){
             vm.object.Index = 0;
             vm.object.Data = response.data.Search;
             vm.object.Ok = response.data.Response;
             vm.object.Status = response.status;
-            vm.films.Total = response.data.totalResults;
+            vm.films.Total = String(response.data.totalResults);
             vm.films.Data = [];
-            return (vm.object.Ok === 'True') ? getFilm() : {};
+            if (vm.object.Ok === "True") {
+                return getFilm();
+            } else return {Data:[],Total:''};
         };
-        function loadedFilmsError(response){
-            return response;
-        }
         //////////////////////// FUCTION FILM //////////////////////
         /**
          * 
@@ -103,46 +89,23 @@
             let title = 't='  + vm.object.Data[vm.object.Index].Title;
             let apiKey = '&apikey=3370463f';
             let year = '&y=' + vm.object.Data[vm.object.Index].Year;
-            let plot = '&plot=' + vm.object.Plot;
+            let plot = '&plot=full';
             return $http
                     .get(url + title + apiKey + year + plot)
                     .then(loadedTitle)
-                    .catch(loadedTitleError);
+                    .catch(e => {return e});
         };
         function loadedTitle(response){
             vm.object.Index++;
-            if(response.status === 200){
-                if(response.data.Poster !== 'N/A' && response.data.Ratings.length >= 3)
+            if(response.status == 200 && response.data.Poster != 'N/A' && response.data.Ratings.length >= 1){
                 vm.films.Data.push(response.data);
-            }
+            }  
             if(vm.object.Index == vm.object.Data.length){
-                return vm.films;
+                if(vm.films.Data && vm.films.Total) return vm.films;
+                else return {Data:[],Total:''};
             }
             return getFilm();
         };
-        function loadedTitleError(response){
-            return response;
-        }
-        ////////////////////// Fuction Factory HTTP /////////////////////////
-        function getPeli(title, year) {
-            let url = 'http://www.omdbapi.com/?t=' + title;
-            if(year.bool) url += '&y=' + year.name;
-            url += '&plot=full';
-            url += '&apikey=3370463f';
-            return $http.get(url).then(succesFuction).catch(errorFuction);
-        };
-        function getPelis(title) {
-            let url = 'http://www.omdbapi.com/?s=' + title;
-            url += '&plot=full';
-            url += '&apikey=3370463f';
-            return $http.get(url).then(succesFuction).catch(errorFuction);
-        };
-        function succesFuction(response){
-             return response.data;
-         };
-         function errorFuction(response){
-             return response
-         };
         //////////////////////// FUCTION GENRE /////////////////////
         function getGenres(){
             return ['Action','Adventure','Animation','Comedy','Crime','Documentary',
