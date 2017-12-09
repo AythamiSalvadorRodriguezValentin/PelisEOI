@@ -1,7 +1,8 @@
 <div class="container-fluid" ng-cloak>
     <nave-bar-search-row
-        class="nav__bar__search--directive" logo-img="/img/logo.png" logo-alt="logotipo" show-logo="true" nav-list="$PelisEOI.navList" 
-        search="$PelisEOI.search.Title" search-placeholder="Encuentra tu pelicula favorita" show-search="true" show-view="$PelisEOI.showView">
+        class="nav__bar__search--directive" logo-img="/img/logo.png" logo-alt="logotipo" bool-logo="true" 
+        nav-list="$PelisEOI.navList" change-search="$PelisEOI.getFilms('N')" search="$PelisEOI.search.Title" 
+        placeholder="Encuentra tu pelicula favorita" bool-search="true" change-view="$PelisEOI.view">
     </nave-bar-search-row>
     <div class="row">
         <div class="wrapper">
@@ -24,31 +25,16 @@
                     </div>
                     <div class="bar_left_5">
                         <div class="ContainerGeneros" ng-repeat="genero in $PelisEOI.listGenero" ng-cloak>
-                            <button class="btnGenero" ng-click="selectGenero(genero)">{{genero}}</button>
+                            <button class="btnGenero" ng-click="$PelisEOI.selectGenero(genero)">{{genero}}</button>
                         </div>
                     </div>
                 </div>
             </aside>
             <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                <div class="bar_top_Pelis">
-                    <div ng-if="$PelisEOI.totalPelis.length>0" class="pelisFind">{{$PelisEOI.totalPelis}}<span class="pelisFind_text"> películas encontradas </span></div>
-                    <!-- <select name="oderPelis" ng-model="search">
-                        <option ng-repeat=""></option>
-                    </select> -->
-                </div>
-                <div class="padre_ficha">
-                    <div class="fichasPelis" ng-repeat="peli in $PelisEOI.pelisList | filter:search track by $index">
-                        <img class="image" ng-src="{{peli.Poster}}" onerror="this.src='/img/no-image-peli.gif'" ng-click="">
-                        <div class="overlay">
-                            <div class="text">
-                                <img ng-if="peli.Ratings[0].Value" ng-src="/img/star.png" onerror="this.src='/img/no-image.png'"> {{peli.Ratings[0].Value}}
-                                <img ng-if="peli.Ratings[1].Value" ng-src="/img/tomato.png" onerror="this.src='/img/no-image.png'"> {{peli.Ratings[1].Value}}
-                                <img ng-if="peli.Ratings[2].Value" ng-src="/img/palomitas.png" onerror="this.src='/img/no-image.png'"> {{peli.Ratings[2].Value}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div ng-if="$PelisEOI.load" class="loading"><img ng-src="/img/load.gif"></div>
+                <films-container
+                    total-films="$PelisEOI.films.total" films="$PelisEOI.films.data" filter="$PelisEOI.filter" 
+                    bool-load="$PelisEOI.load" src-load="/img/load.gif">
+                </films-container>
             </section>
         </div>
     </div>
