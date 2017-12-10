@@ -80,21 +80,23 @@
                         .catch(e => {return e});
                 }
                 let promise = new Promise(function(resolve,reject){
-                    setTimeout(function(){resolve(vm.films)},2000);
+                    setTimeout(function(){
+                        if (typeof vm.films.Data != 'undefined' 
+                            && typeof vm.films.Total != 'undefined') resolve(vm.films);
+                        else reject("No hay peliculas disponibles");
+                    }, 1000);
                 });
                 return promise;
-            } else return {Data:[],Total:''};
+            } else return {};
         };
         function resolveGetFilms(loaded){
-            let isIn = true;
-            for (let i = 0; i < vm.films.Data.length; i++) {
-                if(!loaded.data) isIn = false;
-                if(loaded.data.imdbID == vm.films.Data[i].imdbID) isIn = false;
-                if(loaded.data.Poster == "N/A") isIn = false;
-                if(loaded.data.Rantings < 1) isIn = false;
+            if(loaded.data && loaded.data.Poster != "N/A" && loaded.data.Ratings.length > 0){
+                let isIn = true;
+                for (let j = 0; j < vm.films.Data.length; j++) {
+                    if(loaded.data.imdbID == vm.films.Data[j].imdbID) isIn = false;
+                }
+                if(isIn) vm.films.Data.push(loaded.data);
             }
-            if(isIn) vm.films.Data.push(loaded.data);
-            console.log(vm.films.Data);
         };
         //////////////////////// FUCTION FILM ID ///////////////////
         /**
