@@ -11,12 +11,16 @@
         /////////////////////// VAR FILM ///////////////////////////
         vm.films = {};
         vm.object = {};
+        vm.apiKey = '';
+        vm.url = '';
         /////////////////////////// INIT //////////////////////////////
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
             vm.films = {Total:0,Data:[]};
-            vm.object = {Title:'',Genre:'',Year:'',Page:'',nextPage:false}
+            vm.apiKey = '&apikey=3370463f';
+            vm.url = 'http://www.omdbapi.com/?';
+            vm.object = {Title:'',Genre:'',Year:'',Page:''}
         }
         ///////////////// FUCTION FILM SERVICE /////////////////////
         var service = {
@@ -29,41 +33,39 @@
         //////////////////////// FUCTION FILM //////////////////////
         /**
          * 
-         * @param {*} object 'object': {title:'String',year:'String'}
-         * title: titulo de la pelicula.
-         * year: año de la pelicular.
+         * @param {*} object 'object': {Title:'String',Year:'String'}
+         * Title: Titulo de la pelicula --> "Madagascar...".
+         * Year: Año de la pelicular. --> "2010"
          * Esta funcion devuelve una pelicula completa.
          */
         function getFilm(object) {
-            let url = 'http://www.omdbapi.com/?'
             let title = 't='  + object.Title;
-            let apiKey = '&apikey=3370463f';
             let year = '&y=' + object.Year;
             let plot = '&plot=full';
             return $http
-                    .get(url + title + apiKey + year + plot)
+                    .get(vm.url + title + vm.apiKey + year + plot)
                     .then(loaded => {return loaded})
                     .catch(e => {return e});
         };
         //////////////////////// FUCTION FILMS /////////////////////
         /**
          * 
-         * @param {*} object 'object':
+         * @param {*} object 'Object':{Title: titulo o inicio del titulo de la pelicula a buscar --> "Madagascar...",
+         * Year: Intervalo de años entre los que deseas buscar --> "2000-2010",
+         * Genre: géneros que deseas filtrar en la búsqueda --> "Action, Crime, Fiction, War, ...",
+         * Page: página en la que deseas buscar --> "1", "2" ... "1000",
+         * Type: tipo de búsqueda --> "movie", "series" o "episode",
+         * Plot: tipo de respuesta --> "short" o "full"}
+         * @param {*} nextPage 
          */
-        function getFilms(object,nextPage) {
-            (nextPage) ? vm.object.Page++ : vm.object.Page = 1;
-            vm.object.nextPage = nextPage;
-            vm.object.Title = object.Title;
-            vm.object.Year = object.Year;
-            vm.object.Genre = object.Genre;
-            let url = 'http://www.omdbapi.com/?';
-            let title = 's=' + vm.object.Title;
-            let apiKey = '&apikey=3370463f';
-            let plot = '&plot=full';
-            let type = '&type=movie';
-            let page = '&page=' + vm.object.Page;
+        function getFilms(object) {
+            let title = 's=' + object.Title;
+            let plot = '&plot=' + object.Plot;
+            let type = '&type=' + object.Type;
+            let page = '&page=' + object.Page;
+            vm.object = object;
             return $http
-                    .get(url + title + apiKey + plot + type + page)
+                    .get(vm.url + title + vm.apiKey + plot + type + page)
                     .then(loadedFilms)
                     .catch(e => {return e});
         };
@@ -101,18 +103,14 @@
         //////////////////////// FUCTION FILM ID ///////////////////
         /**
          * 
-         * @param {*} object 'object': {title:'String',year:'String'}
-         * title: titulo de la pelicula.
-         * year: año de la pelicular.
-         * Esta funcion devuelve una pelicula completa.
+         * @param {*} imbdID 'String': identificador de la pelicula imbdID.
+         * Esta funcion devuelve una pelicula completa a partir de su imbdID.
          */
-        function getFilmID(IMDb) {
-            let url = 'http://www.omdbapi.com/?'
-            let id = 'i='  + IMDb;
-            let apiKey = '&apikey=3370463f';
+        function getFilmID(imbdID) {
+            let id = 'i='  + imbdID;
             let plot = '&plot=full';
             return $http
-                    .get(url + id + apiKey + plot)
+                    .get(vm.url + id + vm.apiKey + plot)
                     .then(loadedID => {return loadedID})
                     .catch(e => {return e});
         };

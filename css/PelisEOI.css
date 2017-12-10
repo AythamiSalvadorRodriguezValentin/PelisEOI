@@ -145,3 +145,10 @@
     height: 130px;
 }
 /*_________Barra inferior_________________*/
+
+
+/*__button__Style__*/
+.markedStyleButton{
+    border: 2px solid #2883d8;
+    color: #2883d8;
+}
