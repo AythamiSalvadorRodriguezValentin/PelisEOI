@@ -25,7 +25,7 @@
         function activate() {
             vm.listGenero = PSP.getGenres();
             vm.filter = {Title:'',Genre:''}
-            vm.search = {Title:'',Genre:'',Year:'',Type:'movie',Plot:'full',Page:1};
+            vm.search = {Title:'',Genre:'',Year:''};
             vm.navList = ['Categorías','Mejor Valoradas','Populares Ahora','Proximamente'];
         }
         /////////////////////// FUCTION $FILM /////////////////////////
@@ -35,15 +35,15 @@
                 if(more === 'Y'){
                     vm.search.Page++;
                     PSP 
-                        .getFilms(vm.search)
-                        .then(loaded => {vm.films = loaded; vm.load = false})
+                        .getFilms(vm.search,true)
+                        .then(loaded => {if(vm.films.Data.length > 0) vm.films.Data.push(loaded.Data); vm.load = false; console.log(vm.films);})
                         .catch(e => console.error(e));
                 } else {
                     vm.films = [];
                     vm.search.Page = 1;
                     vm.totalFilms = '';
                     PSP 
-                        .getFilms(vm.search)
+                        .getFilms(vm.search,false)
                         .then(loaded => {vm.films = loaded; vm.load = false})
                         .catch(e => console.error(e));
                 }    
