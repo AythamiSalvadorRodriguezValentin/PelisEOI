@@ -36,7 +36,7 @@
                     vm.search.Page++;
                     PSP 
                         .getFilms(vm.search,true)
-                        .then(loaded => {if(loaded.Data) vm.films.Data.push(loaded.Data); vm.load = false})
+                        .then(loaded => {vm.films = loaded; vm.load = false})
                         .catch(e => console.error(e));
                 } else {
                     vm.films = [];
@@ -44,7 +44,7 @@
                     vm.totalFilms = '';
                     PSP 
                         .getFilms(vm.search,false)
-                        .then(loaded => {if(loaded) vm.films = loaded; vm.load = false})
+                        .then(loaded => {vm.films = loaded; vm.load = false})
                         .catch(e => console.error(e));
                 }    
             }
