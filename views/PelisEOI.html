@@ -7,28 +7,26 @@
     <div class="row">
         <div class="wrapper">
             <aside class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <div class="bar_left">
-                    <div class="bar_left_1">
-                        <img src="img/filter.png" alt="filter">
-                        <span class="pushFilter">Filter</span>
-                        <span class="pushBorrarFilter">Borrar</span>
+                <div class="bar__left--general">
+                    <div class="bar__left__1">
+                        <img class="bar__left__1__filter__img" src="img/filter.png" alt="filter">
+                        <span class="bar__left__1__button__filter">Filter</span>
+                        <span class="bar__left__1__button__filter__delete">Borrar</span>
                     </div>
-                    <div class="bar_left_2">
-                        <span class="years">Año</span>
-                        <span class="years_text"></span>
+                    <div class="bar__left__2">
+                        <span class="bar__left__2__years">Año</span>
+                        <span class="bar__left__2__years--text"></span>
                     </div>
-                    <div class="bar_left_3">
-                        <!-- <input type="range" min="1960" max="2030" step="1" value="2000">
-                        <input type="range" min="1960" max="2030" step="1" value="2000"> -->
-                        
+                    <div class="bar__left__3">
+                        <ng-slider-own></ng-slider-own>
                     </div>
-                    <div class="bar_left_4">
-                        <span class="generos">Géneros</span>
+                    <div class="bar__left__4">
+                        <span class="bar__left__4__generos__text">Géneros</span>
                     </div>
-                    <div class="bar_left_5">
-                        <div class="ContainerGeneros" ng-repeat="genre in $PelisEOI.genreList" ng-cloak>
+                    <div class="bar__left__5">
+                        <div class="bar__left__5__generos--container" ng-repeat="genre in $PelisEOI.genreList" ng-cloak>
                             <button 
-                                class="btnGenero" 
+                                class="bar__left__5__generos__button" 
                                 ng-class="{markedStyleButton:$PelisEOI.checkGenreButton(genre)}" 
                                 ng-click="$PelisEOI.selectGenre(genre)">{{genre}}
                             </button>

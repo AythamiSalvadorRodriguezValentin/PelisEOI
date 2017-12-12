@@ -2,8 +2,9 @@
 <!-- //////////////////////////////////////////////////////////// -->
 <div class="component__films__ombD--general">
     <div class="component__bar__top__films">
-        <div ng-if="$ctrl.totalFilms.length > 0" class="component__films__find">
-            {{$ctrl.totalFilms}}
+        <div 
+            ng-if="$ctrl.totalFilms.length > 0" 
+            class="component__films__find">{{$ctrl.totalFilms}}
             <span class="component__films__find__text"> películas encontradas </span>
         </div>
         <!-- <select name="oderPelis" ng-model="search">
@@ -11,18 +12,34 @@
         </select> -->
     </div>
     <div class="component__card__films--general">
-        <div class="component__card__films--container" ng-repeat="film in $ctrl.films | filter:$ctrl.filter track by film.imdbID">
-            <img class="component__card__films__img" ng-src="{{film.Poster}}" onerror="this.src='/img/no-image-peli.gif'" ng-click="">
+        <div 
+            class="component__card__films--container" 
+            ng-repeat="film in $ctrl.films | filter:$ctrl.filter track by film.imdbID">
+            <img 
+                class="component__card__films__img" 
+                ng-src="{{film.Poster}}" 
+                onerror="this.src='/img/no-image-peli.gif'" 
+                ng-click="$ctrl.showFilm({id:film.imdbID})">
             <div class="component__card__films__overlay">
                 <div class="component__card__films__text">
-                    <img ng-if="film.Ratings[0].Value" class="component__card__films__img1"> {{film.Ratings[0].Value}}
-                    <img ng-if="film.Ratings[1].Value" class="component__card__films__img2"> {{film.Ratings[1].Value}}
-                    <img ng-if="film.Ratings[2].Value" class="component__card__films__img3"> {{film.Ratings[2].Value}}
+                    <img 
+                        ng-if="film.Ratings[0].Value" 
+                        class="component__card__films__img1"> {{film.Ratings[0].Value}}
+                    <img 
+                        ng-if="film.Ratings[1].Value" 
+                        class="component__card__films__img2"> {{film.Ratings[1].Value}}
+                    <img 
+                        ng-if="film.Ratings[2].Value" 
+                        class="component__card__films__img3"> {{film.Ratings[2].Value}}
                 </div>
             </div>
         </div>
     </div>
-    <div ng-if="$ctrl.boolLoad" class="component__loading__films">
-        <img class="component__loading__films__img" ng-src="{{$ctrl.srcLoad}}">
+    <div 
+        ng-if="$ctrl.boolLoad" 
+        class="component__loading__films">
+        <img 
+            class="component__loading__films__img" 
+            ng-src="{{$ctrl.srcLoad}}">
     </div>
 </div>

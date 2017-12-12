@@ -17,6 +17,7 @@
         vm.view = '';
         ///////////////////////////////////////////////////////////
         vm.slider1 = {};
+        vm.slider2 = {};
         /////////////////////// FUCTION vm ////////////////////////
         vm.getFilms = getFilms;
         vm.selectGenre = selectGenre;
@@ -29,23 +30,28 @@
             vm.search = {Title:'',Genre:'',Year:'',Type:'',Plot:'',Page:1};
             vm.navList = ['Categorías','Mejor Valoradas','Populares Ahora','Proximamente'];
             /*Slider*/
-            vm.slider1 = {
+            vm.slider = {
                 minValue: 10,
-                maxValue: 90,
+                maxValue: 20,
                 options: {
                     floor: 0,
-                    ceil: 100,
+                    ceil: 30,
                     step: 1,
-                    noSwitching: true
-                }
+                    showSelectionBar: true,
+                    noSwitching: true,
+                    selectionBarGradient: {
+                        from: 'white',
+                        to: '#FC0'
+                    }
+                }      
             };
-        }
+        };
         /////////////////////// FUCTION $FILM /////////////////////////
         function getFilms(more){
             if (vm.search.Title.length >= 2) {
                 vm.load = true;
                 vm.search.Type = 'movie';
-                vm.search.Type = 'full';
+                vm.search.Plot = 'full';
                 if(more === 'Y'){
                     vm.search.Page++;
                     PSP 

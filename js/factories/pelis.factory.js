@@ -70,7 +70,7 @@
                     .catch(e => {return e});
         };
         function loadedFilms(response){
-            if(!vm.object.nextPage){
+            if(vm.object.Page == 1){
                 vm.films.Data = [];
                 vm.films.Total = String(response.data.totalResults);
             }
