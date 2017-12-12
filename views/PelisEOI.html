@@ -1,8 +1,8 @@
 <div class="container-fluid" ng-cloak>
     <nave-bar-search-row
         class="nav__bar__search--directive" logo-img="/img/logo.png" logo-alt="logotipo" bool-logo="true" 
-        nav-list="$PelisEOI.navList" change-search="$PelisEOI.getFilms('N')" search="$PelisEOI.search.Title" 
-        placeholder="Encuentra tu pelicula favorita" bool-search="true" change-view="$PelisEOI.view">
+        nav-list="$films.navList" change-search="$films.getFilms('N')" search="$films.search.Title" 
+        placeholder="Encuentra tu pelicula favorita" bool-search="true" change-view="$films.view">
     </nave-bar-search-row>
     <div class="row">
         <div class="wrapper">
@@ -24,21 +24,21 @@
                         <span class="bar__left__4__generos__text">Géneros</span>
                     </div>
                     <div class="bar__left__5">
-                        <div class="bar__left__5__generos--container" ng-repeat="genre in $PelisEOI.genreList" ng-cloak>
+                        <div class="bar__left__5__generos--container" ng-repeat="genre in $films.genreList" ng-cloak>
                             <button 
                                 class="bar__left__5__generos__button" 
-                                ng-class="{markedStyleButton:$PelisEOI.checkGenreButton(genre)}" 
-                                ng-click="$PelisEOI.selectGenre(genre)">{{genre}}
+                                ng-class="{markedStyleButton:$films.checkGenreButton(genre)}" 
+                                ng-click="$films.selectGenre(genre)">{{genre}}
                             </button>
                         </div>
                     </div>
                 </div>
             </aside>
             <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                <button ng-click="$PelisEOI.getFilms('Y')">more</button>
+                <button ng-click="$films.getFilms('Y')">more</button>
                 <films-container
-                    total-films="$PelisEOI.films.Total" films="$PelisEOI.films.Data"
-                    bool-load="$PelisEOI.load" src-load="/img/load.gif" show-film="$PelisEOI.showFilm(id)">
+                    total-films="$films.films.Total" films="$films.films.Data"
+                    bool-load="$films.load" src-load="/img/load.gif" show-film="$films.showFilm(id)">
                 </films-container>
             </section>
         </div>
