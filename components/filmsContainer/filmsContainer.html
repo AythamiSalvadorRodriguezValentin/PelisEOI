@@ -19,7 +19,7 @@
                 class="component__card__films__img" 
                 ng-src="{{film.Poster}}" 
                 onerror="this.src='/img/no-image-peli.gif'" 
-                ng-click="$ctrl.showFilm({id:film.imdbID})">
+                ng-click="$ctrl.showFilm({film:film})">
             <div class="component__card__films__overlay">
                 <div class="component__card__films__text">
                     <img 

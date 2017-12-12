@@ -8,17 +8,17 @@
     PelisEOIController.$inject = ['$location','PelisServerProvider'];
     function PelisEOIController($location,PSP) {
         let vm = this;
-        ///////////////////////// VAR vm //////////////////////////
-        vm.films = {Data:[],Total:''};
+        ///////////////////////// VAR VM //////////////////////////
+        vm.films = {};
+        vm.film = {};
         vm.search = {};
         vm.genreList = [];
         vm.load = false;
         vm.navList = [];
-        vm.view = '';
+        vm.view = 'Descubrir';
+        vm.viewFilm = false;
         ///////////////////////////////////////////////////////////
-        vm.slider1 = {};
-        vm.slider2 = {};
-        /////////////////////// FUCTION vm ////////////////////////
+        /////////////////////// FUCTION VM ////////////////////////
         vm.showFilm = showFilm;
         vm.getFilms = getFilms;
         vm.selectGenre = selectGenre;
@@ -27,25 +27,10 @@
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
+            vm.films = {Data:[],Total:''};
             vm.genreList = PSP.getGenres();
             vm.search = {Title:'',Genre:'',Year:'',Type:'',Plot:'',Page:1};
-            vm.navList = ['Categorías','Mejor Valoradas','Populares Ahora','Proximamente'];
-            /*Slider*/
-            vm.slider = {
-                minValue: 10,
-                maxValue: 20,
-                options: {
-                    floor: 0,
-                    ceil: 30,
-                    step: 1,
-                    showSelectionBar: true,
-                    noSwitching: true,
-                    selectionBarGradient: {
-                        from: 'white',
-                        to: '#FC0'
-                    }
-                }      
-            };
+            vm.navList = ['Descubrir','Mejor Valoradas','Populares Ahora','Proximamente'];
         };
         /////////////////////// FUCTION $FILM /////////////////////////
         function getFilms(more){
@@ -87,9 +72,9 @@
             return (vm.search.Genre.indexOf(genre) != -1) ? true : false;
         }
         ///////////////////// FUCTION SHOW VIEW  //////////////////////
-        function showFilm(id){
-            let url = "/films/" + id;
-            $location.path(url);
+        function showFilm(film){
+            vm.film = film;
+            vm.viewFilm = true;
         }
     }
 })();

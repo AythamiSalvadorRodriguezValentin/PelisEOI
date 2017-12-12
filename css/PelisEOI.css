@@ -69,6 +69,19 @@
 /*_________Barra inferior_________________*/
 
 
+/*___Show__Film___*/
+.show__film__container--general{
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+}
+.show__film__container--container{
+    background-color: white;
+    margin-left: 5%;
+}
 /*__button__Style__*/
 .markedStyleButton{
     border: 2px solid #2883d8;

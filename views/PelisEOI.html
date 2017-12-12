@@ -1,46 +1,63 @@
-<div class="container-fluid" ng-cloak>
+<!-- ///////////////////////////// NAVEGADOR /////////////////////////////// -->
+<div class="container__pelis_eoi--general">
     <nave-bar-search-row
-        class="nav__bar__search--directive" logo-img="/img/logo.png" logo-alt="logotipo" bool-logo="true" 
-        nav-list="$films.navList" change-search="$films.getFilms('N')" search="$films.search.Title" 
-        placeholder="Encuentra tu pelicula favorita" bool-search="true" change-view="$films.view">
+        class="nav__bar__search--directive" change-view="$films.view" logo-img="/img/logo.png" 
+        logo-alt="logotipo" bool-logo="true" nav-list="$films.navList" change-search="$films.getFilms('N')" 
+        bool-search="true" search="$films.search.Title" placeholder="Encuentra tu pelicula favorita" >
     </nave-bar-search-row>
-    <div class="row">
-        <div class="wrapper">
-            <aside class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <div class="bar__left--general">
-                    <div class="bar__left__1">
-                        <img class="bar__left__1__filter__img" src="img/filter.png" alt="filter">
-                        <span class="bar__left__1__button__filter">Filter</span>
-                        <span class="bar__left__1__button__filter__delete">Borrar</span>
-                    </div>
-                    <div class="bar__left__2">
-                        <span class="bar__left__2__years">Año</span>
-                        <span class="bar__left__2__years--text"></span>
-                    </div>
-                    <div class="bar__left__3">
-                        <ng-slider-own></ng-slider-own>
-                    </div>
-                    <div class="bar__left__4">
-                        <span class="bar__left__4__generos__text">Géneros</span>
-                    </div>
-                    <div class="bar__left__5">
-                        <div class="bar__left__5__generos--container" ng-repeat="genre in $films.genreList" ng-cloak>
-                            <button 
-                                class="bar__left__5__generos__button" 
-                                ng-class="{markedStyleButton:$films.checkGenreButton(genre)}" 
-                                ng-click="$films.selectGenre(genre)">{{genre}}
-                            </button>
+    <!-- ///////////////////////////// DESCUBRIR /////////////////////////////// -->
+    <div ng-show="$films.view == 'Descubrir'" class="container__descubrir">
+        <div class="row">
+            <div class="wrapper">
+                <aside class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <div class="bar__left--general">
+                        <div class="bar__left__1">
+                            <img 
+                                class="bar__left__1__filter__img" 
+                                src="img/filter.png" 
+                                alt="filter">
+                            <span class="bar__left__1__button__filter">Filter</span>
+                            <span class="bar__left__1__button__filter__delete">Borrar</span>
+                        </div>
+                        <div class="bar__left__2">
+                            <span class="bar__left__2__years">Año</span>
+                            <span class="bar__left__2__years--text"></span>
+                        </div>
+                        <div class="bar__left__3">
+                            <ng-slider-own></ng-slider-own>
+                        </div>
+                        <div class="bar__left__4">
+                            <span class="bar__left__4__generos__text">Géneros</span>
+                        </div>
+                        <div class="bar__left__5">
+                            <div 
+                                class="bar__left__5__generos--container" 
+                                ng-repeat="genre in $films.genreList" 
+                                ng-cloak>
+                                <button 
+                                    class="bar__left__5__generos__button" 
+                                    ng-class="{markedStyleButton:$films.checkGenreButton(genre)}" 
+                                    ng-click="$films.selectGenre(genre)">{{genre}}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </aside>
-            <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                <button ng-click="$films.getFilms('Y')">more</button>
-                <films-container
-                    total-films="$films.films.Total" films="$films.films.Data"
-                    bool-load="$films.load" src-load="/img/load.gif" show-film="$films.showFilm(id)">
-                </films-container>
-            </section>
+                </aside>
+                <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <button ng-click="$films.getFilms('Y')">more</button>
+                    <films-container
+                        films="$films.films.Data" total-films="$films.films.Total"
+                        bool-load="$films.load" src-load="/img/load.gif"
+                        show-film="$films.showFilm(film)">
+                    </films-container>
+                </section>
+            </div>
         </div>
+    </div>
+</div>
+<!-- ///////////////////////////// SHOW FILM /////////////////////////////// -->
+<div ng-show="$films.viewFilm == true" class="show__film__container--general">
+    <div class="show__film__container--container">
+        <film-description film="$films.film"></film-description>
     </div>
 </div>
