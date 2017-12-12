@@ -5,8 +5,8 @@
         .module('PelisEOI')
         .controller('PelisEOIController', PelisEOIController);
 
-    PelisEOIController.$inject = ['PelisServerProvider'];
-    function PelisEOIController(PSP) {
+    PelisEOIController.$inject = ['$location','PelisServerProvider'];
+    function PelisEOIController($location,PSP) {
         let vm = this;
         ///////////////////////// VAR vm //////////////////////////
         vm.films = {Data:[],Total:''};
@@ -19,6 +19,7 @@
         vm.slider1 = {};
         vm.slider2 = {};
         /////////////////////// FUCTION vm ////////////////////////
+        vm.showFilm = showFilm;
         vm.getFilms = getFilms;
         vm.selectGenre = selectGenre;
         vm.checkGenreButton = checkGenreButton;
@@ -69,7 +70,7 @@
                 }    
             }
         };
-        /////////////////////// OTHERS FUCTION ////////////////////////
+        /////////////////////// FUCTION GENRE  ////////////////////////
         function selectGenre(genre){
             if (vm.search.Genre.indexOf(genre) == -1) {
                 if(vm.search.Genre.length > 1) vm.search.Genre += ', ';
@@ -84,6 +85,11 @@
         }
         function checkGenreButton(genre){
             return (vm.search.Genre.indexOf(genre) != -1) ? true : false;
+        }
+        ///////////////////// FUCTION SHOW VIEW  //////////////////////
+        function showFilm(id){
+            let url = "/films/" + id;
+            $location.path(url);
         }
     }
 })();

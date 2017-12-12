@@ -1,0 +1,18 @@
+(function() {
+    'use strict';
+    ////////////////////////////////////////////////////////////
+    angular
+        .module('PelisEOI')
+        .controller('FilmController', FilmController);
+    ////////////////////////////////////////////////////////////
+    FilmController.$inject = ['Film'];
+    function FilmController(Film) {
+        var vm = this;
+        activate();
+        ////////////////////////////////////////////////////////////
+        function activate() { 
+            vm.film = Film;
+        }
+        ////////////////////////////////////////////////////////////
+    }
+})();

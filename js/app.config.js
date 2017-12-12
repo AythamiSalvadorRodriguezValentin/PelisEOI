@@ -7,5 +7,17 @@ function config($routeProvider){
             templateUrl:'/views/PelisEOI.html',
             controllerAs:'$PelisEOI'
         })
+        .when('/films/:id',{
+            controller:'FilmController',
+            templateUrl:'/views/film.html',
+            controllerAs:'$films',
+            resolve:{
+                Film:FilmResolveFactory
+            }
+        })
         .otherwise({redirectTo:'/'});
 };
+FilmResolveFactory.$inject = ['$route','PelisServerProvider'];
+function FilmResolveFactory($route,PelisServerProvider){
+    return PelisServerProvider.getFilmID($route.current.params.id);
+}

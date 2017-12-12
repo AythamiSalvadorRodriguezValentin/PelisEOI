@@ -38,7 +38,7 @@
                 <button ng-click="$PelisEOI.getFilms('Y')">more</button>
                 <films-container
                     total-films="$PelisEOI.films.Total" films="$PelisEOI.films.Data"
-                    bool-load="$PelisEOI.load" src-load="/img/load.gif">
+                    bool-load="$PelisEOI.load" src-load="/img/load.gif" show-film="$PelisEOI.showFilm(id)">
                 </films-container>
             </section>
         </div>
