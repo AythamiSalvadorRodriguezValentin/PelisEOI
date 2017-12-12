@@ -1,0 +1,106 @@
+/*_________Barra Superior________________*/
+.component__bar__top__films{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.component__films__find{
+    font-family: NunitoSans SemiBold;
+    font-size: 15px;
+    font-weight: bold;
+}
+.component__films__find__text{
+    font-family: NunitoSans Regular;
+    font-size: 15px;
+    font-weight: 200;
+}
+/*___________Container__Films____________*/
+.component__card__films--general{
+    background-color: white;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: space-between;
+}
+.component__card__films--container{
+    width: 260px;
+    height: 400px;
+    background-color: transparent;
+    margin-bottom: 30px;
+    position: relative;
+}
+.component__card__films__img{
+    width: 260px;
+    height: 400px;
+    opacity: 1;
+    transition: .5s ease;
+}
+.component__card__films__overlay{
+    position: absolute;
+    top: 200;
+    bottom: 0;
+    left: 0px;
+    right: 0;
+    width: 260px;
+    height: 60px;
+    opacity: 0;
+    transition: .7s ease;
+    background-color: black;
+}
+.component__card__films--container:hover .component__card__films__img{
+    opacity: 0.3;
+}
+.component__card__films--container:hover .component__card__films__overlay{
+    opacity: 1;
+}
+.component__card__films__text {
+    width: 260px;
+    color: white;
+    font-size: 15px;
+    position: absolute;
+    top: 25%;
+    left: 0%;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+}
+.component__loading__films{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+.component__loading__films__img{
+    width: 160px;
+    height: 130px;
+}
+/*_____Image__Icon_____*/
+.component__card__films__img1{
+    width: 30px;
+    height: 30px;
+    background-image: url("/img/rt-icons.png");
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-position-x: 200px;
+}
+.component__card__films__img2{
+    width: 30px;
+    height: 30px;
+    background-image: url("/img/rt-icons.png");
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-position-x: 30px;
+}
+.component__card__films__img3{
+    width: 30px;
+    height: 30px;
+    background-image: url("/img/rt-icons.png");
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-position-x: 40px;
+}
