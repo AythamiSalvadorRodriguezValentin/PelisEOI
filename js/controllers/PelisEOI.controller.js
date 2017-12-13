@@ -30,7 +30,7 @@
             vm.films = {data:[],total:'',pages:''};
             vm.genreList = OIDSP.getGenres();
             vm.search = {title:'',genre:'',year:'',type:'',language:'',page:1};
-            vm.navList = ['Descubrir','Mejor Valoradas','Populares Ahora','Proximamente'];
+            vm.navList = ['Descubrir','Próximamente','Mis favoritas','Para más tarde','Vistas'];
         };
         /////////////////////// FUCTION $FILM /////////////////////////
         function getFilms(more){
