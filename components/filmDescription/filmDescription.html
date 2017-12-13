@@ -4,7 +4,7 @@
     <div class="component__film--topbar">
         <div class="component__film--title">
             <span>{{$ctrl.film.title}}</span>
-            <span class="component__film__title--year">{{$ctrl.film.released_date}}</span>
+            <span class="component__film__title--year">{{$ctrl.film.date[0]}}</span>
         </div>
         <a href="/" class="component__film--button__return__page">
             <div class="component__button__return__page--icon">X</div>
@@ -34,13 +34,13 @@
                     class="component__film__description__calificacion--ratings">
                         <img 
                             ng-if="film.Ratings[0].Value" 
-                            class="component__card__films__img1"> {{film.Ratings[0].Value}}
+                            class="component__films__ratings__img1"> {{$ctrl.film.Ratings[0].Value}}
                         <img 
                             ng-if="film.Ratings[1].Value" 
-                            class="component__card__films__img2"> {{film.Ratings[1].Value}}
+                            class="component__films__ratings__img2"> {{$ctrl.film.Ratings[1].Value}}
                         <img 
                             ng-if="film.Ratings[2].Value" 
-                            class="component__card__films__img3"> {{film.Ratings[2].Value}}
+                            class="component__films__ratings__img3"> {{$ctrl.film.Ratings[2].Value}}
                 </div>
             </div>
             <div class="component__film__description--description">
@@ -50,6 +50,19 @@
                 ng-if="$ctrl.film.video" 
                 class="component__film__description--video_trailer">
                 <!-- VIDEO TRAILER -->
+            </div>
+        </div>
+    </div>
+    <div class="component__film__selected--films_similar">
+        <div class="component__film__selected__films_similar--title">Películas similares</div>
+        <div class="component__film__selected__films_similar--container">
+            <div 
+                class="component__film__selected__films_similar__container--films"
+                ng-repeat="similar in $ctrl.film.similar.data">
+                <img 
+                    ng-src="{{similar.poster}}" 
+                    onerror="this.src='/img/no-image-peli.gif'" 
+                    alt="photo similar film">
             </div>
         </div>
     </div>

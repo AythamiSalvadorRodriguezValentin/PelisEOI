@@ -1,9 +1,10 @@
-/*__Top__Bar__Film__*/
+/*______Film_______*/
 .component__film__selected--general{
     width: 100%;
     height: 100%;
     padding: 28px;
 }
+/*__Top__Bar__Film__*/
 .component__film--topbar{
     width: 100%;
     height: 100px;
@@ -29,6 +30,9 @@
     align-items: center;
     margin-bottom: 36px;
 }
+.component__film--button__return__page:hover{
+    text-decoration: none;
+}
 .component__button__return__page--icon{
     width: 50px;
     height: 50px;
@@ -41,7 +45,7 @@
     align-items: center;
     font-size: 30px;
 }
-/*__Film__*/
+/*__Container__Film__*/
 .component__film__selected--container{
     width: 100%;
     height: 745px;
@@ -62,6 +66,7 @@
     height: 660px;
     object-fit: contain;
 }
+/*__Description__Film__*/
 .component__film--description{
     width: 100%;
     margin-left: 35px;
@@ -123,4 +128,27 @@
     width: 700px;
     height: 340px;
     border: 1px solid black;
+}
+
+/*_______Similar__Films________*/
+.component__film__selected--films_similar{
+    width: 100%;
+    height: 550px;
+    padding-top: 30px;
+    color: #555A61;
+}
+.component__film__selected__films_similar--title{
+
+}
+.component__film__selected__films_similar--container{
+
+}
+.component__film__selected__films_similar__container--films{
+    width: 270px;
+    height: 240px;
+}
+.component__film__selected__films_similar__container--films img{
+    width: 270px;
+    height: 240px;
+    object-fit: contain;
 }

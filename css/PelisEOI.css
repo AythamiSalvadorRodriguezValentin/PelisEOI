@@ -73,6 +73,7 @@
 .show__film__container--general{
     background-color: rgba(0, 0, 0, 0.7);
     position: fixed;
+    overflow-y: scroll;
     height: 100%;
     width: 100%;
     left: 0px;

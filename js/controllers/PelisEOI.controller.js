@@ -20,7 +20,7 @@
         ///////////////////////////////////////////////////////////
         /////////////////////// FUCTION VM ////////////////////////
         vm.showFilm = showFilm;
-        vm.getFilms = getFilms;
+        vm.getMovies = getMovies;
         vm.selectGenre = selectGenre;
         vm.checkGenreButton = checkGenreButton;
         /////////////////////////// INIT //////////////////////////////
@@ -33,7 +33,7 @@
             vm.navList = ['Descubrir','Próximamente','Mis favoritas','Para más tarde','Vistas'];
         };
         /////////////////////// FUCTION $FILM /////////////////////////
-        function getFilms(more){
+        function getMovies(more){
             if (vm.search.title.length >= 2) {
                 vm.load = true;
                 vm.search.type = 'movie';
@@ -71,19 +71,26 @@
                 }
                 vm.search.genre = arrayGenre.join(', ');
             }
-        }
+        };
         function checkGenreButton(genre){
             return (vm.search.genre.indexOf(genre) != -1) ? true : false;
-        }
+        };
         ///////////////////// FUCTION SHOW VIEW  //////////////////////
         function showFilm(film){
+            film.language = 'en-US';
+            film.page = 1;
             TMDBSP
                 .getMovieDBID(film)
                 .then(loaded => {
-                    console.log(loaded);
                     vm.film = loaded;
+                }).catch(e => console.error(e));
+            TMDBSP
+                .getMoviesDBSimilar(film)
+                .then(loaded => {
+                    vm.film.similar = loaded;
+                    console.log(vm.film.similar);
                     vm.viewFilm = true;
                 }).catch(e => console.error(e));
-        }
+        };
     }
 })();
