@@ -3,7 +3,7 @@
     <nave-bar-search-row
         class="nav__bar__search--directive" change-view="$films.view" logo-img="/img/logo.png" 
         logo-alt="logotipo" bool-logo="true" nav-list="$films.navList" change-search="$films.getFilms('N')" 
-        bool-search="true" search="$films.search.Title" placeholder="Encuentra tu pelicula favorita" >
+        bool-search="true" search="$films.search.title" placeholder="Encuentra tu pelicula favorita" >
     </nave-bar-search-row>
     <!-- ///////////////////////////// DESCUBRIR /////////////////////////////// -->
     <div ng-show="$films.view == 'Descubrir'" class="container__descubrir">
@@ -46,7 +46,7 @@
                 <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <button ng-click="$films.getFilms('Y')">more</button>
                     <films-container
-                        films="$films.films.Data" total-films="$films.films.Total"
+                        films="$films.films.data" total-films="$films.films.total"
                         bool-load="$films.load" src-load="/img/load.gif"
                         show-film="$films.showFilm(film)">
                     </films-container>

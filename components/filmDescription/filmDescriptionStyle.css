@@ -1,23 +1,99 @@
 /*__Top__Bar__Film__*/
-.component__show__characteristic__film__selected--general{
+.component__film__selected--general{
     width: 100%;
     height: 100%;
+    padding: 28px;
 }
-.component__show__characteristic__film__selected--topbar{
+.component__film--topbar{
     width: 100%;
     height: 100px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e9ecee;
 }
-.component__show__characteristic__film__selected--title{
-
+.component__film--title{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    color: #1B2227;
 }
-.component__show__characteristic__film__selected--button__return__page{
-
+.component__film__title--year{
+    font-size: 16px;
+    color: #A6AAAE;
+}
+.component__film--button__return__page{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 36px;
 }
 .component__button__return__page--icon{
-
+    width: 50px;
+    height: 50px;
+    border: 2px solid #E36854;
+    border-radius: 50%;
+    color: #E36854;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
 }
-/*__Container__Film__*/
-.component__show__characteristic__film__selected--container{
+/*__Film__*/
+.component__film__selected--container{
     width: 100%;
     height: 745px;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+.component__film--img{
+    width: 440px;
+    height: 100%;
+    object-fit: contain;
+}
+.component__film--description{
+    width: 100%;
+    margin-left: 35px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    border: 1px solid black;
+}
+.component__film__description--title{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.component__film__description__title--{
+    text-align: left;
+}
+.component__film__description__title--runtime{
+    color: #A4A8AC;
+}
+.component__film__description--calificacion{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.component__film__description__calificacion{
+    display: flex;
+    flex-flow: row nowrap;
+}
+.component__film__description__calificacion--child{
+    border-radius: 12px 12px 12px 12px;
+    background-color: #E7ECEC;
+    margin-right: 5px;
+    padding-top: 4px;
+    padding-bottom: 7px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #5C6268;
 }

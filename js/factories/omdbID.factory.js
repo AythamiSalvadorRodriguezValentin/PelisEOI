@@ -3,10 +3,10 @@
     ////////////////////////////////////////////////////////////
     angular
         .module('PelisEOI')
-        .factory('PelisServerProvider', PelisServerProvider);
+        .factory('OmdbIDServerProvider', OmdbIDServerProvider);
     ////////////////////////////////////////////////////////////
-    PelisServerProvider.$inject = ['$http'];
-    function PelisServerProvider($http) {
+    OmdbIDServerProvider.$inject = ['$http'];
+    function OmdbIDServerProvider($http) {
         let vm = this;
         /////////////////////// VAR FILM ///////////////////////////
         vm.films = {};
@@ -17,7 +17,7 @@
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
-            vm.films = {Total:0,Data:[]};
+            vm.films = {total:0,data:[]};
             vm.apiKey = '&apikey=3370463f';
             vm.url = 'http://www.omdbapi.com/?';
             vm.object = {Title:'',Genre:'',Year:'',Page:''}
@@ -59,10 +59,10 @@
          * @param {*} nextPage 
          */
         function getFilms(object) {
-            let title = 's=' + object.Title;
-            let plot = '&plot=' + object.Plot;
-            let type = '&type=' + object.Type;
-            let page = '&page=' + object.Page;
+            let title = 's=' + object.title;
+            let plot = '&plot=full';
+            let type = '&type=' + object.type;
+            let page = '&page=' + object.page;
             vm.object = object;
             return $http
                     .get(vm.url + title + vm.apiKey + plot + type + page)
@@ -71,8 +71,8 @@
         };
         function loadedFilms(response){
             if(vm.object.Page == 1){
-                vm.films.Data = [];
-                vm.films.Total = String(response.data.totalResults);
+                vm.films.data = [];
+                vm.films.total = String(response.data.totalResults);
             }
             if (response.data.Response === "True") {
                 let object = response.data.Search;
@@ -83,8 +83,8 @@
                 }
                 let promise = new Promise(function(resolve,reject){
                     setTimeout(function(){
-                        if (typeof vm.films.Data != 'undefined' 
-                            && typeof vm.films.Total != 'undefined') resolve(vm.films);
+                        if (typeof vm.films.data != 'undefined' 
+                            && typeof vm.films.total != 'undefined') resolve(vm.films);
                         else reject("No hay peliculas disponibles");
                     }, 1000);
                 });
@@ -94,10 +94,10 @@
         function resolveGetFilms(loaded){
             if(loaded.data && loaded.data.Poster != "N/A" && loaded.data.Ratings.length > 0){
                 let isIn = true;
-                for (let j = 0; j < vm.films.Data.length; j++) {
-                    if(loaded.data.imdbID == vm.films.Data[j].imdbID) isIn = false;
+                for (let j = 0; j < vm.films.data.length; j++) {
+                    if(loaded.data.imdbID == vm.films.data[j].imdbID) isIn = false;
                 }
-                if(isIn) vm.films.Data.push(loaded.data);
+                if(isIn) vm.films.data.push(loaded.data);
             }
         };
         //////////////////////// FUCTION FILM ID ///////////////////

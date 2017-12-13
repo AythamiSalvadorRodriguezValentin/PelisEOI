@@ -5,8 +5,8 @@
         .module('PelisEOI')
         .controller('PelisEOIController', PelisEOIController);
 
-    PelisEOIController.$inject = ['$location','PelisServerProvider'];
-    function PelisEOIController($location,PSP) {
+    PelisEOIController.$inject = ['$location','OmdbIDServerProvider','TheMovieDBServerProvider'];
+    function PelisEOIController($location,OIDSP,TMDBSP) {
         let vm = this;
         ///////////////////////// VAR VM //////////////////////////
         vm.films = {};
@@ -27,53 +27,58 @@
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
-            vm.films = {Data:[],Total:''};
-            vm.genreList = PSP.getGenres();
-            vm.search = {Title:'',Genre:'',Year:'',Type:'',Plot:'',Page:1};
+            vm.films = {data:[],total:'',pages:''};
+            vm.genreList = OIDSP.getGenres();
+            vm.search = {title:'',genre:'',year:'',type:'',language:'',page:1};
             vm.navList = ['Descubrir','Mejor Valoradas','Populares Ahora','Proximamente'];
         };
         /////////////////////// FUCTION $FILM /////////////////////////
         function getFilms(more){
-            if (vm.search.Title.length >= 2) {
+            if (vm.search.title.length >= 2) {
                 vm.load = true;
-                vm.search.Type = 'movie';
-                vm.search.Plot = 'full';
+                vm.search.type = 'movie';
+                vm.search.language = 'en-US';
                 if(more === 'Y'){
-                    vm.search.Page++;
-                    PSP 
-                        .getFilms(vm.search)
-                        .then(loaded => {vm.films = loaded; vm.load = false})
-                        .catch(e => console.error(e));
+                    vm.search.page++;
+                    TMDBSP
+                    .getMoviesDBSearch(vm.search)
+                    .then(loaded => {
+                        vm.films = loaded;
+                        vm.load = false;
+                    }).catch(e => console.error(e));
                 } else {
+                    vm.search.page = 1;
                     vm.films = [];
-                    vm.search.Page = 1;
-                    vm.totalFilms = '';
-                    PSP 
-                        .getFilms(vm.search)
-                        .then(loaded => {vm.films = loaded; vm.load = false})
-                        .catch(e => console.error(e));
+                    TMDBSP
+                        .getMoviesDBSearch(vm.search)
+                        .then(loaded => {
+                            vm.films = loaded;
+                            console.log(loaded);
+                            vm.load = false;
+                        }).catch(e => console.error(e));
                 }    
             }
         };
         /////////////////////// FUCTION GENRE  ////////////////////////
         function selectGenre(genre){
-            if (vm.search.Genre.indexOf(genre) == -1) {
-                if(vm.search.Genre.length > 1) vm.search.Genre += ', ';
-                vm.search.Genre += genre;
+            if (vm.search.genre.indexOf(genre) == -1) {
+                if(vm.search.genre.length > 1) vm.search.genre += ', ';
+                vm.search.genre += genre;
             } else {
-                let arrayGenre = vm.search.Genre.split(', ');
+                let arrayGenre = vm.search.genre.split(', ');
                 for(let i = 0; i < arrayGenre.length; i++){
                     if(arrayGenre[i] == genre) arrayGenre.splice(i,1);
                 }
-                vm.search.Genre = arrayGenre.join(', ');
+                vm.search.genre = arrayGenre.join(', ');
             }
         }
         function checkGenreButton(genre){
-            return (vm.search.Genre.indexOf(genre) != -1) ? true : false;
+            return (vm.search.genre.indexOf(genre) != -1) ? true : false;
         }
         ///////////////////// FUCTION SHOW VIEW  //////////////////////
         function showFilm(film){
             vm.film = film;
+            vm.film.genre = vm.film.genre.split(', ');
             vm.viewFilm = true;
         }
     }

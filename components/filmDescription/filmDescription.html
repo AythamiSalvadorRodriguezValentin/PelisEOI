@@ -1,13 +1,35 @@
 <link rel="stylesheet" href="/components/filmDescription/filmDescriptionStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
-<div class="component__show__characteristic__film__selected--general">
-    <div class="component__show__characteristic__film__selected--topbar">
-        <div class="component__show__characteristic__film__selected--title">{{$ctrl.film.Title}}</div>
-        <a href="/" class="component__show__characteristic__film__selected--button__return__page">
-            <div class="component__button__return__page--icon"></div>
+<div class="component__film__selected--general">
+    <div class="component__film--topbar">
+        <div class="component__film--title">
+            <span>{{$ctrl.film.Title}}</span>
+            <span class="component__film__title--year">{{$ctrl.film.Year}}</span>
+        </div>
+        <a href="/" class="component__film--button__return__page">
+            <div class="component__button__return__page--icon">X</div>
         </a>
     </div>
-    <div class="component__show__characteristic__film__selected--container">
-        
+    <div class="component__film__selected--container">
+        <div class="component__film--img">
+            <img 
+                ng-src="{{$ctrl.film.Poster}}" 
+                onerror="this.src='/img/no-image-peli.gif'" 
+                alt="photo film">
+        </div>
+        <div class="component__film--description">
+            <div class="component__film__description--title">
+                <span class="component__film__description__title--">{{$ctrl.film.Rated}}</span>
+                <span class="component__film__description__title--runtime">{{$ctrl.film.Runtime}}</span>
+            </div>
+            <div class="component__film__description--calificacion">
+                <div class="component__film__description__calificacion">
+                    <div 
+                        class="component__film__description__calificacion--child" 
+                        ng-repeat="genre in $ctrl.film.Genre track by $index">{{genre}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
