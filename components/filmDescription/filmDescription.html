@@ -19,7 +19,7 @@
         </div>
         <div class="component__film--description">
             <div class="component__film__description--title">
-                <span class="component__film__description__title--">{{$ctrl.film.tagline}}</span>
+                <span class="component__film__description__title--">Sipnosis</span>
                 <span class="component__film__description__title--runtime">{{$ctrl.film.runtime}}</span>
             </div>
             <div class="component__film__description--calificacion">
@@ -30,17 +30,17 @@
                     </div>
                 </div>
                 <div 
-                    ng-if="$ctrl.film.Ratings" 
+                    ng-if="$ctrl.film.ombdID.ratings" 
                     class="component__film__description__calificacion--ratings">
-                        <img 
-                            ng-if="film.Ratings[0].Value" 
-                            class="component__films__ratings__img1"> {{$ctrl.film.Ratings[0].Value}}
-                        <img 
-                            ng-if="film.Ratings[1].Value" 
-                            class="component__films__ratings__img2"> {{$ctrl.film.Ratings[1].Value}}
-                        <img 
-                            ng-if="film.Ratings[2].Value" 
-                            class="component__films__ratings__img3"> {{$ctrl.film.Ratings[2].Value}}
+                        <div 
+                            ng-if="$ctrl.film.ombdID.ratings.imdb"
+                            class="component__films__ratings__img">{{$ctrl.film.ombdID.ratings.imdb}}</div>
+                        <div 
+                            ng-if="$ctrl.film.ombdID.ratings.rottem"
+                            class="component__films__ratings__img component__rottem">{{$ctrl.film.ombdID.ratings.rottem}}</div>
+                        <div 
+                            ng-if="$ctrl.film.ombdID.ratings.metacritic" 
+                            class="component__films__ratings__img component__metacritic">{{$ctrl.film.ombdID.ratings.metacritic}}</div>
                 </div>
             </div>
             <div class="component__film__description--description">
@@ -53,7 +53,9 @@
             </div>
         </div>
     </div>
-    <div class="component__film__selected--films_similar">
+    <div 
+        ng-if="$ctrl.film.similar.data.length > 0"
+        class="component__film__selected--films_similar">
         <div class="component__film__selected__films_similar--title">Películas similares</div>
         <div class="component__film__selected__films_similar--container">
             <div 

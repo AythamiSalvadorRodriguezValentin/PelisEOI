@@ -88,7 +88,12 @@
                 .getMoviesDBSimilar(film)
                 .then(loaded => {
                     vm.film.similar = loaded;
-                    console.log(vm.film.similar);
+                    vm.viewFilm = true;
+                }).catch(e => console.error(e));
+            OIDSP
+                .getMovie(film)
+                .then(loaded => {
+                    vm.film.ombdID = loaded;
                     vm.viewFilm = true;
                 }).catch(e => console.error(e));
         };

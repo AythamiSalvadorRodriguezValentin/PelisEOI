@@ -79,6 +79,9 @@
     flex-flow: row;
     justify-content: space-between;
     align-items: center;
+    font-family: Arial, Helvetica, sans-serif, NunitoSans Regular;
+    font-size: 22px;
+    margin-bottom: 10px;
 }
 .component__film__description__title--{
     text-align: left;
@@ -108,15 +111,12 @@
     color: #5C6268;
 }
 .component__film__description__calificacion--ratings{
+    max-width: 180px;
+    height: 25px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
-}
-.component__film__description__calificacion--ratings img{
-    width: 25px;
-    height: 25px;
-    object-fit: contain;
 }
 .component__film__description--description{
     width: 100%;
@@ -129,26 +129,54 @@
     height: 340px;
     border: 1px solid black;
 }
-
+/*_____Image__Icon_____*/
+.component__films__ratings__img{
+    width: 60px;
+    height: 25px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: 12px;
+    padding-left: 30px;
+    background-image: url("/img/stadistics-icons.png");
+    background-repeat: no-repeat;
+    background-position-y:-50px;
+}
+.component__rottem{
+    background-repeat: no-repeat;
+    background-position-y:-25px;
+}
+.component__metacritic{
+    background-repeat: no-repeat;
+    background-position-y:0px;
+}
 /*_______Similar__Films________*/
 .component__film__selected--films_similar{
     width: 100%;
     height: 550px;
     padding-top: 30px;
     color: #555A61;
+    border-bottom: 1px solid #e9ecee;
 }
 .component__film__selected__films_similar--title{
-
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
 }
 .component__film__selected__films_similar--container{
-
+    display: flex;
+    flex-grow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    overflow-x: scroll;
+    margin-top: 30px;
 }
 .component__film__selected__films_similar__container--films{
-    width: 270px;
-    height: 240px;
+    width: 300px;
+    height: 267px;
 }
 .component__film__selected__films_similar__container--films img{
-    width: 270px;
-    height: 240px;
+    width: 300px;
+    height: 100%;
     object-fit: contain;
 }

@@ -9,7 +9,6 @@
     function OmdbIDServerProvider($http) {
         let vm = this;
         /////////////////////// VAR FILM ///////////////////////////
-        vm.films = {};
         vm.object = {};
         vm.apiKey = '';
         vm.url = '';
@@ -17,16 +16,15 @@
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
-            vm.films = {total:0,data:[]};
             vm.apiKey = '&apikey=3370463f';
             vm.url = 'http://www.omdbapi.com/?';
             vm.object = {Title:'',Genre:'',Year:'',Page:''}
         }
         ///////////////// FUCTION FILM SERVICE /////////////////////
         var service = {
-            getFilm:getFilm,
-            getFilms:getFilms,
-            getFilmID:getFilmID,
+            getMovie:getMovie,
+            getMovies:getMovies,
+            getMovieID:getMovieID,
             getGenres:getGenres
         };
         return service;
@@ -38,14 +36,19 @@
          * Year: Año de la pelicular. --> "2010"
          * Esta funcion devuelve una pelicula completa.
          */
-        function getFilm(object) {
-            let title = 't='  + object.Title;
-            let year = '&y=' + object.Year;
+        function getMovie(object) {
+            let title = 't='  + object.title;
+            let year = '&y=' + object.year;
             let plot = '&plot=full';
             return $http
                     .get(vm.url + title + vm.apiKey + year + plot)
-                    .then(loaded => {return loaded})
-                    .catch(e => {return e});
+                    .then(loaded => {
+                        loaded.data.ratings = {};
+                        if(loaded.data.Ratings[0].Value) loaded.data.ratings.imdb = calRatings(loaded.data.Ratings[0].Value);
+                        if(loaded.data.Ratings[1].Value) loaded.data.ratings.rottem = calRatings(loaded.data.Ratings[1].Value);
+                        if(loaded.data.Ratings[2].Value) loaded.data.ratings.metacritic = calRatings(loaded.data.Ratings[2].Value);
+                        return loaded.data;
+                    }).catch(e => {return e});
         };
         //////////////////////// FUCTION FILMS /////////////////////
         /**
@@ -58,7 +61,7 @@
          * Plot: tipo de respuesta --> "short" o "full"}
          * @param {*} nextPage 
          */
-        function getFilms(object) {
+        function getMovies(object) {
             let title = 's=' + object.title;
             let plot = '&plot=full';
             let type = '&type=' + object.type;
@@ -70,35 +73,30 @@
                     .catch(e => {return e});
         };
         function loadedFilms(response){
+            let films = {}
             if(vm.object.Page == 1){
-                vm.films.data = [];
-                vm.films.total = String(response.data.totalResults);
+                films.data = [];
+                films.total = String(response.data.totalResults);
             }
             if (response.data.Response === "True") {
                 let object = response.data.Search;
-                for (let i = 0; i < object.length; i++) {
-                    getFilm(object[i])
-                        .then(resolveGetFilms)
-                        .catch(e => {return e});
-                }
                 let promise = new Promise(function(resolve,reject){
-                    setTimeout(function(){
-                        if (typeof vm.films.data != 'undefined' 
-                            && typeof vm.films.total != 'undefined') resolve(vm.films);
-                        else reject("No hay peliculas disponibles");
-                    }, 1000);
+                    for (let i = 0; i < object.length; i++) {
+                        getMovie(object[i])
+                            .then(loaded =>{
+                                if(loaded.data && loaded.data.Poster != "N/A" && loaded.data.Ratings.length > 0){
+                                    let isIn = true;
+                                    for (let j = 0; j < films.data.length; j++) {
+                                        if(loaded.data.imdbID == films.data[j].imdbID) isIn = false;
+                                    }
+                                    if(isIn) films.data.push(loaded.data);
+                                }
+                                if(i == object.length) resolve(films);
+                            }).catch(e => {return e});
+                    }
                 });
                 return promise;
             } else return {};
-        };
-        function resolveGetFilms(loaded){
-            if(loaded.data && loaded.data.Poster != "N/A" && loaded.data.Ratings.length > 0){
-                let isIn = true;
-                for (let j = 0; j < vm.films.data.length; j++) {
-                    if(loaded.data.imdbID == vm.films.data[j].imdbID) isIn = false;
-                }
-                if(isIn) vm.films.data.push(loaded.data);
-            }
         };
         //////////////////////// FUCTION FILM ID ///////////////////
         /**
@@ -106,7 +104,7 @@
          * @param {*} imbdID 'String': identificador de la pelicula imbdID.
          * Esta funcion devuelve una pelicula completa a partir de su imbdID.
          */
-        function getFilmID(imbdID) {
+        function getMovieID(imbdID) {
             let id = 'i='  + imbdID;
             let plot = '&plot=full';
             return $http
@@ -120,6 +118,18 @@
                     'Drama','Family','Fantasy','History','Horror', 'Music',
                     'Mystery','Romance','Fiction','TVMovies','Thriller','War',
                     'Western'];
+        };
+        //////////////////////// OTHER FUCTION /////////////////////
+        function calRatings(obj){
+            let index = obj.indexOf('/');
+            if(index != -1){
+                let div = parseInt(obj.substring(index + 1, obj.length));
+                let param = parseFloat(obj.substring(0,index));
+                if(div == 100) param += '%';
+                return param;
+            }
+            else return obj;
+            
         };
     }
 })();

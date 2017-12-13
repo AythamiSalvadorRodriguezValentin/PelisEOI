@@ -9,7 +9,6 @@
     function TheMovieDBServerProvider($http) {
         let vm = this;
         /////////////////////// VAR FILM ///////////////////////////
-        vm.films = {};
         vm.object = {};
         vm.apiKey = '';
         vm.url = '';
@@ -44,7 +43,6 @@
                     .catch(e => {return e});
         };
         function loadedMovieDBID(response){
-            vm.films = {};
             if (response.status == 200 && response.statusText == "OK") {
                 response.data.runtime = calcHrMnt(response.data.runtime);
                 response.data.date = calDate(response.data.release_date);
@@ -71,14 +69,14 @@
                     .catch(e => {return e});
         };
         function moviesDBSearch(response){
-            vm.films = {};
+            let films = {};
             if (response.status == 200 && response.statusText == "OK") {
-                vm.films.total = String(response.data.total_results);
-                vm.films.pages = String(response.data.total_pages);
-                vm.films.data = response.data.results;
-                for (let i = 0; i < vm.films.data.length; i++)
-                    vm.films.data[i].poster = 'https://image.tmdb.org/t/p/w640' + vm.films.data[i].poster_path;            
-                return vm.films;
+                films.total = String(response.data.total_results);
+                films.pages = String(response.data.total_pages);
+                films.data = response.data.results;
+                for (let i = 0; i < films.data.length; i++)
+                    films.data[i].poster = 'https://image.tmdb.org/t/p/w640' + films.data[i].poster_path;            
+                return films;
             } else return {};
         };
         //////////////////////// FUCTION FILMS /////////////////////
@@ -98,14 +96,14 @@
                     .catch(e => {return e});
         };
         function moviesDBPopular(response){
-            vm.films = {};
+            let films = {};
             if (response.status == 200 && response.statusText == "OK") {
-                vm.films.total = String(response.data.total_results);
-                vm.films.pages = String(response.data.total_pages);
-                vm.films.data = response.data.results;
-                for (let i = 0; i < vm.films.data.length; i++)
-                    vm.films.data[i].poster = 'https://image.tmdb.org/t/p/w640' + vm.films.data[i].poster_path;            
-                return vm.films;
+                films.total = String(response.data.total_results);
+                films.pages = String(response.data.total_pages);
+                films.data = response.data.results;
+                for (let i = 0; i < films.data.length; i++)
+                    films.data[i].poster = 'https://image.tmdb.org/t/p/w640' + films.data[i].poster_path;            
+                return films;
             } else return {};
         };
         //////////////////////// FUCTION FILMS /////////////////////
@@ -124,14 +122,14 @@
                     .catch(e => {return e});
         };
         function moviesDBSimilar(response){
-            vm.films = {};
+            let films = {};
             if (response.status == 200 && response.statusText == "OK") {
-                vm.films.total = String(response.data.total_results);
-                vm.films.pages = String(response.data.total_pages);
-                vm.films.data = response.data.results;
-                for (let i = 0; i < vm.films.data.length; i++)
-                    vm.films.data[i].poster = 'https://image.tmdb.org/t/p/w640' + vm.films.data[i].poster_path;            
-                return vm.films;
+                films.total = String(response.data.total_results);
+                films.pages = String(response.data.total_pages);
+                films.data = response.data.results;
+                for (let i = 0; i < films.data.length; i++)
+                    films.data[i].poster = 'https://image.tmdb.org/t/p/w640' + films.data[i].poster_path;            
+                return films;
             } else return {};
         };
         //////////////////////// FUCTION GENRE /////////////////////

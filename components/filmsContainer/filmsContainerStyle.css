@@ -81,26 +81,23 @@
 }
 /*_____Image__Icon_____*/
 .component__card__films__img1{
-    width: 30px;
-    height: 30px;
-    background-image: url("/img/rt-icons.png");
+    width: 25px;
+    height: 25px;
+    background-image: url("/img/stadistics-icons.png");
     background-repeat: no-repeat;
-    background-position: left bottom;
-    background-position-x: 200px;
+    background-position-y: 0px;
 }
 .component__card__films__img2{
-    width: 30px;
-    height: 30px;
-    background-image: url("/img/rt-icons.png");
+    width: 25px;
+    height: 25px;
+    background-image: url("/img/stadistics-icons.png");
     background-repeat: no-repeat;
-    background-position: left bottom;
-    background-position-x: 30px;
+    background-position-y: -25px;
 }
 .component__card__films__img3{
-    width: 30px;
-    height: 30px;
-    background-image: url("/img/rt-icons.png");
+    width: 25px;
+    height: 25px;
+    background-image: url("/img/stadistics-icons.png");
     background-repeat: no-repeat;
-    background-position: left bottom;
-    background-position-x: 40px;
+    background-position-y: -50px;
 }
