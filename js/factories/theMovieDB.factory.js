@@ -24,7 +24,8 @@
             getMovieDBID:getMovieDBID,
             getMoviesDBSearch:getMoviesDBSearch,
             getMoviesDBPopular:getMoviesDBPopular,
-            getMoviesDBSimilar:getMoviesDBSimilar
+            getMoviesDBSimilar:getMoviesDBSimilar,
+            getMoviesDBVideo:getMoviesDBVideo
         };
         return service;
         //////////////////////// FUCTION FILM //////////////////////
@@ -130,6 +131,29 @@
                 for (let i = 0; i < films.data.length; i++)
                     films.data[i].poster = 'https://image.tmdb.org/t/p/w640' + films.data[i].poster_path;            
                 return films;
+            } else return {};
+        };
+        //////////////////////// FUCTION FILMS /////////////////////
+        /**
+         * 
+         * @param {*} object 'Object': {...}
+         */
+        function getMoviesDBVideo(object) {
+            let type = 'movie/' + object.id + '/videos?';
+            let language = '&language=' + object.language;
+            vm.object = object;
+            console.log("dentro");
+            return $http
+                    .get(vm.url + type + vm.apiKey + language)
+                    .then(moviesDBVideo)
+                    .catch(e => {return e});
+        };
+        function moviesDBVideo(response){
+            let video = {};
+            if (response.status == 200 && response.statusText == "OK") {
+                video = response.data.results;          
+                console.log(video);
+                return {};
             } else return {};
         };
         //////////////////////// FUCTION GENRE /////////////////////

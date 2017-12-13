@@ -88,7 +88,11 @@
                 .getMoviesDBSimilar(film)
                 .then(loaded => {
                     vm.film.similar = loaded;
-                    vm.viewFilm = true;
+                }).catch(e => console.error(e));
+            TMDBSP
+                .getMoviesDBVideo(film)
+                .then(loaded => {
+                    vm.film.video = loaded;
                 }).catch(e => console.error(e));
             OIDSP
                 .getMovie(film)

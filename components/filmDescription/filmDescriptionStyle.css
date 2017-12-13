@@ -124,10 +124,14 @@
     margin-top: 25px;
     color: #8C9397;
 }
-.component__film__description--video_trailer{
+.component__film__description--video__trailer{
     width: 700px;
     height: 340px;
     border: 1px solid black;
+}
+.component__film__description__video__trailer{
+    width: 700px;
+    height: 340px;
 }
 /*_____Image__Icon_____*/
 .component__films__ratings__img{
