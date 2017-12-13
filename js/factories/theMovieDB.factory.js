@@ -5,8 +5,8 @@
         .module('PelisEOI')
         .factory('TheMovieDBServerProvider', TheMovieDBServerProvider);
     ////////////////////////////////////////////////////////////
-    TheMovieDBServerProvider.$inject = ['$http'];
-    function TheMovieDBServerProvider($http) {
+    TheMovieDBServerProvider.$inject = ['$http','$sce'];
+    function TheMovieDBServerProvider($http,$sce) {
         let vm = this;
         /////////////////////// VAR FILM ///////////////////////////
         vm.object = {};
@@ -142,7 +142,6 @@
             let type = 'movie/' + object.id + '/videos?';
             let language = '&language=' + object.language;
             vm.object = object;
-            console.log("dentro");
             return $http
                     .get(vm.url + type + vm.apiKey + language)
                     .then(moviesDBVideo)
@@ -151,9 +150,13 @@
         function moviesDBVideo(response){
             let video = {};
             if (response.status == 200 && response.statusText == "OK") {
-                video = response.data.results;          
+                let video = response.data.results;
+                for (let i = 0; i < video.length; i++){
+                    if (video[i].key) 
+                        video[i].url = $sce.trustAs($sce.RESOURCE_URL, 'https://www.youtube.com/embed/' + video[i].key);
+                }
                 console.log(video);
-                return {};
+                return video;
             } else return {};
         };
         //////////////////////// FUCTION GENRE /////////////////////

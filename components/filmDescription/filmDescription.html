@@ -47,27 +47,31 @@
                 {{$ctrl.film.overview}}
             </div>
             <div 
-                ng-if="$ctrl.film.video" 
+                ng-if="$ctrl.film.video.length > 0" 
                 class="component__film__description--video__trailer">
                 <!-- VIDEO TRAILER -->
-                <!-- <video 
+                <div class="component__film__description__video__trailer--title">Trailer</div>
+                <iframe 
                     class="component__film__description__video__trailer"
-                    ng-src=""
-                    controls>
-
-                </video> -->
+                    ng-src="{{$ctrl.film.video[0].url}}"
+                    frameborder="0" 
+                    gesture="media" 
+                    allow="encrypted-media" 
+                    allowfullscreen>
+                </iframe>
             </div>
         </div>
     </div>
     <div 
         ng-if="$ctrl.film.similar.data.length > 0"
-        class="component__film__selected--films_similar">
-        <div class="component__film__selected__films_similar--title">Películas similares</div>
-        <div class="component__film__selected__films_similar--container">
+        class="component__film__selected--films__similar">
+        <div class="component__film__selected__films__similar--title">Películas similares</div>
+        <div class="component__film__selected__films__similar--container">
             <div 
-                class="component__film__selected__films_similar__container--films"
+                class="component__film__selected__films__similar__container--films"
                 ng-repeat="similar in $ctrl.film.similar.data">
-                <img 
+                <img
+                    class="component__film__selected__films__similar__container__films__img"
                     ng-src="{{similar.poster}}" 
                     onerror="this.src='/img/no-image-peli.gif'" 
                     alt="photo similar film">

@@ -27,7 +27,6 @@
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
-            vm.films = {data:[],total:'',pages:''};
             vm.genreList = OIDSP.getGenres();
             vm.search = {title:'',genre:'',year:'',type:'',language:'',page:1};
             vm.navList = ['Descubrir','Próximamente','Mis favoritas','Para más tarde','Vistas'];
@@ -37,7 +36,7 @@
             if (vm.search.title.length >= 2) {
                 vm.load = true;
                 vm.search.type = 'movie';
-                vm.search.language = 'en-US';
+                vm.search.language = 'es-ES';
                 if(more === 'Y'){
                     vm.search.page++;
                     TMDBSP
@@ -53,7 +52,6 @@
                         .getMoviesDBSearch(vm.search)
                         .then(loaded => {
                             vm.films = loaded;
-                            console.log(loaded);
                             vm.load = false;
                         }).catch(e => console.error(e));
                 }    
@@ -77,7 +75,7 @@
         };
         ///////////////////// FUCTION SHOW VIEW  //////////////////////
         function showFilm(film){
-            film.language = 'en-US';
+            film.language = 'es-ES';
             film.page = 1;
             TMDBSP
                 .getMovieDBID(film)
