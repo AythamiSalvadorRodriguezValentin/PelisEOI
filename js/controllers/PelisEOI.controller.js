@@ -77,9 +77,13 @@
         }
         ///////////////////// FUCTION SHOW VIEW  //////////////////////
         function showFilm(film){
-            vm.film = film;
-            vm.film.genre = vm.film.genre.split(', ');
-            vm.viewFilm = true;
+            TMDBSP
+                .getMovieDBID(film)
+                .then(loaded => {
+                    console.log(loaded);
+                    vm.film = loaded;
+                    vm.viewFilm = true;
+                }).catch(e => console.error(e));
         }
     }
 })();

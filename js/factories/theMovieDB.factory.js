@@ -35,15 +35,21 @@
          * @param {*} object 'object': {...}
          */
         function getMovieDBID(object) {
-            let type = 'find/';
+            object.externalID = 'imdb_id';
+            let type = 'movie/';
             let id =  object.id + '?';
-            let language = 'language=' + object.language;
-            let external_source = '&external_source=' + object.ExternalID;
+            let language = '&language=' + object.language;
             return $http
-                    .get(vm.url + type + id + language + vm.apiKey + external_source)
-                    .then(loaded => {return loaded})
+                    .get(vm.url + type + id + vm.apiKey + language)
+                    .then(loadedMovieDBID)
                     .catch(e => {return e});
         };
+        function loadedMovieDBID(response){
+            if (response.status == 200 && response.statusText == "OK") {
+                response.data.poster = 'https://image.tmdb.org/t/p/w640' + response.data.poster_path;
+                return response.data;
+            } else return {};
+        }
         //////////////////////// FUCTION FILMS /////////////////////
         /**
          * 

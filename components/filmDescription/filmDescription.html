@@ -3,8 +3,8 @@
 <div class="component__film__selected--general">
     <div class="component__film--topbar">
         <div class="component__film--title">
-            <span>{{$ctrl.film.Title}}</span>
-            <span class="component__film__title--year">{{$ctrl.film.Year}}</span>
+            <span>{{$ctrl.film.title}}</span>
+            <span class="component__film__title--year">{{$ctrl.film.released_date}}</span>
         </div>
         <a href="/" class="component__film--button__return__page">
             <div class="component__button__return__page--icon">X</div>
@@ -13,22 +13,43 @@
     <div class="component__film__selected--container">
         <div class="component__film--img">
             <img 
-                ng-src="{{$ctrl.film.Poster}}" 
+                ng-src="{{$ctrl.film.poster}}" 
                 onerror="this.src='/img/no-image-peli.gif'" 
                 alt="photo film">
         </div>
         <div class="component__film--description">
             <div class="component__film__description--title">
-                <span class="component__film__description__title--">{{$ctrl.film.Rated}}</span>
-                <span class="component__film__description__title--runtime">{{$ctrl.film.Runtime}}</span>
+                <span class="component__film__description__title--">{{$ctrl.film.tagline}}</span>
+                <span class="component__film__description__title--runtime">{{$ctrl.film.runtime}}</span>
             </div>
             <div class="component__film__description--calificacion">
                 <div class="component__film__description__calificacion">
                     <div 
-                        class="component__film__description__calificacion--child" 
-                        ng-repeat="genre in $ctrl.film.Genre track by $index">{{genre}}
+                        class="component__film__description__calificacion--genre" 
+                        ng-repeat="genre in $ctrl.film.genres track by $index">{{genre.name}}
                     </div>
                 </div>
+                <div 
+                    ng-if="$ctrl.film.Ratings" 
+                    class="component__film__description__calificacion--ratings">
+                        <img 
+                            ng-if="film.Ratings[0].Value" 
+                            class="component__card__films__img1"> {{film.Ratings[0].Value}}
+                        <img 
+                            ng-if="film.Ratings[1].Value" 
+                            class="component__card__films__img2"> {{film.Ratings[1].Value}}
+                        <img 
+                            ng-if="film.Ratings[2].Value" 
+                            class="component__card__films__img3"> {{film.Ratings[2].Value}}
+                </div>
+            </div>
+            <div class="component__film__description--description">
+                {{$ctrl.film.overview}}
+            </div>
+            <div 
+                ng-if="$ctrl.film.video" 
+                class="component__film__description--video_trailer">
+                <!-- VIDEO TRAILER -->
             </div>
         </div>
     </div>
