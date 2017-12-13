@@ -1,9 +1,9 @@
 <!-- ///////////////////////////// NAVEGADOR /////////////////////////////// -->
 <div class="container__pelis_eoi--general">
     <nave-bar-search-row
-        class="nav__bar__search--directive" change-view="$films.view" logo-img="/img/logo.png" 
+        class="nav__bar__search--directive" change-view="$films.changeView(nav)" logo-img="/img/logo.png" 
         logo-alt="logotipo" bool-logo="true" nav-list="$films.navList" change-search="$films.getMovies('N')" 
-        bool-search="true" search="$films.search.title" placeholder="Encuentra tu pelicula favorita" >
+        bool-search="true" search="$films.search.title" placeholder="Encuentra tu pelicula favorita">
     </nave-bar-search-row>
     <!-- ///////////////////////////// DESCUBRIR /////////////////////////////// -->
     <div ng-show="$films.view == 'Descubrir'" class="container__descubrir">
@@ -24,7 +24,7 @@
                             <span class="bar__left__2__years--text"></span>
                         </div>
                         <div class="bar__left__3">
-                            <ng-slider-own></ng-slider-own>
+                            <!-- Sliders -->
                         </div>
                         <div class="bar__left__4">
                             <span class="bar__left__4__generos__text">Géneros</span>

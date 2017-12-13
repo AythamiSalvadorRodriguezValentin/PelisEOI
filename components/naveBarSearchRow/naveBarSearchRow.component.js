@@ -25,7 +25,7 @@
                 logoAlt: '@',
                 placeholder: '@',
                 search: '=',
-                changeView: '=',
+                changeView: '&',
                 changeSearch: '&',
             },
         });

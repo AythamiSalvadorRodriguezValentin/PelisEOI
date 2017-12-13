@@ -15,22 +15,44 @@
         vm.genreList = [];
         vm.load = false;
         vm.navList = [];
-        vm.view = 'Descubrir';
+        vm.view = '';
         vm.viewFilm = false;
         ///////////////////////////////////////////////////////////
         /////////////////////// FUCTION VM ////////////////////////
         vm.showFilm = showFilm;
         vm.getMovies = getMovies;
+        vm.changeView = changeView;
         vm.selectGenre = selectGenre;
         vm.checkGenreButton = checkGenreButton;
         /////////////////////////// INIT //////////////////////////////
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
+            changeView('Descubrir');
             vm.genreList = OIDSP.getGenres();
-            vm.search = {title:'',genre:'',year:'',type:'',language:'',page:1};
+            vm.search = {title:'',genre:'',year:'',type:'movie',language:'es-ES',page:1};
             vm.navList = ['Descubrir','Próximamente','Mis favoritas','Para más tarde','Vistas'];
         };
+        /////////////////////// FUCTION $VIEW /////////////////////////
+        function changeView(nav){
+            vm.view = nav;
+            if (nav == 'Descubrir') {
+                TMDBSP
+                    .getMoviesDBPopular(vm.search)
+                    .then(loaded => {
+                        vm.films = loaded;
+                        vm.load = false;
+                    }).catch(e => console.error(e));
+            } else if(nav == 'Próximamente'){
+                vm.films = {};
+            } else if(nav == 'Mis favoritas'){
+                
+            } else if(nav == 'Para más tarde'){
+                
+            } else if(nav == 'Vistas'){
+                
+            }
+        }
         /////////////////////// FUCTION $FILM /////////////////////////
         function getMovies(more){
             if (vm.search.title.length >= 2) {
@@ -40,11 +62,11 @@
                 if(more === 'Y'){
                     vm.search.page++;
                     TMDBSP
-                    .getMoviesDBSearch(vm.search)
-                    .then(loaded => {
-                        vm.films = loaded;
-                        vm.load = false;
-                    }).catch(e => console.error(e));
+                        .getMoviesDBSearch(vm.search)
+                        .then(loaded => {
+                            vm.films = loaded;
+                            vm.load = false;
+                        }).catch(e => console.error(e));
                 } else {
                     vm.search.page = 1;
                     vm.films = [];

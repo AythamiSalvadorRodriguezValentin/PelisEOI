@@ -16,7 +16,7 @@
                 <ul class="component__nav__bar__row--middle">
                     <li 
                         ng-repeat="nav in $ctrl.navList track by $index"
-                        ng-click="$ctrl.changeView = nav">
+                        ng-click="$ctrl.changeView({nav:nav})">
                         {{::nav}}
                     </li>
                 </ul>
