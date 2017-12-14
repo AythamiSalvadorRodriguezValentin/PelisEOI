@@ -155,7 +155,6 @@
                     if (video[i].key) 
                         video[i].url = $sce.trustAs($sce.RESOURCE_URL, 'https://www.youtube.com/embed/' + video[i].key);
                 }
-                console.log(video);
                 return video;
             } else return {};
         };
