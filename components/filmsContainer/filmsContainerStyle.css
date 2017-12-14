@@ -51,6 +51,9 @@
     transition: .7s ease;
     background-color: black;
 }
+.component__card__films--container:hover{
+    cursor: pointer;
+}
 .component__card__films--container:hover .component__card__films__img{
     opacity: 0.3;
 }

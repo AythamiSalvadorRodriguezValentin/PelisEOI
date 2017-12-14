@@ -13,12 +13,15 @@
             controller: FilmsContainerController,
             controllerAs: '$ctrl',
             bindings: {
+                orderBySelect: '<',
                 totalFilms: '<',
                 films: '<',
                 filter: '<',
                 boolLoad: '<',
                 srcLoad: '@',
-                showFilm: '&'
+                selected:'=',
+                showFilm: '&',
+                changeSelect: '&'
             },
         });
     ///////////////////////////////////////////////////////////

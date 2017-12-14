@@ -7,9 +7,9 @@
             class="component__films__find">{{$ctrl.totalFilms}}
             <span class="component__films__find__text"> películas encontradas </span>
         </div>
-        <!-- <select name="oderPelis" ng-model="search">
-            <option ng-repeat=""></option>
-        </select> -->
+        <select name="oderPelis" ng-model="$ctrl.selected" ng-change="$ctrl.changeSelect()">
+            <option ng-repeat="orderBy in $ctrl.orderBySelect track by $index">{{orderBy}}</option>
+        </select>
     </div>
     <div class="component__card__films--general">
         <div 

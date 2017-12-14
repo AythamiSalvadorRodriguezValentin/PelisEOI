@@ -50,7 +50,7 @@
                 ng-if="$ctrl.film.video.length > 0" 
                 class="component__film__description--video__trailer">
                 <!-- VIDEO TRAILER -->
-                <div class="component__film__description__video__trailer--title">Trailer</div>
+                <div class="component__film__description__video__trailer--title">{{$ctrl.film.video[0].name}}</div>
                 <iframe 
                     class="component__film__description__video__trailer"
                     ng-src="{{$ctrl.film.video[0].url}}"
