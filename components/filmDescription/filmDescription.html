@@ -72,6 +72,7 @@
                 ng-repeat="similar in $ctrl.film.similar.data">
                 <img
                     class="component__film__selected__films__similar__container__films__img"
+                    
                     ng-src="{{similar.poster}}" 
                     onerror="this.src='/img/no-image-peli.gif'" 
                     alt="photo similar film">

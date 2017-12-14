@@ -36,7 +36,6 @@
             let title = ('t=' + object.title).split(' ').join('+');
             let year = '&y=' + object.year;
             let plot = '&plot=full';
-            console.log(vm.url + title + vm.apiKey + year + plot);
             return $http
                     .get(vm.url + title + vm.apiKey + year + plot)
                     .then(loaded => {

@@ -54,7 +54,7 @@
                     </div>
                 </aside>
                 <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                    <button ng-click="$films.getFilms('Y')">more</button>
+                    <button ng-click="$films.getMovies('Y')">more</button>
                     <films-container
                         films="$films.films.data" total-films="$films.films.total"
                         order-by-select="$films.orderBy" change-select="$films.changeFilter()"
@@ -71,4 +71,11 @@
     <div class="show__film__container--container">
         <film-description film="$films.film"></film-description>
     </div>
+</div>
+<!-- //////////////////////////// SHOW WARNING ///////////////////////////// -->
+<div ng-show="$films.warning == true" class="warning__box">
+    <p class="warning__box--title">
+        Ha ocurrido un error durante la operación realizada
+    </p>
+    <button ng-click="$films.warning = false">Vale</button>
 </div>

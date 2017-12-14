@@ -97,3 +97,31 @@
     border: 2px solid #2883d8;
     color: #2883d8;
 }
+/*_____Box__Warning_____*/
+.warning__box{
+    z-index: 150;
+    width: 400px;
+    height: 200px;
+    position: fixed;
+    top: 100px;
+    right: 100px;
+    background-color: rgb(207, 26, 26);
+    border-radius: 5px 5px 5px 5px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+}
+.warning__box button{
+    width: 50px;
+    height: 30px;
+    border-radius: 2px 2px 2px 2px;
+    background-color: white;
+}
+.warning__box--title{
+    width: 100%;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    color: white;
+}

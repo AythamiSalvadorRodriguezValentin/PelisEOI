@@ -20,6 +20,7 @@
         vm.timeout = {};
         vm.load = false;
         vm.viewFilm = false;
+        vm.warning = false;
         ///////////////////////////////////////////////////////////
         /////////////////////// FUCTION VM ////////////////////////
         vm.showFilm = showFilm;
@@ -41,7 +42,7 @@
             InterSF
                 .getMoviesData(vm.search,'genres')
                 .then(loaded => vm.genreList = loaded)
-                .catch(e => {console.error(e)});
+                .catch(e => errorDisplay(e));
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav){
@@ -73,7 +74,7 @@
                     .then(loaded => {
                         vm.films = loaded;
                         vm.load = false;
-                    }).catch(e => console.error(e));
+                    }).catch(e => errorDisplay(e));
             }
         };
         /////////////////////// FUCTION FILTER ////////////////////////
@@ -98,7 +99,7 @@
                 .then(loaded => {
                     vm.films = loaded;
                     vm.load = false;
-                }).catch(e => console.error(e));
+                }).catch(e => errorDisplay(e));
         }
         /////////////////////// FUCTION DISCOVER ////////////////////////
         function getMovieDiscover(){
@@ -110,7 +111,7 @@
                 .then(loaded => {
                     vm.films = loaded;
                     vm.load = false;
-                }).catch(e => console.error(e));
+                }).catch(e => errorDisplay(e));
         }
         /////////////////////// FUCTION GENRE /////////////////////////
         function selectGenre(genre){
@@ -138,9 +139,12 @@
                 .getMovieDataFull(film)
                 .then(loaded => {
                     vm.film = loaded;
-                    console.log(vm.film);
                     vm.viewFilm = true;
-                }).catch(e => console.error(e));
+                }).catch(e => errorDisplay(e));
         };
+        ///////////////////////// ERROR ///////////////////////////////
+        function errorDisplay(e){
+            vm.warning = (vm.warning) ? false : true;
+        }
     }
 })();
