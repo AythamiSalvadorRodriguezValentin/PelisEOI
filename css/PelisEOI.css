@@ -9,6 +9,7 @@
 }
 /*_________Barra lateral__________________*/
 .bar__left--general{
+    cursor: default;
     width: 270px;
     height: 1920px;
     border-right: 1px solid #e9ecee;
@@ -22,7 +23,11 @@
     justify-content: space-between;
     align-items: flex-end;
 }
+.bar__left__1__button__filter{
+    cursor: pointer;
+}
 .bar__left__1__button__filter__delete{
+    cursor: pointer;
     color: #E06646;
 }
 .bar__left__2{
@@ -33,13 +38,17 @@
     justify-content: space-between;
     align-items: center;
 }
-.bar__left__3{
+.slider-year{
     width: 240px;
     height: 50px;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+}
+.slider-year-input{
+    width: 240px;
+    height: 30px;
 }
 .bar__left__4{
     width: 240px;
@@ -61,7 +70,7 @@
 }
 .bar__left__5__generos__button{
     width: 115px;
-    height: 33px;
+    min-height: 33px;
     background-color: transparent;
     border-radius: 5px 5px 5px 5px;
     border: 2px solid #e9ecee;

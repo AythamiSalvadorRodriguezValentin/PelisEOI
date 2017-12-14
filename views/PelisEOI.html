@@ -17,14 +17,24 @@
                                 src="img/filter.png" 
                                 alt="filter">
                             <span class="bar__left__1__button__filter">Filter</span>
-                            <span class="bar__left__1__button__filter__delete">Borrar</span>
+                            <span class="bar__left__1__button__filter__delete" ng-click="$films.resetFilter()">Borrar</span>
                         </div>
                         <div class="bar__left__2">
                             <span class="bar__left__2__years">Año</span>
-                            <span class="bar__left__2__years--text"></span>
+                            <span class="bar__left__2__years--text">{{$films.slider.minYearValue}} - {{$films.slider.maxYearValue}}</span>
                         </div>
-                        <div class="bar__left__3">
+                        <div class="slider-year">
                             <!-- Sliders -->
+                            <div class="slider-year-input">
+                                <input 
+                                    type="range" name="sliderMinYear" id="sliderMinYearId" min="{{$films.slider.minYear}}" max="{{$films.slider.maxYear}}"
+                                    ng-model="$films.slider.minYearValue" ng-change="$films.changeFilter()">
+                            </div>
+                            <div class="slider-year-input">
+                                <input 
+                                    type="range" name="sliderMaxYear" id="sliderMinYearId" min="{{$films.slider.minYear}}" max="{{$films.slider.maxYear}}"
+                                    ng-model="$films.slider.maxYearValue" ng-change="$films.changeFilter()">
+                            </div>
                         </div>
                         <div class="bar__left__4">
                             <span class="bar__left__4__generos__text">Géneros</span>
@@ -36,8 +46,8 @@
                                 ng-cloak>
                                 <button 
                                     class="bar__left__5__generos__button" 
-                                    ng-class="{markedStyleButton:$films.checkGenreButton(genre)}" 
-                                    ng-click="$films.selectGenre(genre)">{{genre}}
+                                    ng-class="{markedStyleButton:$films.checkGenreButton(genre.id)}" 
+                                    ng-click="$films.selectGenre(genre.id)">{{genre.name}}
                                 </button>
                             </div>
                         </div>
@@ -47,7 +57,8 @@
                     <button ng-click="$films.getFilms('Y')">more</button>
                     <films-container
                         films="$films.films.data" total-films="$films.films.total"
-                        bool-load="$films.load" src-load="/img/load.gif"
+                        order-by-select="$films.orderBy" change-select="$films.changeFilter()"
+                        bool-load="$films.load" src-load="/img/load.gif" selected="$films.search.sort_by"
                         show-film="$films.showFilm(film)">
                     </films-container>
                 </section>
@@ -56,7 +67,7 @@
     </div>
 </div>
 <!-- ///////////////////////////// SHOW FILM /////////////////////////////// -->
-<div ng-show="$films.viewFilm == true" class="show__film__container--general">
+<div ng-show="$films.viewFilm == true" class="film__general show__film__container--general">
     <div class="show__film__container--container">
         <film-description film="$films.film"></film-description>
     </div>
