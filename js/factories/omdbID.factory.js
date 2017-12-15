@@ -41,9 +41,9 @@
                     .then(loaded => {
                         loaded.data.ratings = {};
                         if(loaded.data.Ratings){
-                            if(loaded.data.Ratings[0].Value) loaded.data.ratings.imdb = calRatings(loaded.data.Ratings[0].Value);
-                            if(loaded.data.Ratings[1].Value) loaded.data.ratings.rottem = calRatings(loaded.data.Ratings[1].Value);
-                            if(loaded.data.Ratings[2].Value) loaded.data.ratings.metacritic = calRatings(loaded.data.Ratings[2].Value);
+                            if(loaded.data.Ratings[0]) loaded.data.ratings.imdb = calRatings(loaded.data.Ratings[0].Value);
+                            if(loaded.data.Ratings[1]) loaded.data.ratings.rottem = calRatings(loaded.data.Ratings[1].Value);
+                            if(loaded.data.Ratings[2]) loaded.data.ratings.metacritic = calRatings(loaded.data.Ratings[2].Value);
                         }
                         return loaded.data;
                     }).catch(e => {return e});
@@ -62,9 +62,9 @@
                     .then(loaded => {
                         loaded.data.ratings = {};
                         if(loaded.data.Ratings){
-                            if(loaded.data.Ratings[0].Value) loaded.data.ratings.imdb = calRatings(loaded.data.Ratings[0].Value);
-                            if(loaded.data.Ratings[1].Value) loaded.data.ratings.rottem = calRatings(loaded.data.Ratings[1].Value);
-                            if(loaded.data.Ratings[2].Value) loaded.data.ratings.metacritic = calRatings(loaded.data.Ratings[2].Value);
+                            if(loaded.data.Ratings[0]) loaded.data.ratings.imdb = calRatings(loaded.data.Ratings[0].Value);
+                            if(loaded.data.Ratings[1]) loaded.data.ratings.rottem = calRatings(loaded.data.Ratings[1].Value);
+                            if(loaded.data.Ratings[2]) loaded.data.ratings.metacritic = calRatings(loaded.data.Ratings[2].Value);
                         }
                         return loaded.data;
                     })

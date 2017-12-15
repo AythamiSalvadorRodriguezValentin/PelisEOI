@@ -13,7 +13,8 @@
             controller: FilmDescriptionController,
             controllerAs: '$ctrl',
             bindings: {
-                film: '='
+                film: '=',
+                close:'&'
             },
         });
     ////////////////////////////////////////////////////////////

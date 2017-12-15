@@ -46,7 +46,7 @@
     left: 0px;
     right: 0;
     width: 260px;
-    height: 60px;
+    height: 100px;
     opacity: 0;
     transition: .7s ease;
     background-color: black;
@@ -61,17 +61,23 @@
     opacity: 1;
 }
 .component__card__films__text {
-    width: 260px;
+    width: 100%;
     color: white;
     font-size: 15px;
     position: absolute;
     top: 25%;
     left: 0%;
+    padding-left: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    font-size: 12px;
+}
+.component__card__films__text__element{
+    width: 100%;
     display: flex;
-    flex-flow: row;
-    justify-content: space-around;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
     align-items: center;
-    padding: 5px;
 }
 .component__loading__films{
     display: flex;
@@ -81,26 +87,4 @@
 .component__loading__films__img{
     width: 160px;
     height: 130px;
-}
-/*_____Image__Icon_____*/
-.component__card__films__img1{
-    width: 25px;
-    height: 25px;
-    background-image: url("/img/stadistics-icons.png");
-    background-repeat: no-repeat;
-    background-position-y: 0px;
-}
-.component__card__films__img2{
-    width: 25px;
-    height: 25px;
-    background-image: url("/img/stadistics-icons.png");
-    background-repeat: no-repeat;
-    background-position-y: -25px;
-}
-.component__card__films__img3{
-    width: 25px;
-    height: 25px;
-    background-image: url("/img/stadistics-icons.png");
-    background-repeat: no-repeat;
-    background-position-y: -50px;
 }

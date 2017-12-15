@@ -50,10 +50,12 @@
                 getMoviesDB(object,'id')
                 .then(loaded => {
                     vm.data = loaded;
+                    resolve(vm.data);
                 }).catch(e => reject(e));
                 getMoviesDB(object,'similar')
                 .then(loaded => {
                     vm.data.similar = loaded;
+                    resolve(vm.data);
                 }).catch(e => reject(e));
                 getMoviesDB(object,'video')
                 .then(loaded => {
@@ -106,7 +108,8 @@
             else if (type == 'discover'){   /* discover */
                 url = vm.movieDB.url + vm.movieDB.typeDB[type] + vm.movieDB.apiKey + '&language=' + object.language 
                     + '&include_adult=false' + '&include_video=false' + '&page=' + object.page + '&sort_by=' + object.sort_by
-                    + '&release_date.gte=' + object.release_date_gte + '&release_date_lte=' + object.release_date_lte;
+                    + '&release_date.gte=' + object.release_date_gte + '&release_date_lte=' + object.release_date_lte
+                    + '&with_genres=' + object.genre;
             }
             else if (type == 'search'){   /* search */
                 url = vm.movieDB.url + vm.movieDB.typeDB[type] + vm.movieDB.apiKey + '&query='  + object.title
@@ -133,48 +136,58 @@
         }
         function moviesDBResponse(response){
             let DB = {};
-            if (response.status == 200 && response.statusText == "OK") { 
-                if(response.config.url.indexOf(vm.movieDB.typeDB.video.end) != -1){
-                    /* videos */
-                    let video = [];
-                    for (let i = 0; i < response.data.results.length; i++){
-                        DB = {url:'',name:''};
-                        if (response.data.results[i].key)
-                            DB.url = $sce.trustAs($sce.RESOURCE_URL, 'https://www.youtube.com/embed/' + response.data.results[i].key);
-                        if (response.data.results[i].name)
-                            DB.name = response.data.results[i].name;
-                        video.push(DB);
-                    }
-                    return (response.data.results.length > 0) ? video : [];
-                } else if((response.config.url.indexOf(vm.movieDB.typeDB.discover) != -1)
-                        || (response.config.url.indexOf(vm.movieDB.typeDB.search) != -1)
-                        || (response.config.url.indexOf(vm.movieDB.typeDB.popular) != -1)
-                        || (response.config.url.indexOf(vm.movieDB.typeDB.similar.end) != -1)){
-                    /*  discover, search, popular, similar */
-                    DB.total = String(response.data.total_results);
-                    DB.pages = String(response.data.total_pages);
-                    DB.data = response.data.results;
-                    for (let i = 0; i < DB.data.length; i++)
-                        DB.data[i].poster = 'https://image.tmdb.org/t/p/w640' + DB.data[i].poster_path;
-                } else if((response.config.url.indexOf(vm.movieDB.typeDB.genres) != -1)){
-                    return response.data.genres;
-                } else { /* id */
-                    DB = response.data;
-                    DB.poster = 'https://image.tmdb.org/t/p/w640' + response.data.poster_path;
-                    DB.runtime = calcHrMnt(response.data.runtime);
-                    DB.date = calDate(response.data.release_date);
-                    DB.year = DB.date[0];
+            if(response.status != 200 && response.statusText != "OK") return {};
+            if(response.config.url.indexOf(vm.movieDB.typeDB.video.end) != -1){
+                /* videos */
+                let video = [];
+                for (let i = 0; i < response.data.results.length; i++){
+                    DB = {url:'',name:''};
+                    if (response.data.results[i].key)
+                        DB.url = $sce.trustAs($sce.RESOURCE_URL, 'https://www.youtube.com/embed/' + response.data.results[i].key);
+                    if (response.data.results[i].name)
+                        DB.name = response.data.results[i].name;
+                    video.push(DB);
                 }
-                return DB; 
-            } else return {};
+                return (response.data.results.length > 0) ? video : [];
+            } else if((response.config.url.indexOf(vm.movieDB.typeDB.discover) != -1)
+                    || (response.config.url.indexOf(vm.movieDB.typeDB.search) != -1)
+                    || (response.config.url.indexOf(vm.movieDB.typeDB.popular) != -1)
+                    || (response.config.url.indexOf(vm.movieDB.typeDB.similar.end) != -1)){
+                /*  discover, search, popular, similar */
+                DB.total = String(response.data.total_results);
+                DB.pages = String(response.data.total_pages);
+                DB.data = response.data.results;
+                for (let i = 0; i < DB.data.length; i++)
+                    DB.data[i].poster = 'https://image.tmdb.org/t/p/w640' + DB.data[i].poster_path;
+            } else if((response.config.url.indexOf(vm.movieDB.typeDB.genres) != -1)){
+                return response.data.genres;
+            } else { /* id */
+                DB = response.data;
+                DB.poster = 'https://image.tmdb.org/t/p/w640' + response.data.poster_path;
+                DB.runtime = calcHrMnt(response.data.runtime);
+                DB.date = calDate(response.data.release_date);
+                DB.year = DB.date[0];
+            }
+            return DB; 
         }
         //////////////////////// FUCTION ORDER /////////////////////
         function getOrderBy(){
-            return ['popularity.asc','popularity.desc','release_date.asc',
-                    'release_date.desc','revenue.asc','revenue.desc',
-                    'primary_release_date.asc','primary_release_date.desc',
-                    'original_title.asc','original_title.desc','vote_average.asc',
-                    'vote_average.desc','vote_count.asc','vote_count.desc'];
+            return [
+                {trans:'popularity.asc', name:'Menos Populares'},
+                {trans:'popularity.desc', name:'Más Populares'},
+                {trans:'release_date.asc', name:'Primeras películas'},
+                {trans:'release_date.desc', name:'Últimas películas'},
+                {trans:'revenue.asc', name:'I a'},
+                {trans:'revenue.desc', name:'I d'},
+                {trans:'primary_release_date.asc', name:'Primeras películas realizadas'},
+                {trans:'primary_release_date.desc', name:'Últimas películas realizadas'},
+                {trans:'original_title.asc', name:'Por título ascendente'},
+                {trans:'original_title.desc', name:'Por título descendente'},
+                {trans:'vote_average.asc', name:'Menor votación media'},
+                {trans:'vote_average.desc', name:'Mayor votación media'},
+                {trans:'vote_count.asc', name:'Menos votos'},
+                {trans:'vote_count.desc', name:'Más votos'}
+            ];
         };
         ///////////////////// OTHER FUCTION  //////////////////////
         function calcHrMnt(obj){

@@ -6,7 +6,7 @@
         bool-search="true" search="$films.search.title" placeholder="Encuentra tu pelicula favorita">
     </nave-bar-search-row>
     <!-- ///////////////////////////// DESCUBRIR /////////////////////////////// -->
-    <div ng-show="$films.view == 'Descubrir'" class="container__descubrir">
+    <div class="container__descubrir">
         <div class="row">
             <div class="wrapper">
                 <aside class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
@@ -53,12 +53,14 @@
                         </div>
                     </div>
                 </aside>
-                <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                <section 
+                    class="col-xs-9 col-sm-9 col-md-9 col-lg-9"
+                    ng-show="$films.view == 'Descubrir'">
                     <button ng-click="$films.getMovies('Y')">more</button>
                     <films-container
                         films="$films.films.data" total-films="$films.films.total"
                         order-by-select="$films.orderBy" change-select="$films.changeFilter()"
-                        bool-load="$films.load" src-load="/img/load.gif" selected="$films.search.sort_by"
+                        bool-load="$films.load" src-load="/img/load.gif" selected="$films.search.order"
                         show-film="$films.showFilm(film)">
                     </films-container>
                 </section>
@@ -69,7 +71,7 @@
 <!-- ///////////////////////////// SHOW FILM /////////////////////////////// -->
 <div ng-show="$films.viewFilm == true" class="film__general show__film__container--general">
     <div class="show__film__container--container">
-        <film-description film="$films.film"></film-description>
+        <film-description film="$films.film" close="$films.showFilm()"></film-description>
     </div>
 </div>
 <!-- //////////////////////////// SHOW WARNING ///////////////////////////// -->

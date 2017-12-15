@@ -5,8 +5,8 @@
         .module('PelisEOI')
         .factory('InterfazServerFactory', InterfazServerFactory);
 
-    InterfazServerFactory.$inject = ['OmdbIDServerProvider','TheMovieDBServerProvider'];
-    function InterfazServerFactory(OIDSP,TMDBSP){
+    InterfazServerFactory.$inject = ['TheMovieDBServerProvider'];
+    function InterfazServerFactory(TMDBSP){
         let vm = this;
         vm.data = {};
         ////////////////////////////////////////////////////////////
