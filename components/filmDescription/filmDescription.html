@@ -1,80 +1,52 @@
 <link rel="stylesheet" href="/components/filmDescription/filmDescriptionStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
-<div class="component__film__selected--general">
-    <div class="component__film--topbar">
-        <div class="component__film--title">
+<div class="selected-general">
+    <div class="component-film-topbar">
+        <div class="component-film-title">
             <span>{{$ctrl.film.title}}</span>
-            <span class="component__film__title--year">{{$ctrl.film.date[0]}}</span>
+            <span class="title-year">{{$ctrl.film.date[0]}}</span>
         </div>
-        <a class="component__film--button__return__page" ng-click="$ctrl.close()">
-            <div class="component__button__return__page--icon">X</div>
+        <a class="component-film-button-return-page" ng-click="$ctrl.close()">
+            <div class="component-button-return-page-icon">X</div>
         </a>
     </div>
-    <div class="component__film__selected--container">
-        <div class="component__film--img">
-            <img 
-                ng-src="{{$ctrl.film.poster}}" 
-                onerror="this.src='/img/no-image-peli.gif'" 
-                alt="photo film">
+    <div class="selected-container">
+        <div class="component-film-img">
+            <img ng-src="{{$ctrl.film.poster}}" onerror="this.src='/img/no-image-peli.gif'" alt="photo film">
         </div>
-        <div class="component__film--description">
-            <div class="component__film__description--title">
-                <span class="component__film__description__title--">Sipnosis</span>
-                <span class="component__film__description__title--runtime">{{$ctrl.film.runtime}}</span>
+        <div class="component-film-description">
+            <div class="description-title">
+                <span class="description-title-">Sipnosis</span>
+                <span class="description-title-runtime">{{$ctrl.film.runtime}}</span>
             </div>
-            <div class="component__film__description--calificacion">
-                <div class="component__film__description__calificacion">
-                    <div 
-                        class="component__film__description__calificacion--genre" 
-                        ng-repeat="genre in $ctrl.film.genres track by $index">{{genre.name}}
+            <div class="description-calificacion">
+                <div class="description-calificacion">
+                    <div class="description-calificacion-genre" ng-repeat="genre in $ctrl.film.genres track by $index">{{genre.name}}
                     </div>
                 </div>
-                <div 
-                    ng-if="$ctrl.film.ombdID.ratings" 
-                    class="component__film__description__calificacion--ratings">
-                        <div 
-                            ng-if="$ctrl.film.ombdID.ratings.imdb"
-                            class="component__films__ratings__img">{{$ctrl.film.ombdID.ratings.imdb}}</div>
-                        <div 
-                            ng-if="$ctrl.film.ombdID.ratings.rottem"
-                            class="component__films__ratings__img component__rottem">{{$ctrl.film.ombdID.ratings.rottem}}</div>
-                        <div 
-                            ng-if="$ctrl.film.ombdID.ratings.metacritic" 
-                            class="component__films__ratings__img component__metacritic">{{$ctrl.film.ombdID.ratings.metacritic}}</div>
+                <div ng-if="$ctrl.film.ombdID.ratings" class="description-calificacion-ratings">
+                    <div ng-if="$ctrl.film.ombdID.ratings.imdb" class="component-films-ratings-img">{{$ctrl.film.ombdID.ratings.imdb}}</div>
+                    <div ng-if="$ctrl.film.ombdID.ratings.rottem" class="component-films-ratings-img component-rottem">{{$ctrl.film.ombdID.ratings.rottem}}</div>
+                    <div ng-if="$ctrl.film.ombdID.ratings.metacritic" class="component-films-ratings-img component-metacritic">{{$ctrl.film.ombdID.ratings.metacritic}}</div>
                 </div>
             </div>
-            <div class="component__film__description--description">
+            <div class="description-description">
                 {{$ctrl.film.overview}}
             </div>
-            <div 
-                ng-if="$ctrl.film.video.length > 0" 
-                class="component__film__description--video__trailer">
+            <div ng-if="$ctrl.film.video.length > 0" class="description-video-trailer">
                 <!-- VIDEO TRAILER -->
-                <div class="component__film__description__video__trailer--title">{{$ctrl.film.video[0].name}}</div>
-                <iframe 
-                    class="component__film__description__video__trailer"
-                    ng-src="{{$ctrl.film.video[0].url}}"
-                    frameborder="0" 
-                    gesture="media" 
-                    allow="encrypted-media" 
+                <div class="description-video-trailer-title">{{$ctrl.film.video[0].name}}</div>
+                <iframe class="video-trailer-container" ng-src="{{$ctrl.film.video[0].url}}" frameborder="0" gesture="media" allow="encrypted-media"
                     allowfullscreen>
                 </iframe>
             </div>
         </div>
     </div>
-    <div 
-        ng-if="$ctrl.film.similar.data.length > 0"
-        class="component__film__selected--films__similar">
-        <div class="component__film__selected__films__similar--title">Películas similares</div>
-        <div class="component__film__selected__films__similar--container">
-            <div 
-                class="component__film__selected__films__similar__container--films"
-                ng-repeat="similar in $ctrl.film.similar.data">
-                <img
-                    class="component__film__selected__films__similar__container__films__img"
-                    
-                    ng-src="{{similar.poster}}" 
-                    onerror="this.src='/img/no-image-peli.gif'" 
+    <div ng-if="$ctrl.film.similar.data.length > 0" class="selected-films-similar">
+        <div class="selected-films-similar-title">Películas similares</div>
+        <div class="selected-films-similar-container">
+            <div class="selected-films-similar-container-films" ng-repeat="similar in $ctrl.film.similar.data">
+                <img class="selected-films-similar-container-films-img" ng-src="{{similar.poster}}" onerror="this.src='/img/no-image-peli.gif'"
                     alt="photo similar film">
             </div>
         </div>

@@ -1,5 +1,5 @@
-/*_________Barra Superior________________*/
-.component__bar__top__films{
+/*---Barra Superior----*/
+.component-bar-top-films{
     width: 100%;
     height: 50px;
     display: flex;
@@ -8,83 +8,115 @@
     align-items: center;
     margin-bottom: 20px;
 }
-.component__films__find{
+.component-films-find{
     font-family: NunitoSans SemiBold;
     font-size: 15px;
     font-weight: bold;
 }
-.component__films__find__text{
+.component-films-find-text{
     font-family: NunitoSans Regular;
     font-size: 15px;
     font-weight: 200;
 }
-/*___________Container__Films____________*/
-.component__card__films--general{
+/*----Container-Films---*/
+.component-card-films-general{
     background-color: white;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: space-between;
 }
-.component__card__films--container{
+.component-card-films-container{
     width: 260px;
     height: 400px;
     background-color: transparent;
     margin-bottom: 30px;
     position: relative;
 }
-.component__card__films__img{
+.component-card-films-img{
     width: 260px;
     height: 400px;
     opacity: 1;
     transition: .5s ease;
 }
-.component__card__films__overlay{
+.component-card-films-overlay{
     position: absolute;
     top: 200;
     bottom: 0;
     left: 0px;
     right: 0;
     width: 260px;
-    height: 100px;
+    height: 60px;
     opacity: 0;
     transition: .7s ease;
     background-color: black;
 }
-.component__card__films--container:hover{
+.component-card-films-container:hover{
     cursor: pointer;
 }
-.component__card__films--container:hover .component__card__films__img{
+.component-card-films-container:hover .component-card-films-img{
     opacity: 0.3;
 }
-.component__card__films--container:hover .component__card__films__overlay{
+.component-card-films-container:hover .component-card-films-overlay{
     opacity: 1;
 }
-.component__card__films__text {
+.component-card-films-text {
     width: 100%;
     color: white;
     font-size: 15px;
     position: absolute;
-    top: 25%;
+    top: 0%;
     left: 0%;
+    padding: 5px;
     padding-left: 10px;
+    padding-right: 10px;
     font-family: Arial, Helvetica, sans-serif;
-    font-style: italic;
     font-size: 12px;
-}
-.component__card__films__text__element{
-    width: 100%;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column;
     justify-content: flex-start;
+}
+.component-align{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+.component-element{
+    display: flex;
+    flex-flow: row;
     align-items: center;
 }
-.component__loading__films{
+.element{
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+.element1{
+    background-image: url('/img/stadistic-icon-0.png');
+    background-position-x: -25px;
+    background-position-y: 0px;
+}
+.element2{
+    background-image: url('/img/stadistic-icon-0.png');
+    background-position-x: -25px;
+    background-position-y: -25px;
+}
+.element3{
+    background-image: url('/img/stadistic-icon-0.png');
+    background-position-x: -50px;
+    background-position-y: -25px;
+}
+.element4{
+    background-image: url('/img/stadistic-icon-0.png');
+    background-position-x: -50px;
+    background-position-y: -25px;
+}
+.component-loading-films{
     display: flex;
     flex-flow: row;
     justify-content: center;
 }
-.component__loading__films__img{
+.component-loading-films-img{
     width: 160px;
     height: 130px;
 }

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -6,32 +6,32 @@
         .factory('InterfazServerFactory', InterfazServerFactory);
 
     InterfazServerFactory.$inject = ['TheMovieDBServerProvider'];
-    function InterfazServerFactory(TMDBSP){
+    function InterfazServerFactory(TMDBSP) {
         let vm = this;
         vm.data = {};
         ////////////////////////////////////////////////////////////
         var service = {
-            getMoviesData:getMoviesData,
-            getMovieDataFull:getMovieDataFull,
-            getOrderDataBy:getOrderDataBy
+            getMoviesData: getMoviesData,
+            getMovieDataFull: getMovieDataFull,
+            getOrderDataBy: getOrderDataBy
         };
         return service;
         ////////////////////////////////////////////////////////////
-        function getMoviesData(object,type){
+        function getMoviesData(object, type) {
             return TMDBSP
-                    .getMoviesDB(object,type)
-                    .then(loaded => {return loaded})
-                    .catch(e => {return e});
+                .getMoviesDB(object, type)
+                .then(loaded => { return loaded })
+                .catch(e => { return e });
         };
         ////////////////////////////////////////////////////////////
-        function getMovieDataFull(object){
+        function getMovieDataFull(object) {
             return TMDBSP
-                    .getMovieFull(object)
-                    .then(loaded => {return loaded})
-                    .catch(e => {return e});
+                .getMovieFull(object)
+                .then(loaded => { return loaded })
+                .catch(e => { return e });
         };
         ////////////////////////////////////////////////////////////
-        function getOrderDataBy(){
+        function getOrderDataBy() {
             return TMDBSP.getOrderBy();
         };
     }

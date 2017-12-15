@@ -1,40 +1,34 @@
 <link rel="stylesheet" href="/components/filmsContainer/filmsContainerStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
-<div class="component__films__ombD--general">
-    <div class="component__bar__top__films">
-        <div 
-            ng-if="$ctrl.totalFilms.length > 0" 
-            class="component__films__find">{{$ctrl.totalFilms}}
-            <span class="component__films__find__text"> películas encontradas </span>
+<div class="component-films-ombD-general">
+    <div class="component-bar-top-films">
+        <div ng-if="$ctrl.totalFilms.length > 0" class="component-films-find">{{$ctrl.totalFilms}}
+            <span class="component-films-find-text"> películas encontradas </span>
         </div>
         <select name="oderPelis" ng-model="$ctrl.selected" ng-change="$ctrl.changeSelect()">
             <option ng-repeat="orderBy in $ctrl.orderBySelect track by $index">{{orderBy.name}}</option>
         </select>
     </div>
-    <div class="component__card__films--general">
-        <div 
-            class="component__card__films--container" 
-            ng-repeat="film in $ctrl.films | filter:$ctrl.filter track by film.id">
-            <img 
-                class="component__card__films__img" 
-                ng-src="{{film.poster}}" 
-                onerror="this.src='/img/no-image-peli.gif'" 
-                ng-click="$ctrl.showFilm({film:film})">
-            <div class="component__card__films__overlay">
-                <div class="component__card__films__text">
-                        <div class="component__card__films__text__element">Título: {{film.original_title}}</div>
-                        <div class="component__card__films__text__element">Fecha: {{film.release_date}} </div>
-                        <div class="component__card__films__text__element">Votación: {{film.vote_average}}</div>
-                        <div class="component__card__films__text__element">Votos: {{film.vote_count}}</div>
+    <div class="component-card-films-general">
+        <div class="component-card-films-container" ng-repeat="film in $ctrl.films | filter:$ctrl.filter track by film.id">
+            <div class="omponent-card-films-container">
+                <img class="component-card-films-img" ng-click="$ctrl.showFilm({film:film})" ng-src="{{film.poster}}" onerror="this.src='/img/no-image-peli.gif'">
+                <div class="component-card-films-overlay">
+                    <div class="component-card-films-text">
+                        <div class="component-align">
+                            <div class="component-element">
+                                <div class="element element1"></div> {{film.vote_average}} </div>
+                            <div class="component-element">
+                                <div class="element element2"></div> Añadir a favoritas </div>
+                        </div>
+                        <div class="component-element">
+                            <div class="element element3"></div> Ver más tarde </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div 
-        ng-if="$ctrl.boolLoad" 
-        class="component__loading__films">
-        <img 
-            class="component__loading__films__img" 
-            ng-src="{{$ctrl.srcLoad}}">
+    <div ng-if="$ctrl.boolLoad" class="component-loading-films">
+        <img class="component-loading-films-img" ng-src="{{$ctrl.srcLoad}}">
     </div>
 </div>

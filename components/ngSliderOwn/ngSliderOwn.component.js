@@ -14,6 +14,7 @@
             controllerAs: '$ctrl',
             bindings: {
                 slider: '=',
+                changeSlider:'&'
             },
         });
     ////////////////////////////////////////////////////////////

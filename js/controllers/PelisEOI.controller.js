@@ -34,24 +34,24 @@
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
-            vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
+            vm.navList = ['Descubrir', 'Próximamente', 'Mejor Valoradas', 'Mis favoritas', 'Para más tarde', 'Vistas'];
             vm.search = { title: '', genre: '', year: '', type: '', language: '', sort_by: '', page: 1 };
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
             vm.view = vm.navList[0];
-            resetFilter();
+            resetFilter('popular');
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
             vm.view = nav;
             if (nav == vm.navList[0]) {
-                resetFilter();
+                resetFilter('popular');
             } else if (nav == vm.navList[1]) {
-                vm.films = {};
+                resetFilter('upcoming');
             } else if (nav == vm.navList[2]) {
-
+                resetFilter('topRated');
             } else if (nav == vm.navList[3]) {
-
+                
             } else if (nav == vm.navList[4]) {
 
             }
@@ -84,7 +84,7 @@
             vm.search.release_date_lte = vm.slider.maxYearValue + '-12-31';
             fuctionMovie(vm.search, 'discover');
         }
-        function resetFilter() {
+        function resetFilter(type) {
             /* Search */
             vm.search.page = 1;
             vm.search.title = '';
@@ -97,7 +97,7 @@
             vm.slider.maxYear = 2050;
             vm.slider.maxYearValue = 2020;
             /* Popular */
-            fuctionMovie(vm.search, 'popular');
+            fuctionMovie(vm.search, type);
         }
         /////////////////////// FUCTION GENRE /////////////////////////
         function selectGenre(genre) {

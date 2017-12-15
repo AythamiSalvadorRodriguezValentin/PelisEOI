@@ -1,11 +1,11 @@
-angular.module('PelisEOI',['ngRoute','uiSlider']).config(config);
+angular.module('PelisEOI', ['ngRoute', 'uiSlider']).config(config);
 config.$inject = ['$routeProvider'];
-function config($routeProvider){
+function config($routeProvider) {
     $routeProvider
-        .when('/',{
-            controller:'PelisEOIController',
-            templateUrl:'/views/PelisEOI.html',
-            controllerAs:'$films'
+        .when('/', {
+            controller: 'PelisEOIController',
+            templateUrl: '/views/PelisEOI.html',
+            controllerAs: '$films'
         })
-        .otherwise({redirectTo:'/'});
+        .otherwise({ redirectTo: '/' });
 };
