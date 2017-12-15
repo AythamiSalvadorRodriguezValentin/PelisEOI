@@ -73,7 +73,7 @@
         //////////////////////// FUCTION FILMS /////////////////////
         /**
          * 
-         * @param {*} object 'Object': {id, externalID, title, language, page, sort_by, release_date_gte, release_date_lte}
+         * @param {*} object 'Object': {id, externalID, title, genre, language, page, sort_by, release_date_gte, release_date_lte}
          * @param {*} type 'String': type
          * type = 'id','discover','search','popular','similar','video';
          *      'id'        --> Búsqueda por ID -> necesita-> id, language, externalID.
@@ -90,6 +90,7 @@
          * id = '947464'.
          * externalID = 'imdb_id' o 'freebased_mid' o 'freebase_id' o 'tvdb_id' o 'tvrage_id'.
          * title = 'Interestelar'.
+         * genre = [21,45,67,...].
          * language = 'en-US' o 'es-ES' o ...
          * page = '1' o '2' o '3' ...
          * sort_by = 'popularity.asc' o 'popularity.desc' o 'release_date.asc' o 'release_date.desc' o 'revenue.asc' o 
@@ -111,7 +112,7 @@
             } else if (type == 'discover') {   /* discover */
                 url = vm.movieDB.url + vm.movieDB.typeDB[type] + vm.movieDB.apiKey + '&language=' + object.language
                     + '&page=' + object.page + '&sort_by=' + object.sort_by + '&release_date.gte=' + object.release_date_gte
-                    + '&release_date_lte=' + object.release_date_lte + '&with_genres=' + object.genre;
+                    + '&release_date_lte=' + object.release_date_lte + '&with_genres=' + object.genre.join('%2C');
             } else if (type == 'search') {   /* search */
                 url = vm.movieDB.url + vm.movieDB.typeDB[type] + vm.movieDB.apiKey + '&query=' + object.title
                     + '&language=' + object.language + '&page=' + object.page;
@@ -121,7 +122,7 @@
             } else if (type == 'video') {   /* video */
                 url = vm.movieDB.url + vm.movieDB.typeDB[type].type + object.id + vm.movieDB.typeDB[type].end
                     + vm.movieDB.apiKey + '&language=' + object.language;
-            } else if (type == 'genres') {
+            } else if (type == 'genres') {  /* genres */
                 url = vm.movieDB.url + vm.movieDB.typeDB[type] + vm.movieDB.apiKey + '&language=' + object.language;
             } else return {};
             return $http
@@ -131,17 +132,14 @@
         }
         function moviesDBResponse(response) {
             let DB = {};
-            console.log(response);
             if (response.status != 200 && response.statusText != "OK") return {};
             if (response.config.url.indexOf(vm.movieDB.typeDB.video.end) != -1) {
                 /* videos */
                 let video = [];
                 for (let i = 0; i < response.data.results.length; i++) {
                     DB = { url: '', name: '' };
-                    if (response.data.results[i].key)
-                        DB.url = $sce.trustAs($sce.RESOURCE_URL, 'https://www.youtube.com/embed/' + response.data.results[i].key);
-                    if (response.data.results[i].name)
-                        DB.name = response.data.results[i].name;
+                    if (response.data.results[i].key) DB.url = $sce.trustAs($sce.RESOURCE_URL, 'https://www.youtube.com/embed/' + response.data.results[i].key);
+                    if (response.data.results[i].name) DB.name = response.data.results[i].name;
                     video.push(DB);
                 }
                 return (response.data.results.length > 0) ? video : [];
@@ -155,11 +153,11 @@
                 DB.total = String(response.data.total_results);
                 DB.pages = String(response.data.total_pages);
                 DB.data = response.data.results;
-                for (let i = 0; i < DB.data.length; i++)
-                    DB.data[i].poster = 'https://image.tmdb.org/t/p/w640' + DB.data[i].poster_path;
+                for (let i = 0; i < DB.data.length; i++) DB.data[i].poster = 'https://image.tmdb.org/t/p/w640' + DB.data[i].poster_path;
             } else if ((response.config.url.indexOf(vm.movieDB.typeDB.genres) != -1)) {
-                return response.data.genres;
-            } else { /* id */
+                /* genres */ return response.data.genres;
+            } else {
+                /* id */
                 DB = response.data;
                 DB.poster = 'https://image.tmdb.org/t/p/w640' + response.data.poster_path;
                 DB.runtime = calcHrMnt(response.data.runtime);
@@ -169,6 +167,9 @@
             return DB;
         }
         //////////////////////// FUCTION ORDER /////////////////////
+        /**
+         * Devuelve un array con los objetos para ordenar las movies.
+         */
         function getOrderBy() {
             return [
                 { trans: 'popularity.asc', name: 'Menos Populares' },

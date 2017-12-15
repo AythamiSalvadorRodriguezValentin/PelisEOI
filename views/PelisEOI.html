@@ -1,29 +1,53 @@
-<!-- ///////////////////////////// NAVEGADOR /////////////////////////////// -->
-<div class="row" ng-cloak>
-    <div class="nav-bar-row--nav">
-        <div class="wrapper--row">
+<!-- ///////////////////////////// NAVEGATOR /////////////////////////////// -->
+<nav class="row" ng-cloak>
+    <div class="nav-bar-row-top">
+        <div class="wrapper-nav">
             <div class="col-lg-2">
-                <div class="nav-bar-row-img--start">
+                <div class="nav-bar-top">
                     <img src="/img/logo.png" alt="logotipo">
                 </div>
             </div>
-            <div class="col-lg-7">
-                <ul class="nav-bar-row--middle">
-                    <li class="nav-bar-row--middle-title" ng-repeat="nav in $films.navList track by $index" ng-click="$films.changeView(nav)"
-                        ng-class="{markedSelectedNav:($films.view == nav)}"> {{::nav}}
+            <div class="col-lg-6">
+                <ul class="nav-bar-top">
+                    <li ng-repeat="nav in $films.navList track by $index" ng-click="$films.changeView(nav)" ng-class="{navBarTopSelected:$films.checkView(nav)}">
+                        {{::nav}}
                     </li>
                 </ul>
             </div>
-            <div class="col-lg-3">
-                <div class="nav-bar-row-search--end">
-                    <input class="nav-bar-search" type="text" placeholder="Encuentra tu pelicula favorita" ng-model="$films.search.title" ng-keyup="$films.getMovies('N')">
+            <div class="col-lg-4">
+                <div class="nav-bar-top">
+                    <input type="text" placeholder="Encuentra tu pelicula favorita" ng-model="$films.search.title" ng-keyup="$films.getMovies('N')">
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="row" ng-cloak>
+    <div class="nav-bar-row-bottom">
+        <div class="wrapper">
+            <div class="col-lg-4">
+                <div class="nav-bar-bottom">
+                    <input type="text" placeholder="Introduce tu correo" ng-model="$films.user.email">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="nav-bar-bottom">
+                    <input type="password" placeholder="Introduce tu contraseña" ng-model="$films.user.password">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="nav-bar-bottom">
+                    <button ng-click="$films.signUser('create')">Sign Create</button>
+                    <button ng-click="$films.signUser('up')">Sign Up</button>
+                    <button ng-click="$films.signUser('out')">Sign Out</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- ///////////////////////////// DESCUBRIR /////////////////////////////// -->
-<div class="row">
+<!-- /////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////// DISCOVER /////////////////////////////// -->
+<div class="row" ng-cloak>
     <div class="wrapper">
         <aside class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
             <div class="bar-filter--general">
@@ -37,7 +61,7 @@
                     <span class="year-span-text">{{$films.slider.minYearValue}} - {{$films.slider.maxYearValue}}</span>
                 </div>
                 <div class="slider-year">
-                    <!-- Sliders -->
+                    <!-- ///////////////////////////// SLIDER /////////////////////////////// -->
                     <div class="slider-year-input">
                         <input type="range" name="sliderMinYear" id="sliderMinYearId" min="{{$films.slider.minYear}}" max="{{$films.slider.maxYear}}"
                             ng-model="$films.slider.minYearValue" ng-change="$films.changeFilter()">
@@ -46,12 +70,13 @@
                         <input type="range" name="sliderMaxYear" id="sliderMinYearId" min="{{$films.slider.minYear}}" max="{{$films.slider.maxYear}}"
                             ng-model="$films.slider.maxYearValue" ng-change="$films.changeFilter()">
                     </div>
+                    <!-- //////////////////////////////////////////////////////////////////// -->
                 </div>
                 <div class="genres-text-container">
                     <span class="genres-text-title">Géneros</span>
                 </div>
                 <div class="genres-button-general">
-                    <div class="genres-button-container" ng-repeat="genre in $films.genreList" ng-cloak>
+                    <div class="genres-button-container" ng-repeat="genre in $films.genreList">
                         <button class="genres-button" ng-class="{markedStyleButton:$films.checkGenreButton(genre.id)}" ng-click="$films.selectGenre(genre.id)">
                             {{genre.name}}
                         </button>
@@ -62,21 +87,27 @@
         <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <div class="films-all-container">
                 <button ng-click="$films.getMovies('Y')">more</button>
+                <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
                 <films-container films="$films.films.data" total-films="$films.films.total" order-by-select="$films.orderBy" change-select="$films.changeFilter()"
-                    bool-load="$films.load" src-load="/img/load.gif" selected="$films.search.order" show-film="$films.showFilm(film)">
+                    bool-load="$films.load" src-load="/img/load.gif" selected="$films.search.order" show-film="$films.showFilm(film)"
+                    fuction-favourite="$films.fuctionFavourite(object,type)">
                 </films-container>
+                <!-- //////////////////////////////////////////////////////////////////////////////// -->
             </div>
         </section>
     </div>
 </div>
-<!-- ///////////////////////////// SHOW FILM /////////////////////////////// -->
-<div ng-show="$films.viewFilm == true" class="film-general show-film-container--general">
-    <div class="show-film-container--container">
+<!-- /////////////////////////////////////////////////////////////////////// -->
+<!-- //////////////////////// SHOW FILM SELECTED /////////////////////////// -->
+<div ng-show="$films.viewFilm == true" class="film-selected-general" ng-cloak>
+    <div class="film-selected-container">
         <film-description film="$films.film" close="$films.showFilm()"></film-description>
     </div>
 </div>
+<!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////////// SHOW WARNING ///////////////////////////// -->
-<div ng-show="$films.warning == true" class="warning-box">
+<div ng-show="$films.warning == true" class="warning-box" ng-cloak>
     <p class="warning-box--title"> Ha ocurrido un error durante la operación realizada </p>
     <button ng-click="$films.warning = false">Vale</button>
 </div>
+<!-- /////////////////////////////////////////////////////////////////////// -->

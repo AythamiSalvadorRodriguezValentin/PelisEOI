@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     ////////////////////////////////////////////////////////////
     // Usage:
@@ -14,7 +14,7 @@
             controllerAs: '$ctrl',
             bindings: {
                 film: '=',
-                close:'&'
+                close: '&'
             },
         });
     ////////////////////////////////////////////////////////////
@@ -22,8 +22,8 @@
     function FilmDescriptionController() {
         var $ctrl = this;
         ////////////////////////////////////////////////////////////
-        $ctrl.$onInit = function() { };
-        $ctrl.$onChanges = function(changesObj) { };
-        $ctrl.$onDestroy = function() { };
+        $ctrl.$onInit = function () { };
+        $ctrl.$onChanges = function (changesObj) { };
+        $ctrl.$onDestroy = function () { };
     }
 })();

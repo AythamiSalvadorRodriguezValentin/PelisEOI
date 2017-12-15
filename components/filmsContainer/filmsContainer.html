@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/components/filmsContainer/filmsContainerStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
-<div class="component-films-ombD-general">
+<div class="component-films-ombD-general" ng-cloak>
     <div class="component-bar-top-films">
         <div ng-if="$ctrl.totalFilms.length > 0" class="component-films-find">{{$ctrl.totalFilms}}
             <span class="component-films-find-text"> películas encontradas </span>
@@ -18,8 +18,10 @@
                         <div class="component-align">
                             <div class="component-element">
                                 <div class="element element1"></div> {{film.vote_average}} </div>
-                            <div class="component-element">
-                                <div class="element element2"></div> Añadir a favoritas </div>
+                            <div class="component-element" ng-click="$ctrl.fuctionFavourite({object:film,type:'click'})">
+                                <div class="element element2"></div>
+                                Añadir a favoritos
+                            </div>
                         </div>
                         <div class="component-element">
                             <div class="element element3"></div> Ver más tarde </div>

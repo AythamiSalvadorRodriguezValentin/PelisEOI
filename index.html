@@ -20,14 +20,32 @@
     <script type="text/javascript" src="/libs/jquery.js"></script>
     <script type="text/javascript" src="/libs/bootstrap.js"></script>
     <script type="text/javascript" src="/libs/angular-slider.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyC-ez34z8oyf5aHk3DX6K3pSXLoBNa0tEA",
+            authDomain: "my-pelis-eoi.firebaseapp.com",
+            databaseURL: "https://my-pelis-eoi.firebaseio.com",
+            projectId: "my-pelis-eoi",
+            storageBucket: "",
+            messagingSenderId: "561244818536"
+        };
+        firebase.initializeApp(config);
+    </script>
     <!-- Cargamos la App.config -->
     <script type="text/javascript" src="/js/app.config.js"></script>
     <!-- Factories -->
     <script type="text/javascript" src="/js/factories/omdbID.factory.js"></script>
     <script type="text/javascript" src="/js/factories/theMovieDB.factory.js"></script>
     <script type="text/javascript" src="/js/factories/interfaz.factory.js"></script>
+    <script type="text/javascript" src="/js/factories/firebase.factory.js"></script>
     <!-- Componentes -->
-    <script type="text/javascript" src="/components/naveBarSearchRow/naveBarSearchRow.component.js"></script>
     <script type="text/javascript" src="/components/filmDescription/filmDescription.component.js"></script>
     <script type="text/javascript" src="/components/filmsContainer/filmsContainer.component.js"></script>
     <script type="text/javascript" src="/components/ngSliderOwn/ngSliderOwn.component.js"></script>
