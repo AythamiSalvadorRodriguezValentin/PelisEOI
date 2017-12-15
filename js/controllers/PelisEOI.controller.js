@@ -21,15 +21,14 @@
         vm.load = false;
         vm.viewFilm = false;
         vm.warning = false;
-        ///////////////////////////////////////////////////////////
         /////////////////////// FUCTION VM ////////////////////////
-        vm.showFilm = showFilm;
-        vm.getMovies = getMovies;
         vm.changeView = changeView;
-        vm.selectGenre = selectGenre;
-        vm.resetFilter = resetFilter;
+        vm.getMovies = getMovies;
         vm.changeFilter = changeFilter;
+        vm.resetFilter = resetFilter;
+        vm.selectGenre = selectGenre;
         vm.checkGenreButton = checkGenreButton;
+        vm.showFilm = showFilm;
         /////////////////////////// INIT //////////////////////////////
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
@@ -51,8 +50,10 @@
             } else if (nav == vm.navList[2]) {
                 resetFilter('topRated');
             } else if (nav == vm.navList[3]) {
-                
+
             } else if (nav == vm.navList[4]) {
+
+            } else if (nav == vm.navList[5]) {
 
             }
         }
@@ -113,9 +114,7 @@
             }
             changeFilter();
         };
-        function checkGenreButton(genre) {
-            return (vm.search.genre.indexOf(genre) != -1) ? true : false;
-        };
+        function checkGenreButton(genre) { return (vm.search.genre.indexOf(genre) != -1) ? true : false; };
         ///////////////////// FUCTION SHOW VIEW ///////////////////////
         function showFilm(film) {
             if (vm.viewFilm) { vm.film = {}; vm.viewFilm = false; return; }

@@ -9,7 +9,9 @@
             </div>
             <div class="col-lg-7">
                 <ul class="nav-bar-row--middle">
-                    <li ng-repeat="nav in $films.navList track by $index" ng-click="$films.changeView(nav)"> {{::nav}} </li>
+                    <li class="nav-bar-row--middle-title" ng-repeat="nav in $films.navList track by $index" ng-click="$films.changeView(nav)"
+                        ng-class="{markedSelectedNav:($films.view == nav)}"> {{::nav}}
+                    </li>
                 </ul>
             </div>
             <div class="col-lg-3">
