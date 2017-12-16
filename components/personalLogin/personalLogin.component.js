@@ -14,6 +14,7 @@
             controllerAs: '$ctrl',
             bindings: {
                 user: '=',
+                formLogin:'=',
                 signUser: '&',
                 message:'&'
             },

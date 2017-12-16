@@ -29,12 +29,11 @@
         return service;
         function readAllUser() {
             let promise = new Promise(function (resolve, reject) {
-                firebase.database().ref('users').on('value', function (u) {
-                    let users = Object.keys(u.val()).map(function (val) {
-                        return u.val()[val];
-                    });
-                    console.log(users);
-                    /* resolve(u.val()); */
+                firebase.database().ref('users').on('value', (u) => {
+                    let ids = [];
+                    let users = Object.keys(u.val()).map((val, index) => { ids[index] = val; return u.val()[val]; });
+                    for (let i = 0; i < users.length; i++) users[i].id = ids[i];
+                    resolve(users);
                 });
             });
             return promise;
@@ -43,6 +42,8 @@
         function readUserData(id) {
             let promise = new Promise(function (resolve, reject) {
                 firebase.database().ref('users/' + id).on('value', function (u) {
+                    let user = u.val();
+                    user.id = id;
                     resolve(u.val());
                 });
             });
@@ -50,13 +51,16 @@
         }
         ///////////////////////////// Escribir datos database ///////////////////////////////
         function createUserData(user) {
-            user.id = randId();
-            firebase.database().ref('users/' + user.id).set({
-                name: user.name,
-                email: user.email,
-                phone: user.phone,
-                photo: user.photo
-            });
+            let promise = new Promise((resolve, reject) => {
+                user.id = randId();
+                firebase.database().ref('users/' + user.id).set({
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    photo: user.photo
+                }).catch(e => reject(e));
+            })
+            return promise;
         };
         ///////////////////////////// Actualiza datos database ///////////////////////////////
         function updateUserData(user) {
@@ -139,9 +143,9 @@
                     .updateProfile({
                         displayName: user.name,
                         photoURL: user.photo,
-                    }).then(loaded => resolve('update correct')
-                        .catch(e => resolve(e))
-                    )
+                        /* phoneNumber: user.phone, */
+                    }).then(loaded => resolve('update correct'))
+                    .catch(e => reject(e))
             });
             return promise;
         };

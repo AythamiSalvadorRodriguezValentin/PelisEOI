@@ -9,6 +9,7 @@
     width: 100%;
     height: 100px;
     display: flex;
+    cursor: default;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-between;
@@ -24,6 +25,7 @@
     color: #A6AAAE;
 }
 .component-film-button-return-page{
+    cursor: pointer;
     display: flex;
     flex-flow: row;
     justify-content: center;
@@ -70,6 +72,7 @@
 .component-film-description{
     width: 100%;
     margin-left: 35px;
+    cursor: default;
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
@@ -165,6 +168,7 @@
     width: 100%;
     height: 550px;
     color: #555A61;
+    cursor: default;
     border-bottom: 1px solid #e9ecee;
 }
 .selected-films-similar-title{

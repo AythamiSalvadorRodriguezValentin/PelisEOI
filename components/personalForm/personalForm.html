@@ -19,11 +19,11 @@
             ng-minlength="8" ng-maxlength="16" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <br>
         <label>Teléfono (opcional): </label>
-        <input type="number" placeholder="Teléfono" ng-required="false" ng-model="$ctrl.user.phone" ng-minlength="9" ng-maxlength="9"
+        <input type="number" placeholder="Teléfono" ng-required="true" ng-model="$ctrl.user.phone" ng-minlength="9" ng-maxlength="9"
             ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <br>
         <label>Foto (opcional): </label>
-        <input type="text" placeholder="Url de la foto" ng-required="false" ng-model="$ctrl.user.photo" ng-minlength="5" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
+        <input type="text" placeholder="Url de la foto" ng-required="true" ng-model="$ctrl.user.photo" ng-minlength="5" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <br>
     </form>
     <div class="component__view__container--button">

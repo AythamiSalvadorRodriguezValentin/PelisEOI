@@ -9,21 +9,10 @@
     function PelisEOIController(InterSF) {
         let vm = this;
         ///////////////////////// VAR VM //////////////////////////
-        vm.films = [];
-        vm.user = {};
-        vm.film = {};
-        vm.search = {};
-        vm.genreList = [];
-        vm.navList = [];
-        vm.view = '';
-        vm.errorBox = '';
-        vm.orderBy = [];
-        vm.slider = {};
-        vm.timeout = {};
-        vm.load = false;
-        vm.viewFilm = false;
-        vm.warning = false;
-        vm.formUser = true;
+        vm.genreList = []; vm.navList = []; vm.films = []; vm.users = []; vm.orderBy = [];
+        vm.user = {}; vm.film = {}; vm.search = {}; vm.slider = {}; vm.timeout = {};
+        vm.load = false; vm.viewFilm = false; vm.warning = false; vm.formUser = true;
+        vm.view = ''; vm.errorBox = '';
         /////////////////////// FUCTION VM ////////////////////////
         vm.changeView = changeView;
         vm.checkView = checkView;
@@ -35,20 +24,21 @@
         vm.fuctionFavourite = fuctionFavourite;
         vm.fuctionSeeLater = fuctionSeeLater;
         vm.fuctionSawLast = fuctionSawLast;
+        vm.showFilm = showFilm;
+        vm.errorDisplay = errorDisplay;
         vm.pushRegistrer = pushRegistrer;
         vm.fuctionUser = fuctionUser;
         vm.signUser = signUser;
-        vm.showFilm = showFilm;
-        vm.errorDisplay = errorDisplay;
         /////////////////////////// INIT //////////////////////////////
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
-            vm.user = { auth: false, sign: true, data: null }
+            vm.user = { auth: false, sign: true, data: null, database: null }
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
             vm.search = { title: '', year: '', type: '', language: '', sort_by: '', genre: [], page: 1 };
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
+            fuctionUser('all');
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
@@ -150,64 +140,6 @@
                 InterSF.firebaseUser(vm.user, 'update');
             }
         };
-        //////////////////////// FUCTION USER /////////////////////////
-        function pushRegistrer(){
-            vm.user.sign = false;
-            errorDisplay('Rellena el formulario para registrarte');
-        };
-        function fuctionUser(type) {
-            if (type == 'all') {
-
-            } else if (type == 'user') {
-
-            } else if (type == 'create') {
-
-            } else if (type == 'update') {
-
-            } else if (type == 'delete') {
-
-            }
-        };
-        function signUser(type) {
-            if (type == 'create') {
-                InterSF
-                    .firebaseSign(vm.user, type)
-                    .catch(e => errorDisplay(e))
-            } else if (type == 'up') {
-                InterSF
-                    .firebaseSign(vm.user.login, type)
-                    .then(loaded => signUser('current'))
-                    .catch(e => errorDisplay(e.message));
-            } else if (type == 'out') {
-                if (vm.user.auth) {
-                    InterSF
-                        .firebaseSign(vm.user, type)
-                        .then(loaded => {
-                            vm.user.data = null;
-                            vm.user.auth = false;
-                        }).catch(e => errorDisplay(e))
-                }
-            } else if (type == 'update') {
-                InterSF
-                    .firebaseSign(vm.user, type)
-                    .then(loaded => console.log(loaded))
-                    .catch(e => errorDisplay(e))
-            } else if (type == 'current') {
-                InterSF
-                    .firebaseSign(vm.user, type)
-                    .then(loaded => {
-                        if (loaded != null) {
-                            vm.user.data = loaded;
-                            vm.user.auth = true;
-                            changeView(vm.navList[0]);
-                        } else {
-                            vm.user.auth = false;
-                            vm.user.sign = true;
-                            errorDisplay('No estas conectado');
-                        }
-                    }).catch(e => errorDisplay(e));
-            }
-        };
         ///////////////////// FUCTION SHOW VIEW ///////////////////////
         function showFilm(film) {
             if (vm.viewFilm) { vm.film = {}; vm.viewFilm = false; return; }
@@ -218,8 +150,8 @@
         };
         ///////////////////////// ERROR ///////////////////////////////
         function errorDisplay(e) {
-                vm.errorBox = e;
-                vm.warning = true;
+            vm.errorBox = e;
+            vm.warning = true;
             clearTimeout(vm.timeout.show);
             vm.timeout.error = setTimeout(() => {
                 vm.warning = false;
@@ -248,6 +180,94 @@
                     vm.film = loaded;
                     vm.viewFilm = true;
                 }).catch(e => errorDisplay(e));
+        };
+        //////////////////////// FUCTION USER /////////////////////////
+        function pushRegistrer() {
+            vm.user.sign = false;
+            errorDisplay('Rellena el formulario para registrarte');
+        };
+        function fuctionUser(type) {
+            if (type == 'all') {
+                InterSF
+                    .firebaseUser(vm.user, 'all')
+                    .then(loaded => vm.users = loaded)
+                    .catch(e => errorDisplay(e));
+            } else if (type == 'user') {
+                let user = {}; let isIn = false;
+                for (let i = 0; i < vm.users.length; i++) { 
+                    if (vm.users[i].email == vm.user.data.email) { user = vm.users[i]; isIn = true; } 
+                }
+                if (isIn) {
+                    InterSF
+                        .firebaseUser(user, 'user')
+                        .then(loaded => vm.user.database = loaded)
+                        .catch(e => errorDisplay(e));
+                }
+            } else if (type == 'create') {
+                InterSF
+                    .firebaseUser(vm.user.create, 'create')
+                    .then(loaded => loaded)
+                    .catch(e => errorDisplay(e));
+            } else if (type == 'update') {
+
+            } else if (type == 'delete') {
+
+            }
+        };
+        //////////////////////// FUCTION SIGN /////////////////////////
+        function signUser(type) {
+            if (type == 'create') {
+                InterSF
+                    .firebaseSign(vm.user.create, type)
+                    .then(loaded => {
+                        vm.user.auth = false;
+                        vm.user.sign = true;
+                        fuctionUser('create');
+                        signUser('update');
+                        errorDisplay('Inicia Sesion');
+                    }).catch(e => errorDisplay(e));
+            } else if (type == 'up') {
+                InterSF
+                    .firebaseSign(vm.user.login, type)
+                    .then(loaded => signUser('current'))
+                    .catch(e => {
+                        vm.user.login = {};
+                        errorDisplay(e.message);
+                    });
+            } else if (type == 'out') {
+                if (vm.user.auth) {
+                    InterSF
+                        .firebaseSign(vm.user, type)
+                        .then(loaded => {
+                            vm.user.data = null;
+                            vm.user.auth = false;
+                        }).catch(e => errorDisplay(e))
+                }
+            } else if (type == 'update') {
+                InterSF
+                    .firebaseSign(vm.user.create, 'update')
+                    .then(loaded => {
+                        vm.user.create = {}
+                    }).catch(e => errorDisplay(e));
+            } else if (type == 'current') {
+                InterSF
+                    .firebaseSign(vm.user, type)
+                    .then(loaded => {
+                        vm.user.login = {};
+                        if (loaded != null) {
+                            vm.user.data = loaded;
+                            vm.user.auth = true;
+                            fuctionUser('user');
+                            changeView(vm.navList[0]);
+                        } else {
+                            vm.user.auth = false;
+                            vm.user.sign = true;
+                            vm.user.data = null;
+                            vm.user.database = null;
+                            errorDisplay('No estas conectado');
+                        }
+                    }).catch(e => errorDisplay(e));
+            }
         };
     }
 })();

@@ -50,7 +50,7 @@
          * 
          */
         function firebaseSign(user, type) {
-            let promise = new Promise((resolve,reject) => {
+            let promise = new Promise((resolve, reject) => {
                 if (type == 'create') {
                     FSP
                         .createUserWithEmailAndPasswordUser(user)
@@ -92,23 +92,27 @@
          * 
          */
         function firebaseUser(user, type) {
-            if (type == 'all') {
-                FSP
-                    .readAllUser()
-                    .then(loaded => { return loaded })
-                    .catch(e => { return e });
-            } else if (type == 'user') {
-                FSP
-                    .readUserData(user.id)
-                    .then(loaded => { return loaded })
-                    .catch(e => { return e });
-            } else if (type == 'create') {
-                FSP.createUserData(user)
-            } else if (type == 'update') {
-                FSP.updateUserData(user);
-            } else if (type == 'delete') {
-                FSP.deleteUserData(user.id);
-            }
+            let promise = new Promise((resolve, reject) => {
+                if (type == 'all') {
+                    FSP
+                        .readAllUser()
+                        .then(loaded => resolve(loaded))
+                        .catch(e => reject(e));
+                } else if (type == 'user') {
+                    FSP
+                        .readUserData(user.id)
+                        .then(loaded => resolve(loaded))
+                        .catch(e => reject(e));
+                } else if (type == 'create') {
+                    FSP.createUserData(user)
+                        .catch(e => reject(e));
+                } else if (type == 'update') {
+                    FSP.updateUserData(user);
+                } else if (type == 'delete') {
+                    FSP.deleteUserData(user.id);
+                }
+            });
+            return promise;
         }
         ////////////////////// INDEX ARRAY //////////////////////////
         /**
@@ -121,7 +125,8 @@
          * 
          */
         function indexArray(object, array0) {
-            let array = array0;
+            let array = Object.assign(array0);
+            if (typeof array == 'undefined') array = [];
             let idx = array.indexOf(object);
             if (idx == -1) array.push(object);
             else array.splice(idx, 1);
