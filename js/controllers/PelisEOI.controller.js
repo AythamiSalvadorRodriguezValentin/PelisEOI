@@ -5,8 +5,8 @@
         .module('PelisEOI')
         .controller('PelisEOIController', PelisEOIController);
 
-    PelisEOIController.$inject = ['$location', 'InterfazServerFactory'];
-    function PelisEOIController($location, InterSF) {
+    PelisEOIController.$inject = ['InterfazServerFactory'];
+    function PelisEOIController(InterSF) {
         let vm = this;
         ///////////////////////// VAR VM //////////////////////////
         vm.films = [];
@@ -16,12 +16,14 @@
         vm.genreList = [];
         vm.navList = [];
         vm.view = '';
+        vm.errorBox = '';
         vm.orderBy = [];
         vm.slider = {};
         vm.timeout = {};
         vm.load = false;
         vm.viewFilm = false;
         vm.warning = false;
+        vm.formUser = true;
         /////////////////////// FUCTION VM ////////////////////////
         vm.changeView = changeView;
         vm.checkView = checkView;
@@ -33,21 +35,20 @@
         vm.fuctionFavourite = fuctionFavourite;
         vm.fuctionSeeLater = fuctionSeeLater;
         vm.fuctionSawLast = fuctionSawLast;
+        vm.pushRegistrer = pushRegistrer;
         vm.fuctionUser = fuctionUser;
         vm.signUser = signUser;
         vm.showFilm = showFilm;
+        vm.errorDisplay = errorDisplay;
         /////////////////////////// INIT //////////////////////////////
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
+            vm.user = { auth: false, sign: true, data: null }
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
             vm.search = { title: '', year: '', type: '', language: '', sort_by: '', genre: [], page: 1 };
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
-            vm.view = vm.navList[0];
-            resetFilter('popular');
-            vm.user.favourite = [];
-            vm.user.auth = true;
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
@@ -65,7 +66,7 @@
             } else if (nav == vm.navList[4]) {
                 vm.films.data = vm.user.sawLast;
                 vm.films.total = vm.user.sawLast.length;
-            }
+            } else vm.films = {};
         }
         function checkView(nav) {
             return (vm.view == nav) ? true : false;
@@ -150,6 +151,10 @@
             }
         };
         //////////////////////// FUCTION USER /////////////////////////
+        function pushRegistrer(){
+            vm.user.sign = false;
+            errorDisplay('Rellena el formulario para registrarte');
+        };
         function fuctionUser(type) {
             if (type == 'all') {
 
@@ -167,25 +172,40 @@
             if (type == 'create') {
                 InterSF
                     .firebaseSign(vm.user, type)
-                    .then(loaded => vm.user.data = loaded)
-                    .catch(e => console.error(e))
+                    .catch(e => errorDisplay(e))
             } else if (type == 'up') {
                 InterSF
-                    .firebaseSign(vm.user, type)
-                    .then(loaded => vm.user.data = loaded)
-                    .catch(e => console.error(e))
+                    .firebaseSign(vm.user.login, type)
+                    .then(loaded => signUser('current'))
+                    .catch(e => errorDisplay(e.message));
             } else if (type == 'out') {
-                InterSF
-                    .firebaseSign(vm.user, type)
-                    .then(loaded => vm.user.data = {})
-                    .catch(e => console.error(e))
+                if (vm.user.auth) {
+                    InterSF
+                        .firebaseSign(vm.user, type)
+                        .then(loaded => {
+                            vm.user.data = null;
+                            vm.user.auth = false;
+                        }).catch(e => errorDisplay(e))
+                }
             } else if (type == 'update') {
                 InterSF
                     .firebaseSign(vm.user, type)
                     .then(loaded => console.log(loaded))
-                    .catch(e => console.error(e))
+                    .catch(e => errorDisplay(e))
             } else if (type == 'current') {
-                vm.user.data = InterSF.firebaseSign(vm.user, type);
+                InterSF
+                    .firebaseSign(vm.user, type)
+                    .then(loaded => {
+                        if (loaded != null) {
+                            vm.user.data = loaded;
+                            vm.user.auth = true;
+                            changeView(vm.navList[0]);
+                        } else {
+                            vm.user.auth = false;
+                            vm.user.sign = true;
+                            errorDisplay('No estas conectado');
+                        }
+                    }).catch(e => errorDisplay(e));
             }
         };
         ///////////////////// FUCTION SHOW VIEW ///////////////////////
@@ -198,7 +218,12 @@
         };
         ///////////////////////// ERROR ///////////////////////////////
         function errorDisplay(e) {
-            vm.warning = (vm.warning) ? false : true;
+                vm.errorBox = e;
+                vm.warning = true;
+            clearTimeout(vm.timeout.show);
+            vm.timeout.error = setTimeout(() => {
+                vm.warning = false;
+            }, 1000);
         }
         ////////////////////// OTHER FUCTION //////////////////////////
         function fuctionGenres(object, type) {

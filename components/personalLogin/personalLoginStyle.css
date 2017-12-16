@@ -1,0 +1,53 @@
+/*-----------Login--container-------------*/
+.component-login-button-container{
+    display: inline-flex;
+    flex-flow: row;
+    align-items: center;
+    margin-top: 10px;
+    color: white;
+}
+.component-login-button-container form{
+    display: inline-flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.component-login-button-container form label{
+    margin-top: 4px;
+    margin: 0 ;
+    font-size: 12px;
+    font-family: NunitoSans Regular;
+    font-weight: 200;
+}
+.component-login-button-container form input{
+    height: 25px;
+    border-radius: 2px 2px 2px 2px;
+    background-color: #5c6269;
+}
+.component-login-button-container form input::-webkit-input-placeholder{
+    color: #24292c;
+}
+.component-login-button-container button{
+    width: 55px;
+    height: 25px;
+    border-width: 0px;
+    border-radius: 2px 2px 2px 2px;
+    margin-bottom: 4px;
+    background-color: #5c6269;
+}
+.component-login-button-container button:hover{
+    background-color: #1b2126;
+    cursor: pointer;
+    color: white;
+}
+.component-login-form-colum{
+    display: flex;
+    flex-flow: column;
+    margin-right: 13px;
+}
+.borderRed{
+    border: 1px solid red;
+}
+.withoutBorder{
+    border-width: 0px;
+}

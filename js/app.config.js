@@ -1,4 +1,4 @@
-angular.module('PelisEOI', ['ngRoute', 'uiSlider']).config(config);
+angular.module('PelisEOI', ['ngRoute']).config(config);
 config.$inject = ['$routeProvider'];
 function config($routeProvider) {
     $routeProvider
@@ -9,3 +9,5 @@ function config($routeProvider) {
         })
         .otherwise({ redirectTo: '/' });
 };
+
+/* 'uiSlider' */

@@ -50,29 +50,34 @@
          * 
          */
         function firebaseSign(user, type) {
-            if (type == 'create') {
-                return FSP
-                    .createUserWithEmailAndPasswordUser(user)
-                    .then(loaded => { return loaded; })
-                    .catch(e => { return e; });
-            } else if (type == 'up') {
-                return FSP
-                    .signInWithEmailAndPasswordUser(user)
-                    .then(loaded => { return loaded; })
-                    .catch(e => { return e; });
-            } else if (type == 'out') {
-                return FSP
-                    .signOutUser()
-                    .then(loaded => { return loaded; })
-                    .catch(e => { return e; });
-            } else if (type == 'update') {
-                return FSP
-                    .updateUser(user)
-                    .then(loaded => { return loaded; })
-                    .catch(e => { return e; });
-            } else if (type == 'current') {
-                return FSP.currentUser();
-            }
+            let promise = new Promise((resolve,reject) => {
+                if (type == 'create') {
+                    FSP
+                        .createUserWithEmailAndPasswordUser(user)
+                        .then(loaded => resolve(loaded))
+                        .catch(e => reject(e));
+                } else if (type == 'up') {
+                    FSP
+                        .signInWithEmailAndPasswordUser(user)
+                        .then(loaded => resolve(loaded))
+                        .catch(e => reject(e));
+                } else if (type == 'out') {
+                    FSP
+                        .signOutUser()
+                        .then(loaded => resolve(loaded))
+                        .catch(e => reject(e));
+                } else if (type == 'update') {
+                    FSP
+                        .updateUser(user)
+                        .then(loaded => resolve(loaded))
+                        .catch(e => reject(e));
+                } else if (type == 'current') {
+                    FSP
+                        .onAuthStateChangedUser()
+                        .then(loaded => resolve(loaded))
+                }
+            });
+            return promise;
         }
         ///////////////////// FIREBASE USER ////////////////////////
         /**
@@ -90,9 +95,8 @@
             if (type == 'all') {
                 FSP
                     .readAllUser()
-                    .then(loaded => {
-                        return loaded
-                    }).catch(e => { return e });
+                    .then(loaded => { return loaded })
+                    .catch(e => { return e });
             } else if (type == 'user') {
                 FSP
                     .readUserData(user.id)

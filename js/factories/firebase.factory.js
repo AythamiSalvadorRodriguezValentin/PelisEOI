@@ -78,54 +78,72 @@
         };
         ///////////////////////////// Registra usuarios nuevos ///////////////////////////////
         function createUserWithEmailAndPasswordUser(user) {
-            return firebase
-                .auth()
-                .createUserWithEmailAndPassword(user.email, user.password)
-                .then(loaded => { return loaded; })
-                .catch(e => { return e; });
+            let promise = new Promise((resolve, reject) => {
+                firebase
+                    .auth()
+                    .createUserWithEmailAndPassword(user.email, user.password)
+                    .then(loaded => resolve('created'))
+                    .catch(e => reject(e));
+            });
+            return promise;
         };
         ///////////////////////////// Acceso de usuarios existentes ///////////////////////////////
         function signInWithEmailAndPasswordUser(user) {
-            return firebase
-                .auth()
-                .signInWithEmailAndPassword(user.email, user.password)
-                .then(loaded => { return loaded; })
-                .catch(e => { return e; });
+            let promise = new Promise((resolve, reject) => {
+                firebase
+                    .auth()
+                    .signInWithEmailAndPassword(user.email, user.password)
+                    .then(loaded => resolve(loaded))
+                    .catch(e => reject(e));
+            });
+            return promise;
         }
         ///////////////////////////// Obtén el usuario con sesión activa ///////////////////////////////
         function onAuthStateChangedUser() {
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    // User is signed in. // Obtén el perfil de un usuario //
-                    var displayName = user.displayName;
-                    var email = user.email;
-                    var emailVerified = user.emailVerified;
-                    var photoURL = user.photoURL;
-                    var isAnonymous = user.isAnonymous;
-                    var uid = user.uid;
-                    var providerData = user.providerData;
-                    // ...
-                } else {
-                    // User is signed out.
-                    // ...
-                }
+            let promise = new Promise(function (resolve, reject) {
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        // User is signed in. // Obtén el perfil de un usuario //
+                        var displayName = user.displayName;
+                        var email = user.email;
+                        var emailVerified = user.emailVerified;
+                        var photoURL = user.photoURL;
+                        var isAnonymous = user.isAnonymous;
+                        var uid = user.uid;
+                        var providerData = user.providerData;
+                        resolve(user);
+                        // ...
+                    } else {
+                        // User is signed out.
+                        // ...
+                        reject(null);
+                    }
+                });
             });
+            return promise;
         };
         ////////////////////////////// Obtén el perfil de un usuario //////////////////////////////
         function currentUser() {
-            let user = firebase.auth().currentUser;
-            if (user != null) { return user; }
-            else { return user; }
+            let promise = new Promise((resolve, reject) => {
+                let user = firebase.auth().currentUser;
+                if (user != null) resolve(user);
+                else reject(null);
+            });
+            return promise;
         };
         ///////////////////////////// Actualiza el perfil de un usuario ///////////////////////////////
         function updateUser(user) {
-            return firebase
-                .auth().currentUser
-                .updateProfile({
-                    displayName: user.name,
-                    photoURL: user.photo,
-                }).then(loaded => { return 'update correct' })
-                .catch(e => { return e; });
+            let promise = new Promise((resolve, reject) => {
+                firebase
+                    .auth().currentUser
+                    .updateProfile({
+                        displayName: user.name,
+                        photoURL: user.photo,
+                    }).then(loaded => resolve('update correct')
+                        .catch(e => resolve(e))
+                    )
+            });
+            return promise;
         };
         /////////////////////////////// Configura la dirección de correo electrónico de un usuario /////////////////////////////
         function updateEmailUser(user) {
@@ -178,11 +196,14 @@
         }
         ///////////////////////////// Desconectar Usuario ///////////////////////////////
         function signOutUser() {
-            return firebase
-                .auth()
-                .signOut()
-                .then(loaded => { return 'user disconnected'; })
-                .catch(e => { return e; });
+            let promise = new Promise((resolve, reject) => {
+                firebase
+                    .auth()
+                    .signOut()
+                    .then(loaded => resolve('user disconnected'))
+                    .catch(e => reject(e));
+            });
+            return promise;
         }
         /////////////////////////////////////////// OTHER FUCTION /////////////////////////////////////////
         function randId() {
