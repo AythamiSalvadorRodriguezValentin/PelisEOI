@@ -9,10 +9,22 @@
     function PelisEOIController(InterSF) {
         let vm = this;
         ///////////////////////// VAR VM //////////////////////////
-        vm.genreList = []; vm.navList = []; vm.films = []; vm.users = []; vm.orderBy = [];
-        vm.user = {}; vm.film = {}; vm.search = {}; vm.slider = {}; vm.timeout = {};
-        vm.load = false; vm.viewFilm = false; vm.warning = false; vm.formUser = true;
-        vm.view = ''; vm.errorBox = '';
+        vm.genreList = []; 
+        vm.navList = []; 
+        vm.films = []; 
+        vm.users = []; 
+        vm.orderBy = [];
+        vm.user = {}; 
+        vm.film = {}; 
+        vm.search = {}; 
+        vm.slider = {}; 
+        vm.timeout = {};
+        vm.load = false; 
+        vm.viewFilm = false; 
+        vm.warning = false; 
+        vm.formUser = true;
+        vm.view = ''; 
+        vm.errorBox = '';
         /////////////////////// FUCTION VM ////////////////////////
         vm.changeView = changeView;
         vm.checkView = checkView;
