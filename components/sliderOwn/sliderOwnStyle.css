@@ -1,0 +1,45 @@
+.component-slider-container {
+    cursor: pointer;
+    border: 1px solid #e9ecee;
+    position: relative;
+    height: 2px;
+    width: 100%;
+}
+.component-slider-container > .component-slider-progress {
+    background-color: yellowgreen;
+    position: absolute;
+    height: 100%;
+    top: 25%;
+}
+.component-slider-container > .component-slider-indicator-min {
+    cursor: pointer;
+    z-index: 5;
+    height: 22px;
+    width: 37px;
+    border-radius: 15px 15px 15px 15px;
+    background-color: #2883d8;
+    color: white;
+    position: absolute;
+    left: 30%;
+    margin: -11px;
+    margin-left: -5%;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+.component-slider-container > .component-slider-indicator-max {
+    cursor: pointer;
+    z-index: 5;
+    height: 22px;
+    width: 37px;
+    border-radius: 15px 15px 15px 15px;
+    background-color: #3cb878;
+    color: white;
+    position: absolute;
+    left: 70%;
+    margin: -11px;
+    margin-left: -5%;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}

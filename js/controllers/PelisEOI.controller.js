@@ -47,7 +47,7 @@
         function activate() {
             vm.search = { title: '', year: '', type: '', language: '', sort_by: '', genre: [], page: 1 };
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
-            vm.user = { auth: false, sign: true, data: null, database: null }
+            vm.user = { auth: true, sign: true, data: null, database: null }
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
         };
@@ -110,6 +110,7 @@
             vm.slider.minYearValue = 1980;
             vm.slider.maxYear = 2050;
             vm.slider.maxYearValue = 2020;
+            $scope.$apply(vm.slider);
             /* Popular */
             fuctionMovie(vm.search, type);
         };
