@@ -18,12 +18,12 @@
                 <div class="nav-bar-top">
                     <input ng-if="$films.user.auth" placeholder="Encuentra tu pelicula favorita" ng-model="$films.search.title" ng-keyup="$films.getMovies('N')"
                         type="text">
-                    <button ng-if="$films.user.auth" ng-click="$films.signUser('out')">Sign Out</button>
+                    <button ng-if="$films.user.auth" ng-click="$films.signOutUser()">Sign Out</button>
                 </div>
                 <div ng-show="$films.user.auth == false" class="login-button-container">
                     <button ng-if="!$films.user.sign" ng-click="$films.user.sign = true"> Inicia sesión </button>
-                    <personal-login ng-if="$films.user.sign" user="$films.user.login" sign-user="$films.signUser(type)" form-login="$films.user.formLogin"
-                        message="$films.errorDisplay(e)"></personal-login>
+                    <personal-login ng-if="$films.user.sign" form-login="$films.user.formLogin" message="$films.messageDisplay(e,type)" user="$films.user"
+                        users="$films.users" change-view="$films.changeView(nav)"></personal-login>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
             <div class="films-all-container">
                 <button ng-click="$films.getMovies('Y')">more</button>
                 <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
-                <films-container films="$films.films.data" total-films="$films.films.total" order-by-select="$films.orderBy" change-select="$films.changeFilter()"
+                <films-container films="$films.films.data" total-films="$films.films.total" change-select="$films.changeFilter()" order-by-select="$films.orderBy"
                     bool-load="$films.load" src-load="/img/load.gif" selected="$films.search.order" show-film="$films.showFilm(film)"
                     fuction-favourite="$films.fuctionFavourite(object,type)">
                 </films-container>
@@ -84,8 +84,7 @@
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- ////////////////////////// SHOW FORM USER ///////////////////////////// -->
 <div ng-show="$films.user.auth == false" class="user-form-general" ng-cloak>
-    <personal-form class="user-form-container" user="$films.user.create" form="$films.user.form" click-button="$films.signUser(type)">
-    </personal-form>
+    <personal-form class="user-form-container" user="$films.user" form="$films.user.formPersonal" message="$films.messageDisplay(e,type)"></personal-form>
     <div class="wrapper">
         <footer class="footer-page-films">
             <a class="footer-page-registrate" ng-click="$films.pushRegistrer()">Regístrate gratis</a>
@@ -101,8 +100,8 @@
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
-<!-- //////////////////////////// SHOW WARNING ///////////////////////////// -->
-<div ng-show="$films.warning == true" class="warning-box" ng-cloak>
-    <p class="warning-box--title"> {{$films.errorBox}} </p>
+<!-- //////////////////////////// SHOW MESSAGE ///////////////////////////// -->
+<div ng-show="$films.viewMessage == true" class="message-box" ng-class="{messageBoxStyle:$films.messageType}" ng-cloak>
+    <p class="message-box--title"> {{$films.message}} </p>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->

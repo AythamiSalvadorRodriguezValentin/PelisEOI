@@ -5,13 +5,13 @@
         <div class="component-login-form-colum">
             <label>Correo: </label>
             <input name="$ctrl.formLogin.email" type="email" ng-required="true" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}"
-                ng-class="{borderRed:$ctrl.push, withoutBorder:!$ctrl.push}" ng-model="$ctrl.user.email"
+                ng-class="{borderRed:$ctrl.push, withoutBorder:!$ctrl.push}" ng-model="$ctrl.user.login.email"
                 ng-maxlength="35" ng-keyup="$ctrl.push = false">
             <br>
         </div>
         <div class="component-login-form-colum">
             <label>Contraseña: </label>
-            <input name="$ctrl.formLogin.password" type="password" ng-required="true" ng-model="$ctrl.user.password" ng-minlength="8"
+            <input name="$ctrl.formLogin.password" type="password" ng-required="true" ng-model="$ctrl.user.login.password" ng-minlength="8"
                 ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-class="{borderRed:$ctrl.push, withoutBorder:!$ctrl.push}"
                 ng-maxlength="16" ng-keyup="$ctrl.push = false">
             <br>
