@@ -13,7 +13,10 @@
             controller: NgSliderOwnController,
             controllerAs: '$ctrl',
             bindings: {
-                slider: '='
+                min: '=',
+                max: '=',
+                minValue: '=',
+                maxValue: '='
             },
         });
     ////////////////////////////////////////////////////////////
@@ -23,10 +26,10 @@
         ////////////////////////////////////////////////////////////
         $ctrl.$onInit = function () { initSlider(); };
         $ctrl.$onChanges = function (changesObj) { };
-        $ctrl.$onDestroy = function () { };
+        $ctrl.$onDestroy = function () { stopSlider(); };
         ////////////////////////////////////////////////////////////
         function initSlider() {
-            $('.component-slider-container').on('mousedown', function (e) {
+            $('.component-slider-general').on('mousedown', function (e) {
                 /* Container */
                 let containerSizeX = $(e.currentTarget).outerWidth();
                 let containerXY = $(e.currentTarget).offset();
@@ -75,11 +78,11 @@
             /* value min */
             let value = mouseX * 100 / containerSizeX;
             if (mouseX >= 0 && mouseX <= containerSizeX && posMaxX < 18) {
-                $('.component-slider-container > .component-slider-progress').css('width', (mouseX - 7) + 'px');
+                $('.component-slider-container > .component-slider-progressMin').css('width', (mouseX - 7) + 'px');
                 $('.component-slider-container > .component-slider-indicator-min').css('left', (mouseX - 7) + 'px');
                 $('#component-slider-value-min').text(Math.round(value));
-                $('.component-slider-indicator-min').css('z-index', 5);
-                $('.component-slider-indicator-max').css('z-index', 4);
+                $('.component-slider-indicator-min').css('z-index', 6);
+                $('.component-slider-indicator-max').css('z-index', 5);
             }
         };
         function moveSliderMax(e) {
@@ -100,12 +103,16 @@
             /* value max */
             let value = mouseX * 100 / containerSizeX;
             if (mouseX >= 0 && mouseX <= containerSizeX && posMinX >= 18) {
-                $('.component-slider-container > .component-slider-progress').css('width', (mouseX - 7) + 'px');
+                $('.component-slider-container > .component-slider-progressMedium').css('width', (mouseX - 7) + 'px');
                 $('.component-slider-container > .component-slider-indicator-max').css('left', (mouseX - 7) + 'px');
                 $('#component-slider-value-max').text(Math.round(value));
-                $('.component-slider-indicator-min').css('z-index', 4);
-                $('.component-slider-indicator-max').css('z-index', 5);
+                $('.component-slider-indicator-min').css('z-index', 5);
+                $('.component-slider-indicator-max').css('z-index', 6);
             }
+        };
+        function stopSlider(){
+            $('.component-slider-container').off('mousedown');
+            $('.component-slider-container').off('mousemove');
         };
     }
 })();
