@@ -34,7 +34,7 @@
 <div class="row" ng-show="$films.user.auth == true" ng-cloak>
     <div class="wrapper">
         <aside class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <div class="bar-filter--general">
+            <div class="bar-filter-general">
                 <div class="bar-filter">
                     <img class="filter-img" src="img/filter.png" alt="filter">
                     <span class="filter-span">Filter</span>
@@ -68,7 +68,7 @@
                 <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
                 <films-container films="$films.films.data" total-films="$films.films.total" change-select="$films.changeFilter()" order-by-select="$films.orderBy"
                     bool-load="$films.load" src-load="/img/load.gif" selected="$films.search.order" show-film="$films.showFilm(film)"
-                    fuction-favourite="$films.fuctionFavourite(object,type)">
+                    elements-user="$films.elementsUser(object, clase, type)">
                 </films-container>
                 <!-- //////////////////////////////////////////////////////////////////////////////// -->
             </div>

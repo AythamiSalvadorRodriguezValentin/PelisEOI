@@ -9,5 +9,3 @@ function config($routeProvider) {
         })
         .otherwise({ redirectTo: '/' });
 };
-
-/* 'uiSlider' */

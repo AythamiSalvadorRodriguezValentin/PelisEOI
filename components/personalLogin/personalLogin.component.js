@@ -27,7 +27,17 @@
         $ctrl.checkButton = checkButton;
         $ctrl.push = false;
         ////////////////////////////////////////////////////////////
-        $ctrl.$onInit = function () { };
+        $ctrl.$onInit = function () {
+            InterSF
+                .firebaseUser($ctrl.user, 'all')
+                .then(loaded => {
+                    $ctrl.users = loaded;
+                }).catch(e => $ctrl.message({ e: (e), type: 'error' }));
+            InterSF
+                .firebaseSign($ctrl.user, 'now')
+                .then(loaded => $ctrl.user.data = loaded)
+                .catch(e => e);
+        };
         $ctrl.$onChanges = function (changesObj) { };
         $ctrl.$onDestroy = function () { };
         ////////////////////////////////////////////////////////////
@@ -56,7 +66,12 @@
                         if (loaded != null) {
                             $ctrl.user.data = loaded;
                             $ctrl.user.auth = true;
-                            readUserOrUsers('all');
+                            InterSF
+                                .firebaseUser($ctrl.user, 'all')
+                                .then(loaded => {
+                                    $ctrl.users = loaded;
+                                    readUser();
+                                }).catch(e => $ctrl.message({ e: (e), type: 'error' }));
                             $ctrl.changeView({ nav: 'Descubrir' });
                         } else {
                             $ctrl.user.auth = false;
@@ -69,30 +84,21 @@
             }
         };
         //////////////////////// FUCTION USER /////////////////////////
-        function readUserOrUsers(type) {
-            if (type == 'all') {
-                InterSF
-                    .firebaseUser($ctrl.user, 'all')
-                    .then(loaded => {
-                        $ctrl.users = loaded;
-                        readUserOrUsers('user');
-                    }).catch(e => messageDisplay(e));
-            } else if (type == 'user') {
-                let user = {}; 
-                let isIn = false;
-                for (let i = 0; i < $ctrl.users.length; i++) {
-                    if ($ctrl.users[i].email == $ctrl.user.data.email) { 
-                        user = $ctrl.users[i]; 
-                        isIn = true; 
-                    }
+        function readUser() {
+            let user = {};
+            let isIn = false;
+            for (let i = 0; i < $ctrl.users.length; i++) {
+                if ($ctrl.users[i].email == $ctrl.user.data.email) {
+                    user = $ctrl.users[i];
+                    isIn = true;
                 }
-                if (isIn) {
-                    InterSF
-                        .firebaseUser(user, 'user')
-                        .then(loaded => $ctrl.user.database = loaded)
-                        .catch(e => $ctrl.message({ e: e, type: 'error' }));
-                } else $ctrl.message({ e: 'No se encuentra al usuario en la base de datos', type: 'error' });
             }
-        }
+            if (isIn) {
+                InterSF
+                    .firebaseUser(user, 'user')
+                    .then(loaded => $ctrl.user.database = loaded)
+                    .catch(e => $ctrl.message({ e: e, type: 'error' }));
+            } else $ctrl.message({ e: 'No se encuentra al usuario en la base de datos', type: 'error' });
+        };
     }
 })();

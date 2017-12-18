@@ -16,7 +16,9 @@
             getOrderDataBy: getOrderDataBy,
             firebaseSign: firebaseSign,
             firebaseUser: firebaseUser,
-            indexArray: indexArray
+            addRemoveObjectArray: addRemoveObjectArray,
+            addObjectArray: addObjectArray,
+            indexIDArray: indexIDArray
         };
         return service;
         ////////////////////////////////////////////////////////////
@@ -94,6 +96,13 @@
                         FSP
                             .onAuthStateChangedUser()
                             .then(loaded => resolve(loaded))
+                            .catch(e => reject(e));
+                        break;
+                    case 'now':
+                        FSP
+                            .currentUser()
+                            .then(loaded => resolve(loaded))
+                            .catch(e => reject(e));
                         break;
                     default:
                         break;
@@ -143,24 +152,72 @@
                 }
             });
             return promise;
-        }
-        ////////////////////// INDEX ARRAY //////////////////////////
+        };
+        ////////// ADD OR REMOVE OBJECT ARRAY //////////////
         /**
          * 
-         * @param {*} object objecto que vamos a indexar en el array.
-         * Si existe el objeto lo elimina del array.
-         * Si no existe lo añade en el array.
-         * @param {*} array0 
+         * @param {*} array 
          * Array que vamos a indexar.
          * 
+         * @param {*} object 
+         * Objecto que vamos a indexar en el array.
+         * Si existe el objeto lo elimina del array.
+         * Si no existe lo añade en el array.
+         * 
          */
-        function indexArray(object, array0) {
-            let array = Object.assign(array0);
+        function addRemoveObjectArray(array, object) {
             if (typeof array == 'undefined') array = [];
-            let idx = array.indexOf(object);
-            if (idx == -1) array.push(object);
-            else array.splice(idx, 1);
-            return array;
-        }
+            let a = Object.assign(array);
+            let isIn = false;
+            for (let i = 0; i < a.length; i++) {
+                if (a[i].id == object.id) {
+                    a.splice(i, 1);
+                    isIn = true;
+                }
+            }
+            if (!isIn) a.push(object);
+            return a;
+        };
+        //////////////// ADD OBJECT ARRAY ///////////////////
+        /**
+         * 
+         * @param {*} array 
+         * Array que vamos a indexar.
+         * 
+         * @param {*} object 
+         * Objecto que vamos a indexar en el array.
+         * Si existe el objeto lo elimina del array.
+         * Si no existe lo añade en el array.
+         * 
+         */
+        function addObjectArray(array, object) {
+            if (typeof array == 'undefined') array = [];
+            let a = Object.assign(array);
+            let isIn = false;
+            for (let i = 0; i < a.length; i++) {
+                if (a[i].id == object.id) isIn = true;
+            }
+            if (!isIn) a.push(object);
+            return a;
+        };
+        /////////////////////// INDEX ID ARRAY //////////////////////
+        /**
+         * 
+         * @param {*} array 
+         * Array que vamos a indexar.
+         * 
+         * @param {*} object 
+         * Objecto que vamos a indexar en el array.
+         * Devuelve verdadero si se encuentra en el array.
+         * 
+         */
+        function indexIDArray(array, object) {
+            if (typeof array == 'undefined') array = [];
+            let a = Object.assign(array);
+            for (let i = 0; i < a.length; i++) {
+                if (a[i].id == object.id) return true;
+            }
+            return false;
+        };
     }
 })();

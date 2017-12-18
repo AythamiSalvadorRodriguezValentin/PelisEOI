@@ -54,10 +54,13 @@
             let promise = new Promise((resolve, reject) => {
                 user.id = randId();
                 firebase.database().ref('users/' + user.id).set({
-                    name: user.name,
-                    email: user.email,
-                    phone: user.phone,
-                    photo: user.photo
+                    name: (user.name) ? user.name : 'null',
+                    email: (user.email) ? user.email : 'null',
+                    phone: (user.phone) ? user.phone : 'null',
+                    photo: (user.photo) ? user.photo : 'null',
+                    fav: (user.fav) ? user.fav : [],
+                    see: (user.see) ? user.see : [],
+                    saw: (user.saw) ? user.saw : [],
                 }).catch(e => reject(e));
             })
             return promise;
@@ -65,10 +68,13 @@
         ///////////////////////////// Actualiza datos database ///////////////////////////////
         function updateUserData(user) {
             firebase.database().ref('users/' + user.id).update({
-                name: user.name,
-                email: user.email,
-                phone: user.phone,
-                photo: user.photo
+                name: (user.name) ? user.name : 'null',
+                email: (user.email) ? user.email : 'null',
+                phone: (user.phone) ? user.phone : 'null',
+                photo: (user.photo) ? user.photo : 'null',
+                fav: (user.fav) ? user.fav : [],
+                see: (user.see) ? user.see : [],
+                saw: (user.saw) ? user.saw : [],
             });
         };
         ///////////////////////////// Elimina datos database ///////////////////////////////
@@ -116,11 +122,6 @@
                         var uid = user.uid;
                         var providerData = user.providerData;
                         resolve(user);
-                        // ...
-                    } else {
-                        // User is signed out.
-                        // ...
-                        reject(null);
                     }
                 });
             });

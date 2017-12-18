@@ -17,14 +17,18 @@
                     <div class="component-card-films-text">
                         <div class="component-align">
                             <div class="component-element">
-                                <div class="element element1"></div> {{film.vote_average}} </div>
-                            <div class="component-element" ng-click="$ctrl.fuctionFavourite({object:film,type:'click'})">
-                                <div class="element element2"></div>
-                                Añadir a favoritos
+                                <div class="element element1"></div>
+                                <p class="element-text">{{film.vote_average}}</p>
+                            </div>
+                            <div class="component-element">
+                                <div ng-click="$ctrl.elementsUser({object:film, clase:'fav', type:'click'})" ng-class="{element3:$ctrl.elementsUser({object:film, clase:'fav', type:'class'})}"
+                                    class="element element2"></div>
+                            </div>
+                            <div class="component-element">
+                                <div ng-click="$ctrl.elementsUser({object:film, clase:'see', type:'click'})" ng-class="{element5:$ctrl.elementsUser({object:film, clase:'see', type:'class'})}"
+                                    class="element element4"></div>
                             </div>
                         </div>
-                        <div class="component-element">
-                            <div class="element element3"></div> Ver más tarde </div>
                     </div>
                 </div>
             </div>

@@ -22,7 +22,7 @@
                 selected: '=',
                 showFilm: '&',
                 changeSelect: '&',
-                fuctionFavourite: '&'
+                elementsUser: '&'
             },
         });
     ///////////////////////////////////////////////////////////

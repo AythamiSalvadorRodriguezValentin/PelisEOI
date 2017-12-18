@@ -60,7 +60,7 @@
             return $http
                 .get(vm.url + id + vm.apiKey + plot)
                 .then(loaded => {
-                    if(loaded.status != 200 && loaded.statusText !='OK') return;
+                    if (loaded.status != 200 && loaded.statusText != 'OK') return;
                     loaded.data.ratings = {};
                     if (loaded.data.Ratings) {
                         if (loaded.data.Ratings[0]) loaded.data.ratings.imdb = calRatings(loaded.data.Ratings[0].Value);
