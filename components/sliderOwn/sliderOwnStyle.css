@@ -1,4 +1,5 @@
 .component-slider-general{
+    border-width: 0px;
     cursor: pointer;
     width: 100%;
     height: 22px;
@@ -12,6 +13,7 @@
 }
 .component-slider-container > .component-slider-progressMin {
     z-index: 5;
+    border-width: 0px;
     /* background-color: #2883d8; */
     background-color: #e9ecee;
     position: absolute;
@@ -23,6 +25,7 @@
     position: absolute;
     height: 100%;
     top: 25%;
+    border-width: 0px;
     background: rgba(40,131,216,1);
     background: -moz-linear-gradient(left, rgba(40,131,216,1) 0%, rgba(40,131,216,1) 0%, rgba(60,184,120,1) 100%);
     background: -webkit-gradient(left top, right top, color-stop(0%, rgba(40,131,216,1)), color-stop(0%, rgba(40,131,216,1)), color-stop(100%, rgba(60,184,120,1)));
@@ -34,6 +37,7 @@
 }
 .component-slider-container > .component-slider-progressMax {
     z-index: 3;
+    border-width: 0px;
     /* background-color: #3cb878; */
     background-color: #e9ecee;
     position: absolute;
@@ -45,6 +49,7 @@
     z-index: 5;
     height: 22px;
     width: 37px;
+    border-width: 0px;
     border-radius: 15px 15px 15px 15px;
     background-color: #2883d8;
     color: white;
@@ -60,6 +65,7 @@
     z-index: 5;
     height: 22px;
     width: 37px;
+    border-width: 0px;
     border-radius: 15px 15px 15px 15px;
     background-color: #3cb878;
     color: white;

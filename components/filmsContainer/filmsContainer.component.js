@@ -14,7 +14,6 @@
             controllerAs: '$ctrl',
             bindings: {
                 orderBySelect: '<',
-                totalFilms: '<',
                 films: '<',
                 filter: '<',
                 boolLoad: '<',
@@ -22,7 +21,8 @@
                 selected: '=',
                 showFilm: '&',
                 changeSelect: '&',
-                elementsUser: '&'
+                elementsUser: '&',
+                nav:'<'
             },
         });
     ///////////////////////////////////////////////////////////

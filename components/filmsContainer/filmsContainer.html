@@ -2,15 +2,15 @@
 <!-- //////////////////////////////////////////////////////////// -->
 <div class="component-films-ombD-general" ng-cloak>
     <div class="component-bar-top-films">
-        <div ng-if="$ctrl.totalFilms.length > 0" class="component-films-find">{{$ctrl.totalFilms}}
+        <div ng-if="$ctrl.films.total > 0" class="component-films-find">{{$ctrl.films.total}}
             <span class="component-films-find-text"> películas encontradas </span>
         </div>
-        <select name="oderPelis" ng-model="$ctrl.selected" ng-change="$ctrl.changeSelect()">
+        <select ng-if="$ctrl.nav == 'Descubrir'" class="component-films-selected" name="oderPelis" ng-model="$ctrl.selected" ng-change="$ctrl.changeSelect()">
             <option ng-repeat="orderBy in $ctrl.orderBySelect track by $index">{{orderBy.name}}</option>
         </select>
     </div>
     <div class="component-card-films-general">
-        <div class="component-card-films-container" ng-repeat="film in $ctrl.films | filter:$ctrl.filter track by film.id">
+        <div class="component-card-films-container" ng-repeat="film in $ctrl.films.data | filter:$ctrl.filter track by film.id">
             <div class="omponent-card-films-container">
                 <img class="component-card-films-img" ng-click="$ctrl.showFilm({film:film})" ng-src="{{film.poster}}" onerror="this.src='/img/no-image-peli.gif'">
                 <div class="component-card-films-overlay">
@@ -27,6 +27,9 @@
                             <div class="component-element">
                                 <div ng-click="$ctrl.elementsUser({object:film, clase:'see', type:'click'})" ng-class="{element5:$ctrl.elementsUser({object:film, clase:'see', type:'class'})}"
                                     class="element element4"></div>
+                            </div>
+                            <div class="component-element">
+                                <div ng-class="{element6:$ctrl.elementsUser({object:film, clase:'saw', type:'class'})}" class="element"></div>
                             </div>
                         </div>
                     </div>

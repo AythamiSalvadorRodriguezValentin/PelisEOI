@@ -48,10 +48,10 @@
             vm.user = { auth: false, sign: true, data: null, database: null }
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
-            resetFilter();
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
+            vm.films.total = 0;
             resetFilter();
             vm.view = nav;
             switch (nav) {
@@ -83,17 +83,17 @@
             vm.timeout.search = setTimeout(function () {
                 if (str === 'Y') vm.search.page++;
                 else {
+                    resetFilter();
                     vm.search.page = 1;
                     vm.films = [];
                 }
                 vm.load = true;
-                resetFilter();
                 fuctionMovie(vm.search, (vm.search.title.length > 0) ? 'search' : 'popular');
             }, 300);
         };
         /////////////////////// FUCTION GENRE /////////////////////////
         function selectGenre(genre) {
-            vm.search.genre = InterSF.indexArray(genre, vm.search.genre);
+            vm.search.genre = InterSF.addRemoveObjectArray(vm.search.genre, genre);
             changeFilter();
         };
         function checkGenreButton(genre) {
@@ -120,7 +120,7 @@
             vm.search.order = vm.orderBy[1].name;
             /* Slider */
             vm.slider.minYear = 1950;
-            vm.slider.minYearValue = 1950;
+            vm.slider.minYearValue = 1970;
             vm.slider.maxYear = 2050;
             vm.slider.maxYearValue = 2020;
         };
@@ -131,13 +131,13 @@
                 return (InterSF.indexIDArray(vm.user.database[type], object)) ? true : false;
             }
             else if (clase == 'click') {
-                vm.user.database[type] = InterSF.addRemoveObjectArray(vm.user.database[type], object);
+                vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
                 InterSF.firebaseUser(vm.user.database, 'update');
             }
         };
         function filmsSaw(object) {
             if (!vm.user.auth || vm.user.database == null) return;
-            vm.user.database.saw = InterSF.addObjectArray(vm.user.database.saw, object);
+            vm.user.database.saw = InterSF.addIDArray(vm.user.database.saw, object);
             InterSF.firebaseUser(vm.user.database, 'update');
         }
         ///////////////////////// MESSAGE /////////////////////////////

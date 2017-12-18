@@ -56,6 +56,8 @@
                     .then(loaded => signUser('current'))
                     .catch(e => {
                         $ctrl.user.login = {};
+                        $ctrl.push = true;
+                        console.log(e.code,e.message);
                         $ctrl.message({ e: e.message, type: 'error' });
                     });
             } else if (type == 'current') {

@@ -143,26 +143,42 @@
     font-size: 23px;
 }
 /*-_Image-Icon-_*/
-.component-films-ratings-img{
-    width: 60px;
-    height: 25px;
+.component-align-ratings{
     display: flex;
     flex-flow: row;
     align-items: center;
-    justify-content: flex-start;
-    margin-right: 12px;
-    padding-left: 30px;
-    background-image: url("/img/stadistics-icons.png");
-    background-repeat: no-repeat;
-    background-position-y:-50px;
+    justify-content: space-between;
 }
-.component-rottem{
-    background-repeat: no-repeat;
-    background-position-y:-25px;
+.component-ratings{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
 }
-.component-metacritic{
-    background-repeat: no-repeat;
-    background-position-y:0px;
+.element-ratings-text{
+    position: relative;
+    top: 8px;
+    right: 25px;
+}
+.element-ratings{
+    width: 25px;
+    height: 25px;
+    margin-right: 6px;
+    margin-left: 6px;
+}
+.element-imdb{
+    background-image: url("/img/stadistic-icon.png");
+    background-position-x: 0px;
+    background-position-y: -50px;
+}
+.element-rottem{
+    background-image: url("/img/stadistic-icon.png");
+    background-position-x: 0px;
+    background-position-y: -25px;
+}
+.element-metacritic{
+    background-image: url("/img/stadistic-icon.png");
+    background-position-x: 0px;
+    background-position-y: 0px;
 }
 /*--_Similar-Films--*/
 .selected-films-similar{

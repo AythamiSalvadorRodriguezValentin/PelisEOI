@@ -64,12 +64,15 @@
         </aside>
         <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <div class="films-all-container">
-                <button ng-click="$films.getMovies('Y')">more</button>
                 <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
-                <films-container films="$films.films.data" total-films="$films.films.total" change-select="$films.changeFilter()" order-by-select="$films.orderBy"
+                <films-container films="$films.films" change-select="$films.changeFilter()" order-by-select="$films.orderBy"
                     bool-load="$films.load" src-load="/img/load.gif" selected="$films.search.order" show-film="$films.showFilm(film)"
-                    elements-user="$films.elementsUser(object, clase, type)">
+                    elements-user="$films.elementsUser(object, clase, type)" nav="$films.view">
                 </films-container>
+                <div class="films-all-load" ng-if="!$films.load && ($films.view == $films.navList[0] || $films.view == $films.navList[1])"
+                    ng-click="$films.getMovies('Y')">
+                    Cargar más ...
+                </div>
                 <!-- //////////////////////////////////////////////////////////////////////////////// -->
             </div>
         </section>

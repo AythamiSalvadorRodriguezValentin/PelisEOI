@@ -31,10 +31,13 @@
         $ctrl.maxValueDefault = 75;
         ////////////////////////////////////////////////////////////
         $ctrl.$onInit = function () {
-            configSlider();
+            if($ctrl.init) {
+                $ctrl.init = false;
+                configSlider();
+            }
             initSlider();
         };
-        $ctrl.$onChanges = function (changesObj) { };
+        $ctrl.$onChanges = function (changes) { };
         $ctrl.$onDestroy = function () {
             stopSlider();
         };

@@ -154,7 +154,7 @@
                 || (response.config.url.indexOf(vm.movieDB.typeDB.upcoming) != -1)
                 || (response.config.url.indexOf(vm.movieDB.typeDB.similar.end) != -1)) {
                 /*  discover, search, popular, similar */
-                DB.total = String(response.data.total_results);
+                DB.total = calcPointsTotal(String(response.data.total_results));
                 DB.pages = String(response.data.total_pages);
                 DB.data = response.data.results;
                 for (let i = 0; i < DB.data.length; i++) DB.data[i].poster = 'https://image.tmdb.org/t/p/w640' + DB.data[i].poster_path;
@@ -199,5 +199,10 @@
         function calDate(obj) {
             return [obj.substring(0, 4), obj.substring(5, 7), obj.substring(8, 10)];
         };
+        function calcPointsTotal(value) {
+            value = value.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+            value = value.split('').reverse().join('').replace(/^[\.]/,'');
+            return value;
+        }
     }
 })();

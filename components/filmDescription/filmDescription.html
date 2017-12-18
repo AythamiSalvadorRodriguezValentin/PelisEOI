@@ -25,9 +25,14 @@
                     </div>
                 </div>
                 <div ng-if="$ctrl.film.ombdID.ratings" class="description-calificacion-ratings">
-                    <div ng-if="$ctrl.film.ombdID.ratings.imdb" class="component-films-ratings-img">{{$ctrl.film.ombdID.ratings.imdb}}</div>
-                    <div ng-if="$ctrl.film.ombdID.ratings.rottem" class="component-films-ratings-img component-rottem">{{$ctrl.film.ombdID.ratings.rottem}}</div>
-                    <div ng-if="$ctrl.film.ombdID.ratings.metacritic" class="component-films-ratings-img component-metacritic">{{$ctrl.film.ombdID.ratings.metacritic}}</div>
+                    <div class="component-align-ratings">
+                        <div ng-if="$ctrl.film.ombdID.ratings.imdb" class="element-ratings element-imdb"></div>
+                        <div class="component-ratings-text">{{$ctrl.film.ombdID.ratings.imdb}}</div>
+                        <div ng-if="$ctrl.film.ombdID.ratings.rottem" class="element-ratings element-rottem"></div>
+                        <div class="component-ratings-text">{{$ctrl.film.ombdID.ratings.rottem}}</div>
+                        <div ng-if="$ctrl.film.ombdID.ratings.metacritic" class="element-ratings element-metacritic"></div>
+                        <div class="component-ratings-text">{{$ctrl.film.ombdID.ratings.metacritic}}</div>
+                    </div>
                 </div>
             </div>
             <div class="description-description">
