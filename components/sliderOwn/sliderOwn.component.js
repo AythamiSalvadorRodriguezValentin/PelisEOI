@@ -15,8 +15,9 @@
             bindings: {
                 min: '=',
                 max: '=',
+                maxValue: '=',
                 minValue: '=',
-                maxValue: '='
+                ngChangeSlider: '&'
             },
         });
     ////////////////////////////////////////////////////////////
@@ -33,32 +34,30 @@
             configSlider();
             initSlider();
         };
-        $ctrl.$onChanges = function (changesObj) {
-            console.log(changesObj);
-        };
+        $ctrl.$onChanges = function (changesObj) { };
         $ctrl.$onDestroy = function () {
             stopSlider();
         };
         ////////////////////////////////////////////////////////////
         function configSlider() {
-            if ($ctrl.init) {
-                $ctrl.init = false;
-                let containerSizeX = $('.component-slider-general').outerWidth();
-                let mouseXMin = $ctrl.minValueDefault * containerSizeX / 100;
-                let mouseXMax = $ctrl.maxValueDefault * containerSizeX / 100;
-                $('#component-slider-value-min').text(Math.round($ctrl.minValueDefault));
-                $('#component-slider-value-max').text(Math.round($ctrl.maxValueDefault));
-                $('.component-slider-container > .component-slider-progressMin').css('width', (mouseXMin - 7) + 'px');
-                $('.component-slider-container > .component-slider-indicator-min').css('left', (mouseXMin - 7) + 'px');
-                $('.component-slider-container > .component-slider-progressMedium').css('width', (mouseXMax - 7) + 'px');
-                $('.component-slider-container > .component-slider-indicator-max').css('left', (mouseXMax - 7) + 'px');
-                $('.component-slider-indicator-min').css('color', 'white');
-                $('.component-slider-indicator-max').css('color', 'white');
+            if (!$ctrl.min || !$ctrl.max || !$ctrl.minValue || !$ctrl.maxValue) {
+                $ctrl.min = $ctrl.minDefault;
+                $ctrl.max = $ctrl.maxDefault;
+                $ctrl.minValue = $ctrl.minValueDefault;
+                $ctrl.maxValue = $ctrl.maxValueDefault;
             }
-        }
+            let containerSizeX = $('.component-slider-general').outerWidth();
+            let mouseXMin = calcValueSlider($ctrl.minValue) * containerSizeX / 100;
+            let mouseXMax = calcValueSlider($ctrl.maxValue) * containerSizeX / 100;
+            $('#component-slider-value-min').text(represent2LastNumString($ctrl.minValue));
+            $('#component-slider-value-max').text(represent2LastNumString($ctrl.maxValue));
+            $('.component-slider-container > .component-slider-progressMin').css('width', (mouseXMin - 7) + 'px');
+            $('.component-slider-container > .component-slider-indicator-min').css('left', (mouseXMin - 7) + 'px');
+            $('.component-slider-container > .component-slider-progressMedium').css('width', (mouseXMax - 7) + 'px');
+            $('.component-slider-container > .component-slider-indicator-max').css('left', (mouseXMax - 7) + 'px');
+        };
         function initSlider() {
             $('.component-slider-general').on('mousedown', function (e) {
-                configSlider();
                 /* Container */
                 let containerSizeX = $(e.currentTarget).outerWidth();
                 let containerXY = $(e.currentTarget).offset();
@@ -105,13 +104,15 @@
             /* Mouse sobre el slider */
             let mouseX = e.pageX - containerXY.left;
             /* value min */
-            $ctrl.minValue = mouseX * 100 / containerSizeX;
+            $ctrl.minValue = Math.round(calcValueReal(mouseX * 100 / containerSizeX));
+            if($ctrl.minValue < $ctrl.min) $ctrl.minValue = $ctrl.min;
             if (mouseX >= 0 && mouseX <= containerSizeX && posMaxX < 18) {
                 $('.component-slider-container > .component-slider-progressMin').css('width', (mouseX - 7) + 'px');
                 $('.component-slider-container > .component-slider-indicator-min').css('left', (mouseX - 7) + 'px');
-                $('#component-slider-value-min').text(Math.round($ctrl.minValue));
+                $('#component-slider-value-min').text(Math.round(represent2LastNumString($ctrl.minValue)));
                 $('.component-slider-indicator-min').css('z-index', 6);
                 $('.component-slider-indicator-max').css('z-index', 5);
+                $ctrl.ngChangeSlider();
             }
         };
         function moveSliderMax(e) {
@@ -130,18 +131,29 @@
             /* Mouse sobre el slider */
             let mouseX = e.pageX - containerXY.left;
             /* value max */
-            $ctrl.maxValue = mouseX * 100 / containerSizeX;
+            $ctrl.maxValue = Math.round(calcValueReal(mouseX * 100 / containerSizeX));
+            if($ctrl.maxValue > $ctrl.max) $ctrl.maxValue = $ctrl.max;
             if (mouseX >= 0 && mouseX <= containerSizeX && posMinX >= 18) {
                 $('.component-slider-container > .component-slider-progressMedium').css('width', (mouseX - 7) + 'px');
                 $('.component-slider-container > .component-slider-indicator-max').css('left', (mouseX - 7) + 'px');
-                $('#component-slider-value-max').text(Math.round($ctrl.maxValue));
+                $('#component-slider-value-max').text(Math.round(represent2LastNumString($ctrl.maxValue)));
                 $('.component-slider-indicator-min').css('z-index', 5);
                 $('.component-slider-indicator-max').css('z-index', 6);
+                $ctrl.ngChangeSlider();
             }
         };
         function stopSlider() {
             $('.component-slider-container').off('mousedown');
             $('.component-slider-container').off('mousemove');
+        };
+        function calcValueSlider(real) {
+            return Math.abs($ctrl.min - real) / (Math.abs($ctrl.max - $ctrl.min) / 100);
+        };
+        function calcValueReal(value) {
+            return $ctrl.min + value * (Math.abs($ctrl.max - $ctrl.min) / 100);
+        };
+        function represent2LastNumString(value) {
+            return String(value).substring(String(value).length - 2, String(value).length);
         };
     }
 })();

@@ -50,7 +50,7 @@
             vm.user = { auth: true, sign: true, data: null, database: null }
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
-            changeView(vm.navList[0]);
+            resetFilter();
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
@@ -122,15 +122,9 @@
             vm.search.order = vm.orderBy[1].name;
             /* Slider */
             vm.slider.minYear = 1950;
-            vm.slider.minYearValue = 1980;
+            vm.slider.minYearValue = 1950;
             vm.slider.maxYear = 2050;
             vm.slider.maxYearValue = 2020;
-            setTimeout(() => { 
-                vm.slider.minYear = 1980;
-                vm.slider.minYearValue = 1960;
-                vm.slider.maxYear = 2030;
-                vm.slider.maxYearValue = 2010; 
-            }, 2000)
         };
         ///////////////////// FUCTION FAVOURITE ///////////////////////
         function fuctionFavourite(object, type) {
