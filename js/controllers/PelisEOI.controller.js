@@ -45,29 +45,36 @@
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
-            vm.search = { title: '', year: '', type: '', language: '', sort_by: '', genre: [], page: 1 };
+            vm.search = { title: '', year: '', type: '', language: 'es-ES', sort_by: '', genre: [], page: 1 };
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
             vm.user = { auth: true, sign: true, data: null, database: null }
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
+            changeView(vm.navList[0]);
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
+            resetFilter();
             vm.view = nav;
-            if (nav == vm.navList[0]) {
-                resetFilter('popular');
-            } else if (nav == vm.navList[1]) {
-                resetFilter('upcoming');
-            } else if (nav == vm.navList[2]) {
-                vm.films.data = vm.user.favorite;
-                vm.films.total = vm.user.favorite.length;
-            } else if (nav == vm.navList[3]) {
-                vm.films.data = vm.user.seeLater;
-                vm.films.total = vm.user.seeLater.length;
-            } else if (nav == vm.navList[4]) {
-                vm.films.data = vm.user.sawLast;
-                vm.films.total = vm.user.sawLast.length;
-            } else vm.films = {};
+            switch (nav) {
+                case vm.navList[0]:
+                    fuctionMovie(vm.search, 'popular');
+                    break;
+                case vm.navList[1]:
+                    fuctionMovie(vm.search, 'upcoming');
+                    break;
+                case vm.navList[2]:
+                    vm.films.data = vm.user.favorite;
+                    break;
+                case vm.navList[3]:
+                    vm.films.data = vm.user.seeLater;
+                    break;
+                case vm.navList[4]:
+                    vm.films.data = vm.user.sawLast;
+                    break;
+                default:
+                    break;
+            }
         }
         function checkView(nav) {
             return (vm.view == nav) ? true : false;
@@ -82,8 +89,17 @@
                     vm.films = [];
                 }
                 vm.load = true;
+                resetFilter();
                 fuctionMovie(vm.search, (vm.search.title.length > 0) ? 'search' : 'popular');
             }, 300);
+        };
+        /////////////////////// FUCTION GENRE /////////////////////////
+        function selectGenre(genre) {
+            vm.search.genre = InterSF.indexArray(genre, vm.search.genre);
+            changeFilter();
+        };
+        function checkGenreButton(genre) {
+            return (vm.search.genre.indexOf(genre) != -1) ? true : false;
         };
         /////////////////////// FUCTION FILTER ////////////////////////
         function changeFilter() {
@@ -97,30 +113,24 @@
             vm.search.release_date_gte = vm.slider.minYearValue + '-01-01';
             vm.search.release_date_lte = vm.slider.maxYearValue + '-12-31';
             fuctionMovie(vm.search, 'discover');
+            vm.search.title = '';
         };
-        function resetFilter(type) {
+        function resetFilter() {
             /* Search */
             vm.search.page = 1;
-            vm.search.title = '';
             vm.search.genre = [];
-            vm.search.language = 'es-ES';
             vm.search.order = vm.orderBy[1].name;
             /* Slider */
             vm.slider.minYear = 1950;
             vm.slider.minYearValue = 1980;
             vm.slider.maxYear = 2050;
             vm.slider.maxYearValue = 2020;
-            $scope.$apply(vm.slider);
-            /* Popular */
-            fuctionMovie(vm.search, type);
-        };
-        /////////////////////// FUCTION GENRE /////////////////////////
-        function selectGenre(genre) {
-            vm.search.genre = InterSF.indexArray(genre, vm.search.genre);
-            changeFilter();
-        };
-        function checkGenreButton(genre) {
-            return (vm.search.genre.indexOf(genre) != -1) ? true : false;
+            setTimeout(() => { 
+                vm.slider.minYear = 1980;
+                vm.slider.minYearValue = 1960;
+                vm.slider.maxYear = 2030;
+                vm.slider.maxYearValue = 2010; 
+            }, 2000)
         };
         ///////////////////// FUCTION FAVOURITE ///////////////////////
         function fuctionFavourite(object, type) {

@@ -151,8 +151,8 @@
         };
         /////////////////////////////// Configura la dirección de correo electrónico de un usuario /////////////////////////////
         function updateEmailUser(user) {
-            let user = firebase.auth().currentUser;
-            user.updateEmail(user.email).then(function () {
+            let userFire = firebase.auth().currentUser;
+            userFire.updateEmail(user.email).then(function () {
                 // Update successful.
             }).catch(function (error) {
                 // An error happened.

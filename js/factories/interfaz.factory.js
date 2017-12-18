@@ -5,8 +5,8 @@
         .module('PelisEOI')
         .factory('InterfazServerFactory', InterfazServerFactory);
 
-    InterfazServerFactory.$inject = ['TheMovieDBServerProvider', 'FirebaseServiceProvider'];
-    function InterfazServerFactory(TMDBSP, FSP) {
+    InterfazServerFactory.$inject = ['TheMovieDBServerProvider', 'OmdbIDServerProvider', 'FirebaseServiceProvider'];
+    function InterfazServerFactory(TMDBSP, OIDSP, FSP) {
         let vm = this;
         vm.data = {};
         ////////////////////////////////////////////////////////////
@@ -28,11 +28,25 @@
         };
         ////////////////////////////////////////////////////////////
         function getMovieDataFull(object) {
-            return TMDBSP
-                .getMovieFull(object)
-                .then(loaded => { return loaded })
-                .catch(e => { return e });
-        };
+            let p1 = new Promise(function (resolve, reject) {
+                vm.data = {};
+                TMDBSP
+                    .getMovieFull(object)
+                    .then(loaded => {
+                        vm.data = loaded;
+                        OIDSP
+                            .getMovieID(vm.data.imdb_id)
+                            .then(loaded => {
+                                resolve(loaded);
+                            }).catch(e => reject(e));
+                    }).catch(e => reject(e));
+            });
+            return p1
+                .then(loaded => {
+                    vm.data.ombdID = loaded;
+                    return vm.data;
+                }).catch(e => { return e; });
+        }
         ////////////////////////////////////////////////////////////
         function getOrderDataBy() {
             return TMDBSP.getOrderBy();
@@ -51,30 +65,38 @@
          */
         function firebaseSign(user, type) {
             let promise = new Promise((resolve, reject) => {
-                if (type == 'create') {
-                    FSP
-                        .createUserWithEmailAndPasswordUser(user)
-                        .then(loaded => resolve(loaded))
-                        .catch(e => reject(e));
-                } else if (type == 'up') {
-                    FSP
-                        .signInWithEmailAndPasswordUser(user)
-                        .then(loaded => resolve(loaded))
-                        .catch(e => reject(e));
-                } else if (type == 'out') {
-                    FSP
-                        .signOutUser()
-                        .then(loaded => resolve(loaded))
-                        .catch(e => reject(e));
-                } else if (type == 'update') {
-                    FSP
-                        .updateUser(user)
-                        .then(loaded => resolve(loaded))
-                        .catch(e => reject(e));
-                } else if (type == 'current') {
-                    FSP
-                        .onAuthStateChangedUser()
-                        .then(loaded => resolve(loaded))
+                switch (type) {
+                    case 'create':
+                        FSP
+                            .createUserWithEmailAndPasswordUser(user)
+                            .then(loaded => resolve(loaded))
+                            .catch(e => reject(e));
+                        break;
+                    case 'up':
+                        FSP
+                            .signInWithEmailAndPasswordUser(user)
+                            .then(loaded => resolve(loaded))
+                            .catch(e => reject(e));
+                        break;
+                    case 'out':
+                        FSP
+                            .signOutUser()
+                            .then(loaded => resolve(loaded))
+                            .catch(e => reject(e));
+                        break;
+                    case 'update':
+                        FSP
+                            .updateUser(user)
+                            .then(loaded => resolve(loaded))
+                            .catch(e => reject(e));
+                        break;
+                    case 'current':
+                        FSP
+                            .onAuthStateChangedUser()
+                            .then(loaded => resolve(loaded))
+                        break;
+                    default:
+                        break;
                 }
             });
             return promise;
@@ -93,23 +115,31 @@
          */
         function firebaseUser(user, type) {
             let promise = new Promise((resolve, reject) => {
-                if (type == 'all') {
-                    FSP
-                        .readAllUser()
-                        .then(loaded => resolve(loaded))
-                        .catch(e => reject(e));
-                } else if (type == 'user') {
-                    FSP
-                        .readUserData(user.id)
-                        .then(loaded => resolve(loaded))
-                        .catch(e => reject(e));
-                } else if (type == 'create') {
-                    FSP.createUserData(user)
-                        .catch(e => reject(e));
-                } else if (type == 'update') {
-                    FSP.updateUserData(user);
-                } else if (type == 'delete') {
-                    FSP.deleteUserData(user.id);
+                switch (type) {
+                    case 'all':
+                        FSP
+                            .readAllUser()
+                            .then(loaded => resolve(loaded))
+                            .catch(e => reject(e));
+                        break;
+                    case 'user':
+                        FSP
+                            .readUserData(user.id)
+                            .then(loaded => resolve(loaded))
+                            .catch(e => reject(e));
+                        break;
+                    case 'create':
+                        FSP.createUserData(user)
+                            .catch(e => reject(e));
+                        break;
+                    case 'update':
+                        FSP.updateUserData(user);
+                        break;
+                    case 'delete':
+                        FSP.deleteUserData(user.id);
+                        break;
+                    default:
+                        break;
                 }
             });
             return promise;

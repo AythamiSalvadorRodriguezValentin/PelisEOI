@@ -5,12 +5,11 @@
         .module('PelisEOI')
         .factory('TheMovieDBServerProvider', TheMovieDBServerProvider);
     ////////////////////////////////////////////////////////////
-    TheMovieDBServerProvider.$inject = ['$http', '$sce', 'OmdbIDServerProvider'];
-    function TheMovieDBServerProvider($http, $sce, OIDSP) {
+    TheMovieDBServerProvider.$inject = ['$http', '$sce'];
+    function TheMovieDBServerProvider($http, $sce) {
         let vm = this;
         /////////////////////// VAR FILM ///////////////////////////
         vm.movieDB = {};
-        vm.data = {};
         /////////////////////////// INIT //////////////////////////////
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
@@ -47,28 +46,33 @@
         return service;
         /////////////////////// FUCTION FILM ///////////////////////
         function getMovieFull(object) {
-            vm.data = {};
-            let promise = new Promise(function (resolve, reject) {
+            let p1 = new Promise(function (resolve, reject) {
                 getMoviesDB(object, 'id')
                     .then(loaded => {
-                        vm.data = loaded;
-                    }).catch(e => reject(e));
-                getMoviesDB(object, 'similar')
-                    .then(loaded => {
-                        vm.data.similar = loaded;
-                    }).catch(e => reject(e));
-                getMoviesDB(object, 'video')
-                    .then(loaded => {
-                        vm.data.video = loaded;
-                        OIDSP
-                            .getMovieID(vm.data.imdb_id)
-                            .then(loaded => {
-                                vm.data.ombdID = loaded;
-                            }).catch(e => reject(e));
-                        resolve(vm.data);
+                        resolve(loaded);
                     }).catch(e => reject(e));
             });
-            return promise;
+            let p2 = new Promise(function (resolve, reject) {
+                getMoviesDB(object, 'similar')
+                    .then(loaded => {
+                        resolve(loaded);
+                    }).catch(e => reject(e));
+            });
+            let p3 = new Promise(function (resolve, reject) {
+                getMoviesDB(object, 'video')
+                    .then(loaded => {
+                        resolve(loaded);
+                    }).catch(e => reject(e));
+            });
+            return Promise
+                .all([p1, p2, p3])
+                .then(loaded => {
+                    let data = {};
+                    data = loaded[0];
+                    data.similar = loaded[1];
+                    data.video = loaded[2];
+                    return data;
+                }).catch(e => { return e; });
         };
         //////////////////////// FUCTION FILMS /////////////////////
         /**
