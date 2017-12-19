@@ -50,6 +50,7 @@
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
             lazyLoad(true);
+            anonimoUser();
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
