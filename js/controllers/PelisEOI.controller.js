@@ -91,6 +91,7 @@
                     vm.films = [];
                 }
                 vm.load = true;
+                if (vm.search.title.length > 0) vm.view = vm.navList[0];
                 fuctionMovie(vm.search, (vm.search.title.length > 0) ? 'search' : 'popular');
             }, 300);
         };
