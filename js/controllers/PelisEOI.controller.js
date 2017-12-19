@@ -38,6 +38,7 @@
         vm.messageDisplay = messageDisplay;
         vm.pushRegistrer = pushRegistrer;
         vm.signOutUser = signOutUser;
+        vm.anonimoUser = anonimoUser;
         vm.showFilm = showFilm;
         /////////////////////////// INIT //////////////////////////////
         activate();
@@ -45,9 +46,10 @@
         function activate() {
             vm.search = { title: '', year: '', type: '', language: 'es-ES', sort_by: '', genre: [], page: 1 };
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
-            vm.user = { auth: false, sign: true, data: null, database: null }
+            vm.user = { anonimo: false, auth: false, sign: true, data: null, database: null }
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
+            lazyLoad(true);
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
@@ -138,13 +140,14 @@
                         vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
                     }
                 } else vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
-                InterSF.firebaseUser(vm.user.database, 'update');
+                if (!vm.user.anonimo) InterSF.firebaseUser(vm.user.database, 'update');
             }
         };
         function filmsSaw(object) {
+            let newObject = { id: object.id, poster: object.poster };
             if (!vm.user.auth || vm.user.database == null) return;
-            vm.user.database.saw = InterSF.addIDArray(vm.user.database.saw, object);
-            InterSF.firebaseUser(vm.user.database, 'update');
+            vm.user.database.saw = InterSF.addIDArray(vm.user.database.saw, newObject);
+            if (!vm.user.anonimo) InterSF.firebaseUser(vm.user.database, 'update');
         }
         ///////////////////////// MESSAGE /////////////////////////////
         function messageDisplay(e, type) {
@@ -169,16 +172,27 @@
                     .firebaseSign(vm.user, 'out')
                     .then(loaded => {
                         vm.user.data = null;
+                        vm.user.database = null;
                         vm.user.auth = false;
+                        vm.user.anonimo = false;
+                        vm.films = {};
                         $scope.$apply();
                     }).catch(e => messageDisplay(e, 'error'))
             }
         };
+        ////////////////// FUCTION ANONIMO USER ///////////////////////
+        function anonimoUser() {
+            vm.user.auth = true;
+            vm.user.anonimo = true;
+            vm.user.database = { fav: [], see: [], saw: [] }
+            changeView(vm.navList[0]);
+        }
         ///////////////////// FUCTION SHOW VIEW ///////////////////////
         function showFilm(film) {
             if (!film) {
-                $('html').css('overflow', 'scroll');
+                ScrollPagePrincipal(true);
                 vm.viewFilm = false;
+                lazyLoad(true);
                 vm.film = {};
                 return;
             }
@@ -186,7 +200,9 @@
             film.externalID = 'imdb_id';
             film.language = vm.search.language;
             filmsSaw(film);
+            lazyLoad(false);
             fuctionFullMovie(film);
+            ScrollPagePrincipal(false);
         };
         ////////////////////// OTHER FUCTION //////////////////////////
         function fuctionGenres(object, type) {
@@ -200,7 +216,6 @@
             InterSF
                 .getMoviesData(object, type)
                 .then(loaded => {
-                    console.log(loaded);
                     vm.films.data = InterSF.addArrayInArray(vm.films, loaded.data);
                     vm.films.total = loaded.total;
                     vm.load = false;
@@ -212,9 +227,21 @@
                 .then(loaded => {
                     vm.film = {};
                     vm.film = loaded;
-                    $('html').css('overflow', 'hidden');
                     $scope.$apply(vm.viewFilm = true);
                 }).catch(e => messageDisplay(e, 'error'));
         };
+        /////////////////////// FUCTION CSS /////////////////////////
+        function lazyLoad(start) {
+            if (start) $(window).on('scroll', lazyLoadScroll);
+            else $(window).off('scroll');
+        }
+        function lazyLoadScroll() {
+            if (vm.view == vm.navList[2] || vm.view == vm.navList[3] || vm.view == vm.navList[4]) return;
+            if ($(window).scrollTop() + $('html')[0].clientHeight == $('html').innerHeight()) getMovies('Y');
+        }
+        function ScrollPagePrincipal(view) {
+            if (view) $('html').css('overflow', 'scroll');
+            else $('html').css('overflow', 'hidden');
+        }
     }
 })();

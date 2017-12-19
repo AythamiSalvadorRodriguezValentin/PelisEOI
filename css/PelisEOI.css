@@ -174,14 +174,6 @@
 .films-all-container{
     width: 100%;
 }
-.films-all-load{
-    height: 50px;
-    cursor: pointer;
-    display: flex;
-    flex-flow: row;
-    justify-content: center;
-    align-items: center;
-}
 /*-----Show-Film-----*/
 .film-selected-general{
     z-index: 50;
@@ -250,6 +242,17 @@
     color: black;
 }
 .footer-page-registrate:hover{
+    text-decoration: none;
+    font-weight: 500;
+    color: black;
+}
+.footer-page-anonimo{
+    cursor: pointer;
+    font-family: NunitoSans Regular;
+    font-size: 16px;
+    color: black;
+}
+.footer-page-anonimo:hover{
     text-decoration: none;
     font-weight: 500;
     color: black;
