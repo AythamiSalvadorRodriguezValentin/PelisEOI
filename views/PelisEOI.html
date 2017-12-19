@@ -45,11 +45,13 @@
                     <span class="year-span-text">{{$films.slider.minYearValue}} - {{$films.slider.maxYearValue}}</span>
                 </div>
                 <div class="slider-year">
-                    <!-- ///////////////////////////// SLIDER /////////////////////////////// -->
                     <ng-slider-own class="slider-year-own" min="$films.slider.minYear" max="$films.slider.maxYear" min-value="$films.slider.minYearValue"
                         max-value="$films.slider.maxYearValue" ng-change-slider="$films.changeFilter(min,max,selected)"></ng-slider-own>
-                    <!-- //////////////////////////////////////////////////////////////////// -->
                 </div>
+                <!-- <div class="slider-imdb">
+                    <ng-slider-imdb class="slider-imdb-own" min="$films.slider.minIMDB" max="$films.slider.maxIMDB" min-value="$films.slider.minIMDBValue"
+                        max-value="$films.slider.maxIMDBValue" ng-change-slider="$films.changeFilter(sliderYear, sliderIMDB, selected)"></ng-slider-imdb>
+                </div> -->
                 <div class="genres-text-container">
                     <span class="genres-text-title">Géneros</span>
                 </div>
@@ -65,9 +67,9 @@
         <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <div class="films-all-container">
                 <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
-                <films-container films="$films.films" change-select="$films.changeFilter(min,max,selected)" order-by-select="$films.orderBy" bool-load="$films.load"
-                    selected="$films.search.order" src-load="/img/load.gif" show-film="$films.showFilm(film)" elements-user="$films.elementsUser(object, clase, type)"
-                    nav="$films.view">
+                <films-container films="$films.films" change-select="$films.changeFilter(min,max,selected)" order-by-select="$films.orderBy"
+                    bool-load="$films.load" selected="$films.search.order" src-load="/img/load.gif" show-film="$films.showFilm(film)"
+                    elements-user="$films.elementsUser(object, clase, type)" nav="$films.view" filter="$films.search.imdb">
                 </films-container>
                 <!-- //////////////////////////////////////////////////////////////////////////////// -->
             </div>

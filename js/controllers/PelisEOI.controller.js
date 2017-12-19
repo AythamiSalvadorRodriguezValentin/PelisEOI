@@ -103,7 +103,7 @@
             return (vm.search.genre.indexOf(genre) != -1) ? true : false;
         };
         /////////////////////// FUCTION FILTER ////////////////////////
-        function changeFilter(min, max, selected) {
+        function changeFilter(min,max,selected) {
             if (typeof min != 'undefined') vm.slider.minYearValue = min;
             if (typeof max != 'undefined') vm.slider.maxYearValue = max;
             if (typeof selected != 'undefined') vm.search.order = selected;
@@ -117,7 +117,6 @@
             Object.keys(vm.orderBy).map(function (val, i) {
                 if (vm.orderBy[val].name == vm.search.order) vm.search.sort_by = vm.orderBy[i].trans;
             });
-            console.log(vm.search.order);
             fuctionMovie(vm.search, 'discover');
             vm.search.title = '';
         };

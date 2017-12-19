@@ -75,11 +75,17 @@
                 let widthMax = $('.component-slider-indicator-max').outerWidth();
                 let MaxXY = $('.component-slider-indicator-max').offset();
                 let posMaxX = e.pageX - MaxXY.left;
-                if (mouseX < (MinXY.left - widthMin) && mouseX >= 0) moveSliderMin(e);
-                else if (mouseX > (MaxXY.left - containerXY.left) && mouseX <= (containerSizeX + widthMax / 2)) moveSliderMax(e);
+                if (mouseX < (MinXY.left - widthMin) && mouseX >= 0) {
+                    moveSliderMin(e);
+                } else if (mouseX > (MaxXY.left - containerXY.left) && mouseX <= (containerSizeX + widthMax / 2)) {
+                    moveSliderMax(e);
+                }
                 $(this).on('mousemove', function (e) {
-                    if (mouseX >= 0 && mouseX < (MinXY.left - widthMin)) moveSliderMin(e);
-                    else if (mouseX > (MaxXY.left - containerXY.left) && mouseX <= (containerSizeX + widthMax / 2)) moveSliderMax(e);
+                    if (mouseX >= 0 && mouseX < (MinXY.left - widthMin)) {
+                        moveSliderMin(e);
+                    } else if (mouseX > (MaxXY.left - containerXY.left) && mouseX <= (containerSizeX + widthMax / 2)) {
+                        moveSliderMax(e);
+                    }
                 });
             }).on('mouseup', function () {
                 $(this).off('mousemove');
@@ -103,7 +109,7 @@
             let mouseX = e.pageX - containerXY.left;
             /* value min */
             $ctrl.minValue = Math.round(calcValueReal(mouseX * 100 / containerSizeX));
-            if ($ctrl.minValue < $ctrl.min) $ctrl.minValue = $ctrl.min;
+            if($ctrl.minValue < $ctrl.min) $ctrl.minValue = $ctrl.min;
             if (mouseX >= 0 && mouseX <= containerSizeX && posMaxX < 18) {
                 $('.component-slider-container > .component-slider-progressMin').css('width', (mouseX - 7) + 'px');
                 $('.component-slider-container > .component-slider-indicator-min').css('left', (mouseX - 7) + 'px');
@@ -130,7 +136,7 @@
             let mouseX = e.pageX - containerXY.left;
             /* value max */
             $ctrl.maxValue = Math.round(calcValueReal(mouseX * 100 / containerSizeX));
-            if ($ctrl.maxValue > $ctrl.max) $ctrl.maxValue = $ctrl.max;
+            if($ctrl.maxValue > $ctrl.max) $ctrl.maxValue = $ctrl.max;
             if (mouseX >= 0 && mouseX <= containerSizeX && posMinX >= 18) {
                 $('.component-slider-container > .component-slider-progressMedium').css('width', (mouseX - 7) + 'px');
                 $('.component-slider-container > .component-slider-indicator-max').css('left', (mouseX - 7) + 'px');

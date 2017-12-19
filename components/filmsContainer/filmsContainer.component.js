@@ -18,7 +18,7 @@
                 filter: '<',
                 boolLoad: '<',
                 orderBySelect: '<',
-                selected:'=',
+                selected:'<',
                 srcLoad: '@',
                 showFilm: '&',
                 changeSelect: '&',
