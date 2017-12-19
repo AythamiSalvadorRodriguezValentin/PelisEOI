@@ -30,15 +30,17 @@
         $ctrl.minValueDefault = 25;
         $ctrl.maxValueDefault = 75;
         ////////////////////////////////////////////////////////////
-        $ctrl.$onInit = function () {
+        $ctrl.$onInit = () => {
             if($ctrl.init) {
                 $ctrl.init = false;
                 configSlider();
             }
             initSlider();
         };
-        $ctrl.$onChanges = function (changes) { };
-        $ctrl.$onDestroy = function () {
+        $ctrl.$onChanges = () => { 
+            configSlider();
+        };
+        $ctrl.$onDestroy = () => {
             stopSlider();
         };
         ////////////////////////////////////////////////////////////

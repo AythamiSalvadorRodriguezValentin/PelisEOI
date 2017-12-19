@@ -17,7 +17,7 @@
         <div class="component-film-description">
             <div class="description-title">
                 <span class="description-title-">Sipnosis</span>
-                <span class="description-title-runtime">{{$ctrl.film.runtime}}</span>
+                <span ng-if="$ctrl.film.runtime != '0h0m'" class="description-title-runtime">{{$ctrl.film.runtime}}</span>
             </div>
             <div class="description-calificacion">
                 <div class="description-calificacion">
@@ -52,7 +52,7 @@
         <div class="selected-films-similar-container">
             <div class="selected-films-similar-container-films" ng-repeat="similar in $ctrl.film.similar.data">
                 <img class="selected-films-similar-container-films-img" ng-src="{{similar.poster}}" onerror="this.src='/img/no-image-peli.gif'"
-                    alt="photo similar film">
+                    alt="photo similar film" ng-click="$ctrl.showFilm({film:similar})">
             </div>
         </div>
     </div>

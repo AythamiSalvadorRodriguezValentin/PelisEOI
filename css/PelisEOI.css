@@ -61,7 +61,12 @@
     background-color:  #5c6269;
     border-radius: 50%;
     font-family: NunitoSans Regular;
-    font-size: 13px;
+    font-size: 15px;
+}
+.nav-bar-top button:hover{
+    background-color: #1b2126;
+    cursor: pointer;
+    color: white;
 }
 /*-----------Login--container-------------*/
 .login-button-container{

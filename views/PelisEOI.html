@@ -18,7 +18,7 @@
                 <div class="nav-bar-top">
                     <input ng-if="$films.user.auth" placeholder="Encuentra tu pelicula favorita" ng-model="$films.search.title" ng-keyup="$films.getMovies('N')"
                         type="text">
-                    <button ng-if="$films.user.auth" ng-click="$films.signOutUser()">Sign Out</button>
+                    <button ng-if="$films.user.auth" ng-click="$films.signOutUser()">Salir</button>
                 </div>
                 <div ng-show="$films.user.auth == false" class="login-button-container">
                     <button ng-if="!$films.user.sign" ng-click="$films.user.sign = true"> Inicia sesión </button>
@@ -38,7 +38,7 @@
                 <div class="bar-filter">
                     <img class="filter-img" src="img/filter.png" alt="filter">
                     <span class="filter-span">Filter</span>
-                    <span class="filter-span-delete" ng-click="$films.resetFilter()">Borrar</span>
+                    <span class="filter-span-delete" ng-click="$films.resetFilter(); $films.getMovies('N')">Borrar</span>
                 </div>
                 <div class="year-text-container">
                     <span class="year-span">Año</span>
@@ -93,7 +93,7 @@
 <!-- //////////////////////// SHOW FILM SELECTED /////////////////////////// -->
 <div ng-show="$films.viewFilm == true" class="film-selected-general" ng-cloak>
     <div class="film-selected-container">
-        <film-description film="$films.film" close="$films.showFilm()"></film-description>
+        <film-description film="$films.film" close="$films.showFilm()" show-film="$films.showFilm(film)"></film-description>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->

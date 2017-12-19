@@ -51,7 +51,7 @@
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
-            vm.films.total = 0;
+            vm.films = [];
             resetFilter();
             vm.view = nav;
             switch (nav) {
@@ -108,6 +108,7 @@
             Object.keys(vm.orderBy).map(function (val, i) {
                 if (vm.orderBy[val].name == vm.search.order) vm.search.sort_by = vm.orderBy[i].trans;
             });
+            vm.films = [];
             vm.search.release_date_gte = vm.slider.minYearValue + '-01-01';
             vm.search.release_date_lte = vm.slider.maxYearValue + '-12-31';
             fuctionMovie(vm.search, 'discover');
@@ -120,8 +121,8 @@
             vm.search.order = vm.orderBy[1].name;
             /* Slider */
             vm.slider.minYear = 1950;
-            vm.slider.minYearValue = 1970;
             vm.slider.maxYear = 2050;
+            vm.slider.minYearValue = 1970;
             vm.slider.maxYearValue = 2020;
         };
         //////////////// FUCTION ELEMENTS USER ///////////////////////
@@ -131,7 +132,12 @@
                 return (InterSF.indexIDArray(vm.user.database[type], object)) ? true : false;
             }
             else if (clase == 'click') {
-                vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
+                if (InterSF.indexIDArray(vm.user.database[type], object) && vm.view != vm.navList[2] && vm.view != vm.navList[3]) {
+                    let resp = prompt("¿ Estas seguro que deseas eliminar esta película de la lista ? Introduce 'Y' para borrarla.");
+                    if (resp == 'Y') {
+                        vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
+                    }
+                } else vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
                 InterSF.firebaseUser(vm.user.database, 'update');
             }
         };
@@ -170,7 +176,12 @@
         };
         ///////////////////// FUCTION SHOW VIEW ///////////////////////
         function showFilm(film) {
-            if (vm.viewFilm) { vm.film = {}; vm.viewFilm = false; return; }
+            if (!film) {
+                $('html').css('overflow', 'scroll');
+                vm.viewFilm = false;
+                vm.film = {};
+                return;
+            }
             film.page = 1;
             film.externalID = 'imdb_id';
             film.language = vm.search.language;
@@ -189,7 +200,9 @@
             InterSF
                 .getMoviesData(object, type)
                 .then(loaded => {
-                    vm.films = loaded;
+                    console.log(loaded);
+                    vm.films.data = InterSF.addArrayInArray(vm.films, loaded.data);
+                    vm.films.total = loaded.total;
                     vm.load = false;
                 }).catch(e => messageDisplay(e, 'error'));
         };
@@ -199,6 +212,7 @@
                 .then(loaded => {
                     vm.film = {};
                     vm.film = loaded;
+                    $('html').css('overflow', 'hidden');
                     $scope.$apply(vm.viewFilm = true);
                 }).catch(e => messageDisplay(e, 'error'));
         };

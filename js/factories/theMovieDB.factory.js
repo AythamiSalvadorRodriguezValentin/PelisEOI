@@ -116,7 +116,7 @@
             } else if (type == 'discover') {   /* discover */
                 url = vm.movieDB.url + vm.movieDB.typeDB[type] + vm.movieDB.apiKey + '&language=' + object.language
                     + '&page=' + object.page + '&sort_by=' + object.sort_by + '&release_date.gte=' + object.release_date_gte
-                    + '&release_date_lte=' + object.release_date_lte + '&with_genres=' + object.genre.join('%2C');
+                    + '&release_date.lte=' + object.release_date_lte + '&with_genres=' + object.genre.join('%2C');
             } else if (type == 'search') {   /* search */
                 url = vm.movieDB.url + vm.movieDB.typeDB[type] + vm.movieDB.apiKey + '&query=' + object.title
                     + '&language=' + object.language + '&page=' + object.page;
@@ -180,8 +180,8 @@
                 { trans: 'popularity.desc', name: 'Más Populares' },
                 { trans: 'release_date.asc', name: 'Primeras películas' },
                 { trans: 'release_date.desc', name: 'Últimas películas' },
-                { trans: 'revenue.asc', name: 'I a' },
-                { trans: 'revenue.desc', name: 'I d' },
+                { trans: 'revenue.asc', name: 'Primeros ingrsos' },
+                { trans: 'revenue.desc', name: 'Últimos ingresos' },
                 { trans: 'primary_release_date.asc', name: 'Primeras películas realizadas' },
                 { trans: 'primary_release_date.desc', name: 'Últimas películas realizadas' },
                 { trans: 'original_title.asc', name: 'Por título ascendente' },
@@ -200,8 +200,8 @@
             return [obj.substring(0, 4), obj.substring(5, 7), obj.substring(8, 10)];
         };
         function calcPointsTotal(value) {
-            value = value.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
-            value = value.split('').reverse().join('').replace(/^[\.]/,'');
+            value = value.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g, '$1.');
+            value = value.split('').reverse().join('').replace(/^[\.]/, '');
             return value;
         }
     }

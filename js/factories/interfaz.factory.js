@@ -20,7 +20,8 @@
             addRemoveObjectArray:addRemoveObjectArray,
             addIDArray: addIDArray,
             indexIDArray: indexIDArray,
-            indexArray:indexArray
+            indexArray:indexArray,
+            addArrayInArray:addArrayInArray
         };
         return service;
         ////////////////////////////////////////////////////////////
@@ -264,6 +265,25 @@
                 if (a[i] == object) return true;
             }
             return false;
+        };
+        ///////////////////// ADD ARRAY IN ARRAY////////////////////
+        /**
+         * 
+         * @param {*} array 
+         * Array que vamos a indexar.
+         * 
+         * @param {*} object 
+         * Objecto que vamos a indexar en el array.
+         * Devuelve verdadero si se encuentra en el array.
+         * 
+         */
+        function addArrayInArray(array, object) {
+            if (typeof array == 'undefined') array = [];
+            let a = Object.assign(array);
+            for (let i = 0; i < object.length; i++) {
+                if(!indexIDArray(a, object[i])) a.push(object[i]);
+            }
+            return a;
         };
     }
 })();
