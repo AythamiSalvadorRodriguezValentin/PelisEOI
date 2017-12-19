@@ -110,7 +110,7 @@
                 $('#component-slider-value-min').text(Math.round(represent2LastNumString($ctrl.minValue)));
                 $('.component-slider-indicator-min').css('z-index', 6);
                 $('.component-slider-indicator-max').css('z-index', 5);
-                $ctrl.ngChangeSlider({minValue:$ctrl.minValue, maxValue:$ctrl.maxValue});
+                $ctrl.ngChangeSlider({min:$ctrl.minValue, max:$ctrl.maxValue});
             }
         };
         function moveSliderMax(e) {
@@ -137,7 +137,7 @@
                 $('#component-slider-value-max').text(Math.round(represent2LastNumString($ctrl.maxValue)));
                 $('.component-slider-indicator-min').css('z-index', 5);
                 $('.component-slider-indicator-max').css('z-index', 6);
-                $ctrl.ngChangeSlider({minValue:$ctrl.minValue, maxValue:$ctrl.maxValue});
+                $ctrl.ngChangeSlider({min:$ctrl.minValue, max:$ctrl.maxValue});
             }
         };
         function stopSlider() {

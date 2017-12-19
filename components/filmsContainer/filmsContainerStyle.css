@@ -20,9 +20,9 @@
     font-weight: 200;
 }
 .component-films-selected{
-    display: flex;
-    flex-flow: row;
-    align-items: center;
+    position: relative;
+    top: 0%;
+    right: 0;
     cursor: pointer;
 }
 /*----Container-Films---*/

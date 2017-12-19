@@ -47,7 +47,7 @@
                 <div class="slider-year">
                     <!-- ///////////////////////////// SLIDER /////////////////////////////// -->
                     <ng-slider-own class="slider-year-own" min="$films.slider.minYear" max="$films.slider.maxYear" min-value="$films.slider.minYearValue"
-                        max-value="$films.slider.maxYearValue" ng-change-slider="$films.changeFilter(minValue,maxValue)"></ng-slider-own>
+                        max-value="$films.slider.maxYearValue" ng-change-slider="$films.changeFilter(min,max,selected)"></ng-slider-own>
                     <!-- //////////////////////////////////////////////////////////////////// -->
                 </div>
                 <div class="genres-text-container">
@@ -65,8 +65,8 @@
         <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
             <div class="films-all-container">
                 <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
-                <films-container films="$films.films" change-select="$films.changeFilter()" order-by-select="$films.orderBy" bool-load="$films.load"
-                    src-load="/img/load.gif" selected="$films.search.order" show-film="$films.showFilm(film)" elements-user="$films.elementsUser(object, clase, type)"
+                <films-container films="$films.films" change-select="$films.changeFilter(min,max,selected)" order-by-select="$films.orderBy" bool-load="$films.load"
+                    selected="$films.search.order" src-load="/img/load.gif" show-film="$films.showFilm(film)" elements-user="$films.elementsUser(object, clase, type)"
                     nav="$films.view">
                 </films-container>
                 <!-- //////////////////////////////////////////////////////////////////////////////// -->

@@ -103,19 +103,21 @@
             return (vm.search.genre.indexOf(genre) != -1) ? true : false;
         };
         /////////////////////// FUCTION FILTER ////////////////////////
-        function changeFilter(min, max) {
-            vm.slider.minYearValue = min;
-            vm.slider.maxYearValue = max;
+        function changeFilter(min, max, selected) {
+            if (typeof min != 'undefined') vm.slider.minYearValue = min;
+            if (typeof max != 'undefined') vm.slider.maxYearValue = max;
+            if (typeof selected != 'undefined') vm.search.order = selected;
             clearTimeout(vm.timeout.filter);
             vm.timeout.filter = setTimeout(getMovieFilter(), 300);
         };
         function getMovieFilter() {
-            Object.keys(vm.orderBy).map(function (val, i) {
-                if (vm.orderBy[val].name == vm.search.order) vm.search.sort_by = vm.orderBy[i].trans;
-            });
             vm.films = [];
             vm.search.release_date_gte = vm.slider.minYearValue + '-01-01';
             vm.search.release_date_lte = vm.slider.maxYearValue + '-12-31';
+            Object.keys(vm.orderBy).map(function (val, i) {
+                if (vm.orderBy[val].name == vm.search.order) vm.search.sort_by = vm.orderBy[i].trans;
+            });
+            console.log(vm.search.order);
             fuctionMovie(vm.search, 'discover');
             vm.search.title = '';
         };
