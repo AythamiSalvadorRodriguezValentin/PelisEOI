@@ -103,9 +103,11 @@
             return (vm.search.genre.indexOf(genre) != -1) ? true : false;
         };
         /////////////////////// FUCTION FILTER ////////////////////////
-        function changeFilter() {
+        function changeFilter(min, max) {
+            vm.slider.minYearValue = min;
+            vm.slider.maxYearValue = max;
             clearTimeout(vm.timeout.filter);
-            vm.timeout.filter = setTimeout(getMovieFilter, 300);
+            vm.timeout.filter = setTimeout(getMovieFilter(), 300);
         };
         function getMovieFilter() {
             Object.keys(vm.orderBy).map(function (val, i) {

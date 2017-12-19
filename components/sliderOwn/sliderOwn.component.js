@@ -13,10 +13,10 @@
             controller: NgSliderOwnController,
             controllerAs: '$ctrl',
             bindings: {
-                min: '=',
-                max: '=',
-                maxValue: '=',
-                minValue: '=',
+                min: '<',
+                max: '<',
+                maxValue: '<',
+                minValue: '<',
                 ngChangeSlider: '&'
             },
         });
@@ -31,13 +31,10 @@
         $ctrl.maxValueDefault = 75;
         ////////////////////////////////////////////////////////////
         $ctrl.$onInit = () => {
-            if($ctrl.init) {
-                $ctrl.init = false;
-                configSlider();
-            }
+            configSlider();
             initSlider();
         };
-        $ctrl.$onChanges = () => { 
+        $ctrl.$onChanges = (changes) => {
             configSlider();
         };
         $ctrl.$onDestroy = () => {
@@ -63,6 +60,8 @@
         };
         function initSlider() {
             $('.component-slider-general').on('mousedown', function (e) {
+                /* Diseabled Slider if click not exist */
+                $(window).mouseup(() => { $(this).off('mousemove'); });
                 /* Container */
                 let containerSizeX = $(e.currentTarget).outerWidth();
                 let containerXY = $(e.currentTarget).offset();
@@ -76,17 +75,11 @@
                 let widthMax = $('.component-slider-indicator-max').outerWidth();
                 let MaxXY = $('.component-slider-indicator-max').offset();
                 let posMaxX = e.pageX - MaxXY.left;
-                if (mouseX < (MinXY.left - widthMin) && mouseX >= 0) {
-                    moveSliderMin(e);
-                } else if (mouseX > (MaxXY.left - containerXY.left) && mouseX <= (containerSizeX + widthMax / 2)) {
-                    moveSliderMax(e);
-                }
+                if (mouseX < (MinXY.left - widthMin) && mouseX >= 0) moveSliderMin(e);
+                else if (mouseX > (MaxXY.left - containerXY.left) && mouseX <= (containerSizeX + widthMax / 2)) moveSliderMax(e);
                 $(this).on('mousemove', function (e) {
-                    if (mouseX >= 0 && mouseX < (MinXY.left - widthMin)) {
-                        moveSliderMin(e);
-                    } else if (mouseX > (MaxXY.left - containerXY.left) && mouseX <= (containerSizeX + widthMax / 2)) {
-                        moveSliderMax(e);
-                    }
+                    if (mouseX >= 0 && mouseX < (MinXY.left - widthMin)) moveSliderMin(e);
+                    else if (mouseX > (MaxXY.left - containerXY.left) && mouseX <= (containerSizeX + widthMax / 2)) moveSliderMax(e);
                 });
             }).on('mouseup', function () {
                 $(this).off('mousemove');
@@ -110,14 +103,14 @@
             let mouseX = e.pageX - containerXY.left;
             /* value min */
             $ctrl.minValue = Math.round(calcValueReal(mouseX * 100 / containerSizeX));
-            if($ctrl.minValue < $ctrl.min) $ctrl.minValue = $ctrl.min;
+            if ($ctrl.minValue < $ctrl.min) $ctrl.minValue = $ctrl.min;
             if (mouseX >= 0 && mouseX <= containerSizeX && posMaxX < 18) {
                 $('.component-slider-container > .component-slider-progressMin').css('width', (mouseX - 7) + 'px');
                 $('.component-slider-container > .component-slider-indicator-min').css('left', (mouseX - 7) + 'px');
                 $('#component-slider-value-min').text(Math.round(represent2LastNumString($ctrl.minValue)));
                 $('.component-slider-indicator-min').css('z-index', 6);
                 $('.component-slider-indicator-max').css('z-index', 5);
-                $ctrl.ngChangeSlider();
+                $ctrl.ngChangeSlider({minValue:$ctrl.minValue, maxValue:$ctrl.maxValue});
             }
         };
         function moveSliderMax(e) {
@@ -137,14 +130,14 @@
             let mouseX = e.pageX - containerXY.left;
             /* value max */
             $ctrl.maxValue = Math.round(calcValueReal(mouseX * 100 / containerSizeX));
-            if($ctrl.maxValue > $ctrl.max) $ctrl.maxValue = $ctrl.max;
+            if ($ctrl.maxValue > $ctrl.max) $ctrl.maxValue = $ctrl.max;
             if (mouseX >= 0 && mouseX <= containerSizeX && posMinX >= 18) {
                 $('.component-slider-container > .component-slider-progressMedium').css('width', (mouseX - 7) + 'px');
                 $('.component-slider-container > .component-slider-indicator-max').css('left', (mouseX - 7) + 'px');
                 $('#component-slider-value-max').text(Math.round(represent2LastNumString($ctrl.maxValue)));
                 $('.component-slider-indicator-min').css('z-index', 5);
                 $('.component-slider-indicator-max').css('z-index', 6);
-                $ctrl.ngChangeSlider();
+                $ctrl.ngChangeSlider({minValue:$ctrl.minValue, maxValue:$ctrl.maxValue});
             }
         };
         function stopSlider() {
