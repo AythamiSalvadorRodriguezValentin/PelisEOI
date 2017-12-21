@@ -29,8 +29,8 @@
                 <span class="year-span">Año</span>
                 <span class="year-span-text">{{$films.slider.minYearValue}} - {{$films.slider.maxYearValue}}</span>
             </div>
-            <div class="slider-year">
-                <ng-slider-own class="slider-year-own" min="$films.slider.minYear" max="$films.slider.maxYear" min-value="$films.slider.minYearValue"
+            <div class="slider-year-general">
+                <ng-slider-own class="slider-year-container" min="$films.slider.minYear" max="$films.slider.maxYear" min-value="$films.slider.minYearValue"
                     max-value="$films.slider.maxYearValue" ng-change-slider="$films.changeSliderYear(min,max)"></ng-slider-own>
             </div>
             <div class="genres-text-container">
