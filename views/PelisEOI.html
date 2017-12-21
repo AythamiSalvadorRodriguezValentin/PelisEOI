@@ -19,11 +19,11 @@
 <!-- ////////////////////////////// DISCOVER /////////////////////////////// -->
 <div class="wrapper">
     <div class="films-all-general animated">
-        <aside ng-if="$films.view.barLeft == true" class="aside-filter-general animated fadeInLeft" ng-class="{fadeOutLeft:($films.view.barLeft.animate == false)}">
+        <aside ng-if="$films.view.barLeft == true" class="aside-filter-general animated fadeInLeft">
             <div class="filter-edit">
                 <img class="filter-img" src="img/filter.png" alt="filter">
                 <span class="filter-span">Filtros</span>
-                <span class="filter-span-delete" ng-click="$films.resetFilter(); $films.getMovies('N')">Borrar</span>
+                <span class="filter-span-delete" ng-click="$films.resetFilter(true)">Borrar</span>
             </div>
             <div class="year-text-container">
                 <span class="year-span">Año</span>
@@ -44,14 +44,14 @@
                 </div>
             </div>
         </aside>
-        <section class="films-all-container animated fadeIn" ng-class="{widthAllContainer:$films.view.view != $films.navList[0]}">
+        <section ng-class="{widthAllContainer:($films.view.view != $films.navList[0] || $films.search.title.length > 0)}" class="films-all-container animated fadeIn">
             <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
             <div class="bar-top-films">
                 <div class="films-find">{{$films.films.total}}
                     <span ng-if="$films.films.total" class="films-find-text"> películas encontradas </span>
                 </div>
-                <select ng-if="$films.view.view == $films.navList[0]" class="films-selected" ng-change="$films.changeFilter()"
-                    selected="$films.search.order" name="oderPelis" ng-model="$films.search.order">
+                <select ng-if="$films.view.view == $films.navList[0]" class="films-selected" ng-change="$films.changeFilter()" name="oderPelis"
+                    ng-model="$films.search.order">
                     <option ng-repeat="orderBy in $films.orderBy track by $index">{{orderBy.name}}</option>
                 </select>
             </div>
@@ -73,8 +73,8 @@
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////////// SHOW MESSAGE ///////////////////////////// -->
-<div ng-if="$films.view.message == true" class="message-box animated fadeIn" ng-class="{messageBoxStyle:$films.messageType}"
+<div ng-if="$films.view.message == true" class="message-box animated fadeIn" ng-class="{messageBoxStyle:$films.message.type}"
     ng-cloak>
-    <p class="message-box--title"> {{$films.message}} </p>
+    <p class="message-box--title"> {{$films.message.mssg}} </p>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->

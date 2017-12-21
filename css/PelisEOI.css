@@ -330,19 +330,10 @@ a, input, button{
     outline: none;
 }
 .notWidthAllContainer{
-    transition: 0.7s ease-out;
+    transition: 0.7s ease;
     width: 70%;
 }
-.notWidthAllBar{
-    transition: 0.7s ease-out;
-    display: none !important;
-    width: 0%;
-}
-.widthAllBar{
-    transition: 0.7s ease-in;
-    width: 27%;
-}
 .widthAllContainer{
-    transition: 0.7s ease-in;
+    transition: 0.7s ease;
     width: 100%;
 }

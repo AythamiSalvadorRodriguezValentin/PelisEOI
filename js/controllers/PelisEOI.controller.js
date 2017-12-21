@@ -5,8 +5,8 @@
         .module('PelisEOI')
         .controller('PelisEOIController', PelisEOIController);
 
-    PelisEOIController.$inject = ['$scope', '$timeout', 'InterfazServerFactory'];
-    function PelisEOIController($scope, $timeout, InterSF) {
+    PelisEOIController.$inject = ['$scope', 'InterfazServerFactory'];
+    function PelisEOIController($scope, InterSF) {
         let vm = this;
         ///////////////////////// VAR VM //////////////////////////
         vm.genreList = [];
@@ -22,8 +22,7 @@
         vm.view = {};
         vm.load = false;
         vm.formUser = true;
-        vm.messageType = false;
-        vm.message = '';
+        vm.message = {};
         /////////////////////// FUCTION VM ////////////////////////
         vm.changeView = changeView;
         vm.checkView = checkView;
@@ -44,13 +43,12 @@
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
-            vm.search = { title: '', year: '', type: '', language: 'en-EN', sort_by: '', genre: [], page: 1 };
+            vm.search = { title: '', year: '', type: '', language: 'en-EN', order: '', sort_by: '', genre: [], page: 1, resetFilter: false };
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
             vm.user = { anonimo: false, auth: false, sign: true, data: null, database: null }
             vm.view = { view: vm.navList[0], film: false, barLeft: true, message: false };
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
-            fuctionMovie(vm.search, 'popular');
             configAnimatedJQuery();
             lazyLoad(true);
             anonimoUser();
@@ -60,8 +58,7 @@
             if (vm.view.view == nav) return;
             vm.view.view = nav;
             showHideBarLeft(nav);
-            resetFilter();
-            vm.films = [];
+            resetFilter(false);
             switch (nav) {
                 case vm.navList[0]:
                     fuctionMovie(vm.search, 'popular');
@@ -90,6 +87,7 @@
         }
         /////////////////////// FUCTION $FILM /////////////////////////
         function getMovies(str) {
+            showHideBarLeft(vm.view.view);
             clearTimeout(vm.timeout.search);
             vm.timeout.search = setTimeout(searchMovies, 350);
         };
@@ -97,8 +95,7 @@
             if (more === 'Y') vm.search.page++;
             else {
                 vm.search.page = 1;
-                resetFilter();
-                vm.films = [];
+                resetFilter(false);
             }
             vm.load = true;
             if (vm.search.title.length > 0) vm.view.view = vm.navList[0];
@@ -124,7 +121,7 @@
             vm.timeout.filter = setTimeout(getMovieFilter, 350);
         };
         function getMovieFilter() {
-            vm.films = [];
+            vm.search.resetFilter = false;
             vm.search.release_date_gte = vm.slider.minYearValue + '-01-01';
             vm.search.release_date_lte = vm.slider.maxYearValue + '-12-31';
             Object.keys(vm.orderBy).map(function (val, i) {
@@ -133,16 +130,17 @@
             fuctionMovie(vm.search, 'discover');
             vm.search.title = '';
         };
-        function resetFilter() {
-            /* Search */
+        function resetFilter(popular) {
             vm.search.page = 1;
             vm.search.genre = [];
             vm.search.order = vm.orderBy[1].name;
-            /* Slider */
             vm.slider.minYear = 1950;
             vm.slider.maxYear = 2050;
             vm.slider.minYearValue = 1970;
             vm.slider.maxYearValue = 2020;
+            if (vm.search.resetFilter) return;
+            else vm.search.resetFilter = true;
+            if (popular) fuctionMovie(vm.search, 'popular');
         };
         //////////////// FUCTION ELEMENTS USER ///////////////////////
         function elementsUser(object, type, clase) {
@@ -170,9 +168,9 @@
         }
         ///////////////////////// MESSAGE /////////////////////////////
         function messageDisplay(e, type) {
-            vm.message = e;
+            vm.message.mssg = e;
             vm.view.message = true;
-            vm.messageType = (type == 'error') ? false : true;
+            vm.message.type = (type == 'error') ? false : true;
             clearTimeout(vm.timeout.show);
             vm.timeout.message = setTimeout(() => {
                 vm.view.message = false;
@@ -190,17 +188,16 @@
                 InterSF
                     .firebaseSign(vm.user, 'out')
                     .then(loaded => {
-                        vm.user.data = null;
-                        vm.user.database = null;
+                        vm.user.database = { fav: [], see: [], saw: [] };
                         vm.user.auth = false;
-                        vm.user.anonimo = false;
-                        vm.films = {};
-                        $scope.$apply();
+                        vm.user.anonimo = true;
+                        $scope.$apply(changeView(vm.navList[0]));
                     }).catch(e => messageDisplay(e, 'error'))
             }
         };
         ////////////////// FUCTION ANONIMO USER ///////////////////////
         function anonimoUser() {
+            resetFilter(true);
             vm.user.anonimo = true;
             vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
             if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
@@ -227,14 +224,8 @@
         };
         ////////////////// FUCTION BAR LEFT HIDE //////////////////////
         function showHideBarLeft(nav) {
-            if (nav != vm.navList[0]) {
-                clearTimeout(vm.timeout.barLeft);
-                vm.timeout.barLeft = setTimeout(() => {
-                    $scope.$apply(vm.view.barLeft = false);
-                });
-            } else {
-                vm.view.barLeft = true;
-            }
+            if (nav != vm.navList[0] || vm.search.title.length > 0) vm.view.barLeft = false;
+            else vm.view.barLeft = true;
         }
         ////////////////////// OTHER FUCTION //////////////////////////
         function fuctionGenres(object, type) {
@@ -245,20 +236,21 @@
                 }).catch(e => messageDisplay(e, 'error'));
         };
         function fuctionMovie(object, type) {
+            vm.films = [];
             InterSF
                 .getMoviesData(object, type)
                 .then(loaded => {
                     vm.films.data = InterSF.addArrayInArray(vm.films, loaded.data);
+                    animate('container-films', 'fadeIn');
                     vm.films.total = loaded.total;
                     vm.load = false;
-                    animate('container-films', 'fadeIn');
                 }).catch(e => messageDisplay(e, 'error'));
         };
         function fuctionFullMovie(object) {
+            vm.film = {};
             InterSF
                 .getMovieDataFull(object)
                 .then(loaded => {
-                    vm.film = { total: 0 };
                     vm.film = loaded;
                     animate('all', 'fadeOut');
                     $scope.$apply(vm.view.film = true);
