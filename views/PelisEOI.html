@@ -19,7 +19,7 @@
 <!-- ////////////////////////////// DISCOVER /////////////////////////////// -->
 <div class="wrapper">
     <div class="films-all-general animated">
-        <aside ng-if="$films.view == $films.navList[0]" class="aside-filter-general animated fadeInLeft">
+        <aside ng-if="$films.view.barLeft == true" class="aside-filter-general animated fadeInLeft" ng-class="{fadeOutLeft:($films.view.barLeft.animate == false)}">
             <div class="filter-edit">
                 <img class="filter-img" src="img/filter.png" alt="filter">
                 <span class="filter-span">Filtros</span>
@@ -31,7 +31,7 @@
             </div>
             <div class="slider-year">
                 <ng-slider-own class="slider-year-own" min="$films.slider.minYear" max="$films.slider.maxYear" min-value="$films.slider.minYearValue"
-                    max-value="$films.slider.maxYearValue" ng-change-slider="$films.changeFilter(min,max,selected)"></ng-slider-own>
+                    max-value="$films.slider.maxYearValue" ng-change-slider="$films.changeSliderYear(min,max)"></ng-slider-own>
             </div>
             <div class="genres-text-container">
                 <span class="genres-text-title">Géneros</span>
@@ -44,20 +44,20 @@
                 </div>
             </div>
         </aside>
-        <section class="films-all-container animated fadeIn" ng-class="{widthAllContainer:$films.view != $films.navList[0]}">
+        <section class="films-all-container animated fadeIn" ng-class="{widthAllContainer:$films.view.view != $films.navList[0]}">
             <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
             <div class="bar-top-films">
                 <div class="films-find">{{$films.films.total}}
                     <span ng-if="$films.films.total" class="films-find-text"> películas encontradas </span>
                 </div>
-                <select ng-if="$films.view == $films.navList[0]" class="films-selected" ng-change="$films.changeFilter(min,max,selected)"
+                <select ng-if="$films.view.view == $films.navList[0]" class="films-selected" ng-change="$films.changeFilter()"
                     selected="$films.search.order" name="oderPelis" ng-model="$films.search.order">
                     <option ng-repeat="orderBy in $films.orderBy track by $index">{{orderBy.name}}</option>
                 </select>
             </div>
             <div class="films-container-directive animated">
                 <films-container films="$films.films" bool-load="$films.load" src-load="/img/load.gif" show-film="$films.showFilm(film)"
-                    elements-user="$films.elementsUser(object, clase, type)" nav="$films.view" filter="$films.search.imdb">
+                    elements-user="$films.elementsUser(object, clase, type)" nav="$films.view.view" filter="$films.search.imdb">
                 </films-container>
             </div>
             <!-- //////////////////////////////////////////////////////////////////////////////// -->
@@ -66,14 +66,14 @@
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////// SHOW FILM SELECTED /////////////////////////// -->
-<div ng-if="$films.viewFilm == true" class="film-selected-general animated fadeInRight" ng-cloak>
+<div ng-if="$films.view.film == true" class="film-selected-general animated fadeInRight" ng-cloak>
     <div class="film-selected-container">
         <film-description film="$films.film" close="$films.showFilm()" show-film="$films.showFilm(film)"></film-description>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////////// SHOW MESSAGE ///////////////////////////// -->
-<div ng-if="$films.viewMessage == true" class="message-box animated fadeIn" ng-class="{messageBoxStyle:$films.messageType}"
+<div ng-if="$films.view.message == true" class="message-box animated fadeIn" ng-class="{messageBoxStyle:$films.messageType}"
     ng-cloak>
     <p class="message-box--title"> {{$films.message}} </p>
 </div>

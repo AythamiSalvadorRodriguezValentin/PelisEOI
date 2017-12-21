@@ -19,17 +19,16 @@
         vm.search = {};
         vm.slider = {};
         vm.timeout = {};
+        vm.view = {};
         vm.load = false;
-        vm.viewFilm = false;
-        vm.viewMessage = false;
         vm.formUser = true;
         vm.messageType = false;
-        vm.view = '';
         vm.message = '';
         /////////////////////// FUCTION VM ////////////////////////
         vm.changeView = changeView;
         vm.checkView = checkView;
         vm.getMovies = getMovies;
+        vm.changeSliderYear = changeSliderYear;
         vm.changeFilter = changeFilter;
         vm.resetFilter = resetFilter;
         vm.selectGenre = selectGenre;
@@ -40,6 +39,7 @@
         vm.signOutUser = signOutUser;
         vm.anonimoUser = anonimoUser;
         vm.showFilm = showFilm;
+        vm.showHideBarLeft = showHideBarLeft;
         /////////////////////////// INIT //////////////////////////////
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
@@ -47,18 +47,21 @@
             vm.search = { title: '', year: '', type: '', language: 'en-EN', sort_by: '', genre: [], page: 1 };
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
             vm.user = { anonimo: false, auth: false, sign: true, data: null, database: null }
+            vm.view = { view: vm.navList[0], film: false, barLeft: true, message: false };
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
+            fuctionMovie(vm.search, 'popular');
             configAnimatedJQuery();
             lazyLoad(true);
             anonimoUser();
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
-            if (vm.view == nav) return;
-            vm.films = [];
+            if (vm.view.view == nav) return;
+            vm.view.view = nav;
+            showHideBarLeft(nav);
             resetFilter();
-            vm.view = nav;
+            vm.films = [];
             switch (nav) {
                 case vm.navList[0]:
                     fuctionMovie(vm.search, 'popular');
@@ -83,7 +86,7 @@
             }
         }
         function checkView(nav) {
-            return (vm.view == nav) ? true : false;
+            return (vm.view.view == nav) ? true : false;
         }
         /////////////////////// FUCTION $FILM /////////////////////////
         function getMovies(str) {
@@ -93,12 +96,12 @@
         function searchMovies(more) {
             if (more === 'Y') vm.search.page++;
             else {
-                resetFilter();
                 vm.search.page = 1;
+                resetFilter();
                 vm.films = [];
             }
             vm.load = true;
-            if (vm.search.title.length > 0) vm.view = vm.navList[0];
+            if (vm.search.title.length > 0) vm.view.view = vm.navList[0];
             fuctionMovie(vm.search, (vm.search.title.length > 0) ? 'search' : 'popular');
         }
         /////////////////////// FUCTION GENRE /////////////////////////
@@ -109,11 +112,14 @@
         function checkGenreButton(genre) {
             return (vm.search.genre.indexOf(genre) != -1) ? true : false;
         };
-        /////////////////////// FUCTION FILTER ////////////////////////
-        function changeFilter(min, max, selected) {
+        /////////////////////// FUCTION SLIDER ////////////////////////
+        function changeSliderYear(min, max) {
             if (typeof min != 'undefined') vm.slider.minYearValue = min;
             if (typeof max != 'undefined') vm.slider.maxYearValue = max;
-            if (typeof selected != 'undefined') vm.search.order = selected;
+            changeFilter();
+        }
+        /////////////////////// FUCTION FILTER ////////////////////////
+        function changeFilter() {
             clearTimeout(vm.timeout.filter);
             vm.timeout.filter = setTimeout(getMovieFilter, 350);
         };
@@ -145,7 +151,7 @@
                 return (InterSF.indexIDArray(vm.user.database[type], object)) ? true : false;
             }
             else if (clase == 'click') {
-                if (InterSF.indexIDArray(vm.user.database[type], object) && vm.view != vm.navList[2] && vm.view != vm.navList[3]) {
+                if (InterSF.indexIDArray(vm.user.database[type], object) && vm.view.view != vm.navList[2] && vm.view.view != vm.navList[3]) {
                     let resp = prompt("¿ Estas seguro que deseas eliminar esta película de la lista ? Introduce 'Y' para borrarla.");
                     if (resp == 'Y') {
                         vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
@@ -165,11 +171,11 @@
         ///////////////////////// MESSAGE /////////////////////////////
         function messageDisplay(e, type) {
             vm.message = e;
-            vm.viewMessage = true;
+            vm.view.message = true;
             vm.messageType = (type == 'error') ? false : true;
             clearTimeout(vm.timeout.show);
             vm.timeout.message = setTimeout(() => {
-                vm.viewMessage = false;
+                vm.view.message = false;
                 $scope.$apply();
             }, 3000);
         };
@@ -198,7 +204,6 @@
             vm.user.anonimo = true;
             vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
             if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
-            changeView(vm.navList[0]);
         }
         ///////////////////// FUCTION SHOW VIEW ///////////////////////
         function showFilm(film) {
@@ -208,7 +213,7 @@
                 ScrollPagePrincipal(true);
                 lazyLoad(true);
                 setTimeout(() => {
-                    $scope.$apply(vm.viewFilm = false);
+                    $scope.$apply(vm.view.film = false);
                 }, 550)
                 return;
             }
@@ -220,6 +225,17 @@
             fuctionFullMovie(film);
             ScrollPagePrincipal(false);
         };
+        ////////////////// FUCTION BAR LEFT HIDE //////////////////////
+        function showHideBarLeft(nav) {
+            if (nav != vm.navList[0]) {
+                clearTimeout(vm.timeout.barLeft);
+                vm.timeout.barLeft = setTimeout(() => {
+                    $scope.$apply(vm.view.barLeft = false);
+                });
+            } else {
+                vm.view.barLeft = true;
+            }
+        }
         ////////////////////// OTHER FUCTION //////////////////////////
         function fuctionGenres(object, type) {
             InterSF
@@ -245,7 +261,7 @@
                     vm.film = { total: 0 };
                     vm.film = loaded;
                     animate('all', 'fadeOut');
-                    $scope.$apply(vm.viewFilm = true);
+                    $scope.$apply(vm.view.film = true);
                 }).catch(e => messageDisplay(e, 'error'));
         };
         /////////////////////// FUCTION CSS /////////////////////////
@@ -254,7 +270,7 @@
             else $(window).off('scroll');
         };
         function lazyLoadScroll() {
-            if (vm.view == vm.navList[2] || vm.view == vm.navList[3] || vm.view == vm.navList[4] || vm.films.total.split('.').join() <= 20) return;
+            if (vm.view.view == vm.navList[2] || vm.view.view == vm.navList[3] || vm.view.view == vm.navList[4] || vm.films.total.split('.').join() <= 20) return;
             if ($(window).scrollTop() + $('html')[0].clientHeight == $('html').innerHeight()) searchMovies('Y');
         };
         function ScrollPagePrincipal(view) {
