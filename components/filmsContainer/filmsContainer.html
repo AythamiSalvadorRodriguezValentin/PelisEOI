@@ -1,15 +1,6 @@
 <link rel="stylesheet" href="/components/filmsContainer/filmsContainerStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
-<div class="component-films-ombD-general" ng-cloak>
-    <div class="component-bar-top-films">
-        <div ng-if="$ctrl.films.total > 0" class="component-films-find">{{$ctrl.films.total}}
-            <span class="component-films-find-text"> películas encontradas </span>
-        </div>
-        <select ng-if="$ctrl.nav == 'Descubrir'" class="component-films-selected" selected="$ctrl.selected" name="oderPelis" ng-change="$ctrl.changeSelect({selected:$ctrl.selected})"
-            ng-model="$ctrl.selected">
-            <option ng-repeat="orderBy in $ctrl.orderBySelect track by $index">{{orderBy.name}}</option>
-        </select>
-    </div>
+<div class="component-films-general" ng-cloak>
     <div class="component-card-films-general">
         <div class="component-card-films-container" ng-repeat="film in $ctrl.films.data | filter:$ctrl.filter track by film.id">
             <div class="omponent-card-films-container">

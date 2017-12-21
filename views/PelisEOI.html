@@ -1,103 +1,80 @@
 <!-- ///////////////////////////// NAVEGATOR /////////////////////////////// -->
-<nav class="row" ng-cloak>
-    <div class="nav-bar-row-top">
-        <div class="wrapper-nav">
-            <div class="col-lg-2">
-                <div class="nav-bar-top">
-                    <img src="/img/logo.png" alt="logotipo">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <ul class="nav-bar-top">
-                    <li ng-if="$films.user.auth" ng-repeat="nav in $films.navList track by $index" ng-class="{navBarTopSelected:$films.checkView(nav)}"
-                        ng-click="$films.changeView(nav)"> {{::nav}}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4">
-                <div class="nav-bar-top">
-                    <input ng-if="$films.user.auth" placeholder="Encuentra tu pelicula favorita" ng-model="$films.search.title" ng-keyup="$films.getMovies('N')"
-                        type="text">
-                    <button ng-if="$films.user.auth" ng-click="$films.signOutUser()">Salir</button>
-                </div>
-                <div ng-show="$films.user.auth == false" class="login-button-container">
-                    <button ng-if="!$films.user.sign" ng-click="$films.user.sign = true"> Inicia sesión </button>
-                    <personal-login ng-if="$films.user.sign" form-login="$films.user.formLogin" message="$films.messageDisplay(e,type)" user="$films.user"
-                        users="$films.users" change-view="$films.changeView(nav)"></personal-login>
-                </div>
-            </div>
+<nav class="nav-bar-top-general animated fadeIn" ng-cloak>
+    <div class="wrapper-nav">
+        <div class="nav-bar-top nav-start">
+            <img src="/img/logo.png" alt="logotipo">
+        </div>
+        <ul class="nav-bar-top nav-middle">
+            <li ng-repeat="nav in $films.navList track by $index" ng-class="{navBarTopSelected:$films.checkView(nav)}" ng-click="$films.changeView(nav)">
+                {{::nav}}
+            </li>
+        </ul>
+        <div class="nav-bar-top nav-end">
+            <input placeholder="Encuentra tu pelicula favorita" ng-model="$films.search.title" ng-keyup="$films.getMovies('N')" type="text">
+            <button ng-if="$films.user.auth" ng-click="$films.signOutUser()">Salir</button>
         </div>
     </div>
 </nav>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- ////////////////////////////// DISCOVER /////////////////////////////// -->
-<div class="row" ng-show="$films.user.auth == true" ng-cloak>
-    <div class="wrapper">
-        <aside class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-            <div class="bar-filter-general">
-                <div class="bar-filter">
-                    <img class="filter-img" src="img/filter.png" alt="filter">
-                    <span class="filter-span">Filter</span>
-                    <span class="filter-span-delete" ng-click="$films.resetFilter(); $films.getMovies('N')">Borrar</span>
-                </div>
-                <div class="year-text-container">
-                    <span class="year-span">Año</span>
-                    <span class="year-span-text">{{$films.slider.minYearValue}} - {{$films.slider.maxYearValue}}</span>
-                </div>
-                <div class="slider-year">
-                    <ng-slider-own class="slider-year-own" min="$films.slider.minYear" max="$films.slider.maxYear" min-value="$films.slider.minYearValue"
-                        max-value="$films.slider.maxYearValue" ng-change-slider="$films.changeFilter(min,max,selected)"></ng-slider-own>
-                </div>
-                <!-- <div class="slider-imdb">
-                    <ng-slider-imdb class="slider-imdb-own" min="$films.slider.minIMDB" max="$films.slider.maxIMDB" min-value="$films.slider.minIMDBValue"
-                        max-value="$films.slider.maxIMDBValue" ng-change-slider="$films.changeFilter(sliderYear, sliderIMDB, selected)"></ng-slider-imdb>
-                </div> -->
-                <div class="genres-text-container">
-                    <span class="genres-text-title">Géneros</span>
-                </div>
-                <div class="genres-button-general">
-                    <div class="genres-button-container" ng-repeat="genre in $films.genreList">
-                        <button class="genres-button" ng-class="{markedStyleButton:$films.checkGenreButton(genre.id)}" ng-click="$films.selectGenre(genre.id)">
-                            {{genre.name}}
-                        </button>
-                    </div>
+<div class="wrapper">
+    <div class="films-all-general animated">
+        <aside ng-if="$films.view == $films.navList[0]" class="aside-filter-general animated fadeInLeft">
+            <div class="filter-edit">
+                <img class="filter-img" src="img/filter.png" alt="filter">
+                <span class="filter-span">Filtros</span>
+                <span class="filter-span-delete" ng-click="$films.resetFilter(); $films.getMovies('N')">Borrar</span>
+            </div>
+            <div class="year-text-container">
+                <span class="year-span">Año</span>
+                <span class="year-span-text">{{$films.slider.minYearValue}} - {{$films.slider.maxYearValue}}</span>
+            </div>
+            <div class="slider-year">
+                <ng-slider-own class="slider-year-own" min="$films.slider.minYear" max="$films.slider.maxYear" min-value="$films.slider.minYearValue"
+                    max-value="$films.slider.maxYearValue" ng-change-slider="$films.changeFilter(min,max,selected)"></ng-slider-own>
+            </div>
+            <div class="genres-text-container">
+                <span class="genres-text-title">Géneros</span>
+            </div>
+            <div class="genres-button-general">
+                <div class="genres-button-container" ng-repeat="genre in $films.genreList">
+                    <button class="genres-button" ng-class="{markedStyleButton:$films.checkGenreButton(genre.id)}" ng-click="$films.selectGenre(genre.id)">
+                        {{genre.name}}
+                    </button>
                 </div>
             </div>
         </aside>
-        <section class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-            <div class="films-all-container">
-                <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
-                <films-container films="$films.films" change-select="$films.changeFilter(min,max,selected)" order-by-select="$films.orderBy"
-                    bool-load="$films.load" selected="$films.search.order" src-load="/img/load.gif" show-film="$films.showFilm(film)"
+        <section class="films-all-container animated fadeIn" ng-class="{widthAllContainer:$films.view != $films.navList[0]}">
+            <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
+            <div class="bar-top-films">
+                <div class="films-find">{{$films.films.total}}
+                    <span ng-if="$films.films.total" class="films-find-text"> películas encontradas </span>
+                </div>
+                <select ng-if="$films.view == $films.navList[0]" class="films-selected" ng-change="$films.changeFilter(min,max,selected)"
+                    selected="$films.search.order" name="oderPelis" ng-model="$films.search.order">
+                    <option ng-repeat="orderBy in $films.orderBy track by $index">{{orderBy.name}}</option>
+                </select>
+            </div>
+            <div class="films-container-directive animated">
+                <films-container films="$films.films" bool-load="$films.load" src-load="/img/load.gif" show-film="$films.showFilm(film)"
                     elements-user="$films.elementsUser(object, clase, type)" nav="$films.view" filter="$films.search.imdb">
                 </films-container>
-                <!-- //////////////////////////////////////////////////////////////////////////////// -->
             </div>
+            <!-- //////////////////////////////////////////////////////////////////////////////// -->
         </section>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
-<!-- ////////////////////////// SHOW FORM USER ///////////////////////////// -->
-<div ng-show="$films.user.auth == false" class="user-form-general" ng-cloak>
-    <personal-form class="user-form-container" user="$films.user" form="$films.user.formPersonal" message="$films.messageDisplay(e,type)"></personal-form>
-    <div class="wrapper">
-        <footer class="footer-page-films">
-            <a class="footer-page-registrate" ng-click="$films.pushRegistrer()">Regístrate gratis</a>
-            <a class="footer-page-anonimo" ng-click="$films.anonimoUser()">Entrar sin registrarse</a>
-            <h5 class="footer-page-coprit">Pelis EOI © 2017</h5>
-        </footer>
-    </div>
-</div>
-<!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////// SHOW FILM SELECTED /////////////////////////// -->
-<div ng-show="$films.viewFilm == true" class="film-selected-general" ng-cloak>
+<div ng-if="$films.viewFilm == true" class="film-selected-general animated fadeInRight" ng-cloak>
     <div class="film-selected-container">
         <film-description film="$films.film" close="$films.showFilm()" show-film="$films.showFilm(film)"></film-description>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////////// SHOW MESSAGE ///////////////////////////// -->
-<div ng-show="$films.viewMessage == true" class="message-box" ng-class="{messageBoxStyle:$films.messageType}" ng-cloak>
+<div ng-if="$films.viewMessage == true" class="message-box animated fadeIn" ng-class="{messageBoxStyle:$films.messageType}"
+    ng-cloak>
     <p class="message-box--title"> {{$films.message}} </p>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->

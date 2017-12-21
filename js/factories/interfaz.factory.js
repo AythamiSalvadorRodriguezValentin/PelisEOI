@@ -5,8 +5,8 @@
         .module('PelisEOI')
         .factory('InterfazServerFactory', InterfazServerFactory);
 
-    InterfazServerFactory.$inject = ['TheMovieDBServerProvider', 'OmdbIDServerProvider', 'FirebaseServiceProvider'];
-    function InterfazServerFactory(TMDBSP, OIDSP, FSP) {
+    InterfazServerFactory.$inject = ['TheMovieDBServerProvider', 'OmdbIDServerProvider', 'FirebaseServiceProvider','UsersLocalProvider'];
+    function InterfazServerFactory(TMDBSP, OIDSP, FSP, ULP) {
         let vm = this;
         vm.data = {};
         ////////////////////////////////////////////////////////////
@@ -16,6 +16,7 @@
             getOrderDataBy: getOrderDataBy,
             firebaseSign: firebaseSign,
             firebaseUser: firebaseUser,
+            anonimoUserLocalStorage:anonimoUserLocalStorage,
             addRemoveIDArray: addRemoveIDArray,
             addRemoveObjectArray:addRemoveObjectArray,
             addIDArray: addIDArray,
@@ -156,6 +157,32 @@
             });
             return promise;
         };
+        //////////////// USER LOCAL PROVIDER ///////////////
+        /**
+         * 
+         * @param {*} object 'User'
+         * @param {*} type 
+         * 'all' --> return all users of local storage, need to user.
+         * 'user' --> return one user of local storage, need to 'id'.
+         * 'update' --> update user in localstorage, need to user.
+         * 'remove' --> delete one user of local storage, need to 'id'.
+         * 
+         */
+        function anonimoUserLocalStorage(object, type){
+            switch (type) {
+                case 'get':
+                    return ULP.getAnon();
+                    break;
+                case 'update':
+                    ULP.updateAnom(object);
+                    break;
+                case 'remove':
+                    ULP.removeAnom();
+                    break;
+                default:
+                    break;
+            }
+        }
         ///////////// ADD OR REMOVE ID ARRAY ///////////////
         /**
          * 

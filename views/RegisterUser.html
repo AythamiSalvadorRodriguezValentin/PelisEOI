@@ -1,0 +1,12 @@
+<!-- ////////////////////////// SHOW FORM USER ///////////////////////////// -->
+<div ng-show="$register.user.auth == false" class="user-form-general" ng-cloak>
+    <personal-form class="user-form-container" user="$register.user" message="$register.messageDisplay(e,type)"></personal-form>
+    <div class="wrapper">
+        <footer class="footer-page-films">
+            <a class="footer-page-registrate" ng-click="$register.pushRegistrer()">Regístrate gratis</a>
+            <a class="footer-page-anonimo" ng-click="$register.anonimoUser()">Entrar sin registrarse</a>
+            <h5 class="footer-page-coprit">Pelis EOI © 2017</h5>
+        </footer>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////////// -->

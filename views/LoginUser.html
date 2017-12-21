@@ -1,0 +1,36 @@
+<!-- ///////////////////////////// NAVEGATOR /////////////////////////////// -->
+<nav class="nav-bar-top-general" ng-cloak>
+    <div class="wrapper-nav">
+        <div class="nav-bar-top">
+            <img src="/img/logo.png" alt="logotipo">
+        </div>
+        <ul class="nav-bar-top">
+            <li ng-if="$login.user.auth" ng-repeat="nav in $login.navList track by $index" ng-class="{navBarTopSelected:$login.checkView(nav)}"
+                ng-click="$login.changeView(nav)"> {{::nav}}
+            </li>
+        </ul>
+        <div class="nav-bar-top">
+            <input ng-if="$login.user.auth" placeholder="Encuentra tu pelicula favorita" ng-model="$login.search.title" ng-keyup="$login.getMovies('N')"
+                type="text">
+            <button ng-if="$login.user.auth" ng-click="$login.signOutUser()">Salir</button>
+        </div>
+        <div ng-show="$login.user.auth == false" class="login-button-container">
+            <button ng-if="!$login.user.sign" ng-click="$login.user.sign = true"> Inicia sesión </button>
+            <personal-login ng-if="$login.user.sign" form-login="$login.user.formLogin" message="$login.messageDisplay(e,type)" user="$login.user"
+                users="$login.users" change-view="$login.changeView(nav)"></personal-login>
+        </div>
+    </div>
+</nav>
+<!-- /////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////// SHOW FORM USER ///////////////////////////// -->
+<div ng-show="$login.user.auth == false" class="user-form-general" ng-cloak>
+    <personal-form class="user-form-container" user="$login.user" form="$login.user.formPersonal" message="$login.messageDisplay(e,type)"></personal-form>
+    <div class="wrapper">
+        <footer class="footer-page-login">
+            <a class="footer-page-registrate" ng-click="$login.pushRegistrer()">Regístrate gratis</a>
+            <a class="footer-page-anonimo" ng-click="$login.anonimoUser()">Entrar sin registrarse</a>
+            <h5 class="footer-page-coprit">Pelis EOI © 2017</h5>
+        </footer>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////////// -->

@@ -1,31 +1,7 @@
-/*---Barra Superior----*/
-.component-bar-top-films{
-    width: 100%;
-    height: 50px;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.component-films-find{
-    cursor: default;
-    font-family: NunitoSans SemiBold;
-    font-size: 15px;
-    font-weight: bold;
-}
-.component-films-find-text{
-    font-family: NunitoSans Regular;
-    font-size: 15px;
-    font-weight: 200;
-}
-.component-films-selected{
-    position: relative;
-    top: 0%;
-    right: 0;
-    cursor: pointer;
-}
 /*----Container-Films---*/
+.component-films-general{
+    width: 100%;
+}
 .component-card-films-general{
     background-color: white;
     display: flex;

@@ -17,11 +17,8 @@
                 films: '<',
                 filter: '<',
                 boolLoad: '<',
-                orderBySelect: '<',
-                selected:'<',
                 srcLoad: '@',
                 showFilm: '&',
-                changeSelect: '&',
                 elementsUser: '&',
             },
         });

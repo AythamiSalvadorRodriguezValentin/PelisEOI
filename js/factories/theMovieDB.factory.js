@@ -157,7 +157,9 @@
                 DB.total = calcPointsTotal(String(response.data.total_results));
                 DB.pages = String(response.data.total_pages);
                 DB.data = response.data.results;
-                for (let i = 0; i < DB.data.length; i++) DB.data[i].poster = 'https://image.tmdb.org/t/p/w640' + DB.data[i].poster_path;
+                for (let i = 0; i < DB.data.length; i++) {
+                    DB.data[i].poster = (DB.data[i].poster_path) ? ('https://image.tmdb.org/t/p/w640' + DB.data[i].poster_path) : '/img/no-image-peli.gif';
+                }
             } else if ((response.config.url.indexOf(vm.movieDB.typeDB.genres) != -1)) {
                 /* genres */ return response.data.genres;
             } else {
