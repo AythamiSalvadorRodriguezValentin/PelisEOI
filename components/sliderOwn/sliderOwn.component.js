@@ -44,15 +44,15 @@
         $ctrl.$onDestroy = () => { stopSlider(); };
         ////////////////////////////////////////////////////////////
         function configSlider() {
-            $('.component-slider-general').off('mousedown');
-            $('.component-slider-general').off('mousemove');
+            $('.component-slider-container').off('mousedown');
+            $('.component-slider-container').off('mousemove');
             if (!$ctrl.min || !$ctrl.max || !$ctrl.minValue || !$ctrl.maxValue) {
                 $ctrl.min = $ctrl.minDefault;
                 $ctrl.max = $ctrl.maxDefault;
                 $ctrl.minValue = $ctrl.minValueDefault;
                 $ctrl.maxValue = $ctrl.maxValueDefault;
             }
-            $ctrl.containerSizeX = $('.component-slider-general').outerWidth();
+            $ctrl.containerSizeX = $('.component-slider-container').outerWidth();
             let mouseXMin = calcValueSlider($ctrl.minValue) * $ctrl.containerSizeX / 100;
             let mouseXMax = calcValueSlider($ctrl.maxValue) * $ctrl.containerSizeX / 100;
             $('#component-slider-value-min').text(represent2LastNumString($ctrl.minValue));
@@ -61,7 +61,7 @@
             $('.component-slider-container > .component-slider-indicator-min').css('left', (mouseXMin - 7) + 'px');
             $('.component-slider-container > .component-slider-progressMedium').css('width', (mouseXMax - 7) + 'px');
             $('.component-slider-container > .component-slider-indicator-max').css('left', (mouseXMax - 7) + 'px');
-            initSlider();
+            $('.component-slider-general').on('mousedown', initSlider);
         };
         function reCalcValueSlider(e) {
             /* Container */
@@ -79,25 +79,21 @@
             /* Mouse sobre el slider */
             $ctrl.mouseX = e.pageX - $ctrl.containerXY.left;
         };
-        function initSlider() {
-            $('.component-slider-general').on('mousedown', function (e) {
-                /* Diseabled Slider if click not exist */
-                $(window).mouseup(() => { $(this).off('mousemove'); });
+        function initSlider(e) {
+            $(window).mouseup(() => { $('.component-slider-general').off('mousemove'); });
+            reCalcValueSlider(e);
+            if ($ctrl.mouseX >= 0 && $ctrl.mouseX < ($ctrl.MinXY.left - $ctrl.widthMin)) {
+                moveSliderMin(e);
+            } else if ($ctrl.mouseX > ($ctrl.MaxXY.left - $ctrl.containerXY.left) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2)) {
+                moveSliderMax(e);
+            }
+            $('.component-slider-general').on('mousemove', function (e) {
                 reCalcValueSlider(e);
-                if ($ctrl.mouseX >= 0 && $ctrl.mouseX < ($ctrl.MinXY.left - $ctrl.widthMin / 2)) {
+                if ($ctrl.mouseX >= 0 && $ctrl.mouseX < ($ctrl.MinXY.left - $ctrl.widthMin)) {
                     moveSliderMin(e);
                 } else if ($ctrl.mouseX > ($ctrl.MaxXY.left - $ctrl.containerXY.left) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2)) {
                     moveSliderMax(e);
-                }
-                $(this).on('mousemove', function (e) {
-                    if ($ctrl.mouseX >= 0 && $ctrl.mouseX < ($ctrl.MinXY.left - $ctrl.widthMin / 2)) {
-                        moveSliderMin(e);
-                    } else if ($ctrl.mouseX > ($ctrl.MaxXY.left - $ctrl.containerXY.left) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2)) {
-                        moveSliderMax(e);
-                    }
-                });
-            }).on('mouseup', function () {
-                $(this).off('mousemove');
+                } else $(this).off('mousemove');
             });
         };
         function moveSliderMin(e) {
