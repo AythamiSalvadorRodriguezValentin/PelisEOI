@@ -81,13 +81,13 @@
             $(window).mouseup(() => { $('.component-slider-general').off('mousemove'); });
             reCalcValueSlider(e);
             if ($ctrl.mouseX < 0) return;
-            else if ($ctrl.mouseX >= 0 && $ctrl.mouseX < ($ctrl.MinXY.left - $ctrl.widthMin)) moveSliderMin(e);
-            else if ($ctrl.mouseX > ($ctrl.MaxXY.left - (3 / 2 * $ctrl.containerXY.left)) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2)) moveSliderMax(e);
+            else if ($ctrl.mouseX >= 0 && $ctrl.mouseX < ($ctrl.MinXY.left - (3 / 2 * $ctrl.widthMin))) moveSliderMin(e);
+            else if ($ctrl.mouseX > ($ctrl.MaxXY.left - $ctrl.containerXY.left + $ctrl.widthMax / 2) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2)) moveSliderMax(e);
             $('.component-slider-general').on('mousemove', function (e) {
                 reCalcValueSlider(e);
                 if ($ctrl.mouseX < 0) $(this).off('mousemove');
-                else if ($ctrl.mouseX >= 0 && $ctrl.mouseX < ($ctrl.MinXY.left - $ctrl.widthMin)) moveSliderMin(e);
-                else if ($ctrl.mouseX > ($ctrl.MaxXY.left - (3 / 2 * $ctrl.containerXY.left)) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2)) moveSliderMax(e);
+                else if ($ctrl.mouseX >= 0 && $ctrl.mouseX < ($ctrl.MinXY.left - (3 / 2 * $ctrl.widthMin))) moveSliderMin(e);
+                else if ($ctrl.mouseX > ($ctrl.MaxXY.left - $ctrl.containerXY.left + $ctrl.widthMax / 2) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2)) moveSliderMax(e);
             });
         };
         function moveSliderMin(e) {
