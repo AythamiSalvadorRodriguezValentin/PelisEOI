@@ -59,6 +59,7 @@
             vm.view.view = nav;
             showHideBarLeft(nav);
             resetFilter(false);
+            vm.films = [];
             switch (nav) {
                 case vm.navList[0]:
                     fuctionMovie(vm.search, 'popular');
@@ -120,7 +121,9 @@
             clearTimeout(vm.timeout.filter);
             vm.timeout.filter = setTimeout(getMovieFilter, 350);
         };
-        function getMovieFilter() {
+        function getMovieFilter(more) {
+            if (more == 'Y') vm.search.page++;
+            else { vm.films = []; vm.search.page = 1; }
             vm.search.resetFilter = false;
             vm.search.release_date_gte = vm.slider.minYearValue + '-01-01';
             vm.search.release_date_lte = vm.slider.maxYearValue + '-12-31';
@@ -145,15 +148,11 @@
         //////////////// FUCTION ELEMENTS USER ///////////////////////
         function elementsUser(object, type, clase) {
             if (vm.user.database == null) return;
-            if (clase == 'class') {
-                return (InterSF.indexIDArray(vm.user.database[type], object)) ? true : false;
-            }
+            if (clase == 'class') return (InterSF.indexIDArray(vm.user.database[type], object)) ? true : false;
             else if (clase == 'click') {
                 if (InterSF.indexIDArray(vm.user.database[type], object) && vm.view.view != vm.navList[2] && vm.view.view != vm.navList[3]) {
                     let resp = prompt("¿ Estas seguro que deseas eliminar esta película de la lista ? Introduce 'Y' para borrarla.");
-                    if (resp == 'Y') {
-                        vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
-                    }
+                    if (resp == 'Y') vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
                 } else vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
                 if (!vm.user.anonimo) InterSF.firebaseUser(vm.user.database, 'update');
                 else InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
@@ -172,10 +171,7 @@
             vm.view.message = true;
             vm.message.type = (type == 'error') ? false : true;
             clearTimeout(vm.timeout.show);
-            vm.timeout.message = setTimeout(() => {
-                vm.view.message = false;
-                $scope.$apply();
-            }, 3000);
+            vm.timeout.message = setTimeout(() => $scope.$apply(vm.view.message = false), 3000);
         };
         ////////////////////// FUCTION REGISTER ///////////////////////
         function pushRegistrer() {
@@ -209,9 +205,7 @@
                 animate('all', 'fadeIn');
                 ScrollPagePrincipal(true);
                 lazyLoad(true);
-                setTimeout(() => {
-                    $scope.$apply(vm.view.film = false);
-                }, 550)
+                setTimeout(() => $scope.$apply(vm.view.film = false), 550);
                 return;
             }
             film.page = 1;
@@ -236,12 +230,11 @@
                 }).catch(e => messageDisplay(e, 'error'));
         };
         function fuctionMovie(object, type) {
-            vm.films = [];
             InterSF
                 .getMoviesData(object, type)
                 .then(loaded => {
                     vm.films.data = InterSF.addArrayInArray(vm.films, loaded.data);
-                    animate('container-films', 'fadeIn');
+                    /* animate('container-films', 'fadeIn'); */
                     vm.films.total = loaded.total;
                     vm.load = false;
                 }).catch(e => messageDisplay(e, 'error'));
@@ -263,7 +256,7 @@
         };
         function lazyLoadScroll() {
             if (vm.view.view == vm.navList[2] || vm.view.view == vm.navList[3] || vm.view.view == vm.navList[4] || vm.films.total.split('.').join() <= 20) return;
-            if ($(window).scrollTop() + $('html')[0].clientHeight == $('html').innerHeight()) searchMovies('Y');
+            if ($(window).scrollTop() + $('html')[0].clientHeight == $('html').innerHeight()) (vm.search.resetFilter) ? searchMovies('Y') : getMovieFilter('Y');
         };
         function ScrollPagePrincipal(view) {
             if (view) $('html').css('overflow', 'scroll');
@@ -281,9 +274,7 @@
                     var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
                     this.addClass('animated ' + animationName).one(animationEnd, function () {
                         $(this).removeClass('animated ' + animationName);
-                        if (callback) {
-                            callback();
-                        }
+                        if (callback) callback();
                     });
                     return this;
                 }

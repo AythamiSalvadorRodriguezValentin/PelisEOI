@@ -44,8 +44,8 @@
                 </div>
             </div>
         </aside>
+        <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
         <section ng-class="{widthAllContainer:($films.view.view != $films.navList[0] || $films.search.title.length > 0)}" class="films-all-container animated fadeIn">
-            <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
             <div class="bar-top-films">
                 <div class="films-find">{{$films.films.total}}
                     <span ng-if="$films.films.total" class="films-find-text"> películas encontradas </span>
@@ -60,9 +60,14 @@
                     elements-user="$films.elementsUser(object, clase, type)" nav="$films.view.view" filter="$films.search.imdb">
                 </films-container>
             </div>
-            <!-- //////////////////////////////////////////////////////////////////////////////// -->
         </section>
+        <!-- //////////////////////////////////////////////////////////////////////////////// -->
     </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////// FORM LOGIN USER //////////////////////////// -->
+<div class="form-login-user-general animated fadeInRight">
+    {{$ctrl.user.signText}}
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////// SHOW FILM SELECTED /////////////////////////// -->

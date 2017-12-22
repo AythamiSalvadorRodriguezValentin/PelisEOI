@@ -32,6 +32,8 @@
         $ctrl.widthMax = 0;
         $ctrl.widthMin = 0;
         $ctrl.minDefault = 0;
+        $ctrl.clickMin = true;
+        $ctrl.clickMax = true;
         $ctrl.containerXY = 0;
         $ctrl.maxDefault = 100;
         $ctrl.containerSizeX = 0;
@@ -78,20 +80,26 @@
             $ctrl.mouseX = e.pageX - $ctrl.containerXY.left;
         };
         function initSlider(e) {
-            $(window).mouseup(() => { $('.component-slider-general').off('mousemove'); });
+            $(window).mouseup(() => { $('.component-slider-general').off('mousemove'); resetClick(); });
             reCalcValueSlider(e);
             if ($ctrl.mouseX < 0) return;
-            else if ($ctrl.mouseX >= 0 && $ctrl.mouseX < ($ctrl.MinXY.left - (3 / 2 * $ctrl.widthMin))) moveSliderMin(e);
-            else if ($ctrl.mouseX > ($ctrl.MaxXY.left - $ctrl.containerXY.left + $ctrl.widthMax / 2) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2)) moveSliderMax(e);
+            else if ($ctrl.mouseX >= 0 && $ctrl.mouseX <= ($ctrl.MinXY.left - $ctrl.containerXY.left + $ctrl.widthMin) && $ctrl.clickMin)
+                moveSliderMin(e);
+            else if ($ctrl.mouseX > ($ctrl.MaxXY.left - $ctrl.containerXY.left) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2) && $ctrl.clickMax)
+                moveSliderMax(e);
             $('.component-slider-general').on('mousemove', function (e) {
                 reCalcValueSlider(e);
                 if ($ctrl.mouseX < 0) $(this).off('mousemove');
-                else if ($ctrl.mouseX >= 0 && $ctrl.mouseX < ($ctrl.MinXY.left - (3 / 2 * $ctrl.widthMin))) moveSliderMin(e);
-                else if ($ctrl.mouseX > ($ctrl.MaxXY.left - $ctrl.containerXY.left + $ctrl.widthMax / 2) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2)) moveSliderMax(e);
+                else if ($ctrl.mouseX >= 0 && $ctrl.mouseX <= ($ctrl.MinXY.left - $ctrl.containerXY.left + $ctrl.widthMin) && $ctrl.clickMin)
+                    moveSliderMin(e);
+                else if ($ctrl.mouseX > ($ctrl.MaxXY.left - $ctrl.containerXY.left) && $ctrl.mouseX <= ($ctrl.containerSizeX + $ctrl.widthMax / 2) && $ctrl.clickMax)
+                    moveSliderMax(e);
+                else $(this).off('mousemove');
             });
         };
         function moveSliderMin(e) {
             reCalcValueSlider(e);
+            $ctrl.clickMax = false;
             $ctrl.minValue = Math.round(calcValueReal($ctrl.mouseX * 100 / $ctrl.containerSizeX));
             if ($ctrl.minValue < $ctrl.min) $ctrl.minValue = $ctrl.min;
             if ($ctrl.mouseX >= 0 && $ctrl.mouseX <= $ctrl.containerSizeX && $ctrl.posMaxX < 18) {
@@ -105,6 +113,7 @@
         };
         function moveSliderMax(e) {
             reCalcValueSlider(e);
+            $ctrl.clickMin = false;
             $ctrl.maxValue = Math.round(calcValueReal($ctrl.mouseX * 100 / $ctrl.containerSizeX));
             if ($ctrl.maxValue > $ctrl.max) $ctrl.maxValue = $ctrl.max;
             if ($ctrl.mouseX >= 0 && $ctrl.mouseX <= $ctrl.containerSizeX && $ctrl.posMinX >= 18) {
@@ -116,6 +125,10 @@
                 $ctrl.ngChangeSlider({ min: $ctrl.minValue, max: $ctrl.maxValue });
             }
         };
+        function resetClick() {
+            $ctrl.clickMin = true;
+            $ctrl.clickMax = true;
+        }
         function stopSlider() {
             $('.component-slider-general').off('mousedown');
             $('.component-slider-general').off('mousemove');
