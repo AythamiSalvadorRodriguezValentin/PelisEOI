@@ -52,6 +52,7 @@
             configAnimatedJQuery();
             lazyLoad(true);
             anonimoUser();
+            teclado();
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
@@ -62,10 +63,10 @@
             vm.films = [];
             switch (nav) {
                 case vm.navList[0]:
-                    fuctionMovie(vm.search, 'popular');
+                    fuctionMovie(vm.search, 'popular', true);
                     break;
                 case vm.navList[1]:
-                    fuctionMovie(vm.search, 'upcoming');
+                    fuctionMovie(vm.search, 'upcoming', true);
                     break;
                 case vm.navList[2]:
                     animate('container-films', 'fadeIn');
@@ -100,7 +101,7 @@
             }
             vm.load = true;
             if (vm.search.title.length > 0) vm.view.view = vm.navList[0];
-            fuctionMovie(vm.search, (vm.search.title.length > 0) ? 'search' : 'popular');
+            fuctionMovie(vm.search, (vm.search.title.length > 0) ? 'search' : 'popular', (more != 'Y') ? true : false);
         }
         /////////////////////// FUCTION GENRE /////////////////////////
         function selectGenre(genre) {
@@ -130,7 +131,7 @@
             Object.keys(vm.orderBy).map(function (val, i) {
                 if (vm.orderBy[val].name == vm.search.order) vm.search.sort_by = vm.orderBy[i].trans;
             });
-            fuctionMovie(vm.search, 'discover');
+            fuctionMovie(vm.search, 'discover', (more != 'Y') ? true : false);
             vm.search.title = '';
         };
         function resetFilter(popular) {
@@ -143,7 +144,7 @@
             vm.slider.maxYearValue = 2020;
             if (vm.search.resetFilter) return;
             else vm.search.resetFilter = true;
-            if (popular) fuctionMovie(vm.search, 'popular');
+            if (popular) fuctionMovie(vm.search, 'popular', true);
         };
         //////////////// FUCTION ELEMENTS USER ///////////////////////
         function elementsUser(object, type, clase) {
@@ -229,23 +230,23 @@
                     vm.genreList = loaded;
                 }).catch(e => messageDisplay(e, 'error'));
         };
-        function fuctionMovie(object, type) {
+        function fuctionMovie(object, type, animated) {
             InterSF
                 .getMoviesData(object, type)
                 .then(loaded => {
                     vm.films.data = InterSF.addArrayInArray(vm.films, loaded.data);
-                    /* animate('container-films', 'fadeIn'); */
+                    if (animated) animate('container-films', 'fadeIn');
                     vm.films.total = loaded.total;
                     vm.load = false;
                 }).catch(e => messageDisplay(e, 'error'));
         };
         function fuctionFullMovie(object) {
-            vm.film = {};
             InterSF
                 .getMovieDataFull(object)
                 .then(loaded => {
+                    vm.film = {};
                     vm.film = loaded;
-                    animate('all', 'fadeOut');
+                    if (!vm.view.film) animate('all', 'fadeOut');
                     $scope.$apply(vm.view.film = true);
                 }).catch(e => messageDisplay(e, 'error'));
         };
@@ -268,6 +269,11 @@
             else if (type == 'film') $('.film-selected-general').animateCss(animate);
             else $('.films-all-container').animateCss(animate);
         };
+        function teclado() {
+            $('html').keydown((e) => {
+                if (e.keyCode === 27) { if (vm.view.film) $scope.$apply(vm.view.film = false); }
+            });
+        };
         function configAnimatedJQuery() {
             $.fn.extend({
                 animateCss: function (animationName, callback) {
@@ -280,5 +286,5 @@
                 }
             });
         };
-    }
+    };
 })();
