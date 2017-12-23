@@ -167,17 +167,17 @@
     margin-left: 6px;
 }
 .element-imdb{
-    background-image: url("/img/stadistic-icon.png");
+    background-image: url("/PelisEOI/img/stadistic-icon.png");
     background-position-x: 0px;
     background-position-y: -50px;
 }
 .element-rottem{
-    background-image: url("/img/stadistic-icon.png");
+    background-image: url("/PelisEOI/img/stadistic-icon.png");
     background-position-x: 0px;
     background-position-y: -25px;
 }
 .element-metacritic{
-    background-image: url("/img/stadistic-icon.png");
+    background-image: url("/PelisEOI/img/stadistic-icon.png");
     background-position-x: 0px;
     background-position-y: 0px;
 }

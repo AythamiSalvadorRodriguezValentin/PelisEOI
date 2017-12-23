@@ -2,7 +2,7 @@
 <nav class="nav-bar-top-general animated fadeIn" ng-cloak>
     <div class="wrapper-nav">
         <div class="nav-bar-top nav-start">
-            <img src="/img/logo.png" alt="logotipo">
+            <img src="/PelisEOI/img/logo.png" alt="logotipo">
         </div>
         <ul class="nav-bar-top nav-middle">
             <li ng-repeat="nav in $films.navList track by $index" ng-class="{navBarTopSelected:$films.checkView(nav)}" ng-click="$films.changeView(nav)">
@@ -55,7 +55,7 @@
                 </select>
             </div>
             <div class="films-container-directive animated">
-                <films-container films="$films.films" bool-load="$films.load" src-load="/img/load.gif" show-film="$films.showFilm(film)"
+                <films-container films="$films.films" bool-load="$films.load" src-load="/PelisEOI/img/load.gif" show-film="$films.showFilm(film)"
                     elements-user="$films.elementsUser(object, clase, type)" nav="$films.view.view" filter="$films.search.imdb">
                 </films-container>
             </div>
