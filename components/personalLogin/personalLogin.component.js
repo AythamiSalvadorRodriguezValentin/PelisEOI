@@ -76,7 +76,7 @@
             if (isIn) {
                 InterSF
                     .firebaseUser(user, 'user')
-                    .then(loaded => $ctrl.user.database = loaded)
+                    .then(loaded => $scope.$apply($ctrl.user.database = loaded))
                     .catch(e => $ctrl.message({ e: $ctrl.mssg, type: 'error' }));
             } else $ctrl.message({ e: 'No se encuentra al usuario en la base de datos', type: 'error' });
         };

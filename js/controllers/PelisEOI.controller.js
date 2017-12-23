@@ -89,7 +89,7 @@
             return (vm.view.view == nav) ? true : false;
         }
         /////////////////////// FUCTION $FILM /////////////////////////
-        function getMovies(str) {
+        function getMovies() {
             showHideBarLeft(vm.view.view);
             clearTimeout(vm.timeout.search);
             vm.timeout.search = setTimeout(searchMovies, 350);
@@ -97,7 +97,7 @@
         function searchMovies(more) {
             vm.load = true;
             if (more === 'Y') vm.search.page++;
-            else { vm.search.page = 1; resetFilter(false); }
+            else { vm.films = []; vm.search.page = 1; resetFilter(false); }
             if (vm.search.title.length > 0) vm.view.view = vm.navList[0];
             fuctionMovie(vm.search, (vm.search.title.length > 0) ? 'search' : 'popular', (more != 'Y') ? true : false);
         }
@@ -177,21 +177,54 @@
             vm.user.sign = false;
             vm.user.register = true;
         };
-        ///////////////////// FUCTION LOGIN USER //////////////////////
+        /////////////////// FUCTION CURRENT USER ////////////////////
         function currentUser() {
             setTimeout(() => {
                 InterSF
+                    .firebaseUser(vm.user, 'all')
+                    .then(loaded => vm.users = loaded)
+                    .catch(e => vm.message({ e: vm.mssg, type: 'error' }));
+                InterSF
                     .firebaseSign(vm.user, 'now')
                     .then(loaded => {
+                        vm.user.login = {};
+                        vm.load = false;
                         vm.user.data = loaded;
-                        $scope.$apply(vm.user.auth = true);
+                        vm.user.auth = true;
+                        vm.user.anonimo = false;
+                        $scope.$apply(vm.user.sign = false);
+                        InterSF
+                            .firebaseUser(vm.user, 'all')
+                            .then(loaded => {
+                                vm.users = loaded;
+                                readUser();
+                            }).catch(e => vm.message({ e: vm.mssg, type: 'error' }));
                     }).catch(e => {
-                        vm.user.anonimo = true;
-                        vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
-                        if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
+                        vm.user.auth = false;
+                        vm.user.data = null;
+                        vm.user.database = null;
+                        vm.user.anonimo = false;
+                        $scope.$apply(vm.user.sign = true);
                     });
             }, 500);
         }
+        //////////////////////// FUCTION USER ////////////////////////
+        function readUser() {
+            let user = {};
+            let isIn = false;
+            for (let i = 0; i < vm.users.length; i++) {
+                if (vm.users[i].email == vm.user.data.email) {
+                    user = vm.users[i];
+                    isIn = true;
+                }
+            }
+            if (isIn) {
+                InterSF
+                    .firebaseUser(user, 'user')
+                    .then(loaded => $scope.$apply(vm.user.database = loaded))
+                    .catch(e => vm.message({ e: vm.mssg, type: 'error' }));
+            } else vm.message({ e: 'No se encuentra al usuario en la base de datos', type: 'error' });
+        };
         function iconUserClick() {
             if (vm.user.auth) {
                 InterSF
@@ -242,7 +275,6 @@
             InterSF
                 .getMoviesData(object, type)
                 .then(loaded => {
-                    console.log(loaded);
                     vm.films.data = InterSF.addArrayInArray(vm.films, loaded.data);
                     if (animated) animate('container-films', 'fadeIn');
                     vm.films.total = loaded.total;
