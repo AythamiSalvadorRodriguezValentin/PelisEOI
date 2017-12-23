@@ -176,14 +176,9 @@
             vm.timeout.message = setTimeout(() => $scope.$apply(vm.view.message = false), 5000);
         };
         ////////////////////// FUCTION REGISTER ///////////////////////
-        function pushRegistrer(bool) {
-            if (bool) {
-                vm.user.sign = false;
-                vm.user.register = true;
-            } else {
-                vm.user.register = false;
-                scrollPagePrincipal(true);
-            }
+        function pushRegistrer() {
+            vm.user.sign = false;
+            vm.user.register = true;
         };
         ///////////////////// FUCTION LOGIN USER //////////////////////
         function currentUser() {
