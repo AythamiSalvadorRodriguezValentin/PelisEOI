@@ -15,6 +15,7 @@
             bindings: {
                 user: '=',
                 users: '=',
+                close: '&',
                 message: '&',
             },
         });
@@ -58,6 +59,7 @@
                     else if (e.message.indexOf('The password is invalid') != -1) $ctrl.message({ e: 'La contraseña no es válida', type: 'error' });
                     else if (e.message.indexOf('The email address is badly formatted') != -1) $ctrl.message({ e: 'El correo no es válido', type: 'error' });
                     else $ctrl.message({ e: e.message, type: 'error' });
+                    $ctrl.close();
                     $scope.$apply($ctrl.load = false);
                 });
         };
@@ -112,7 +114,7 @@
             if (bool) {
                 $('html').on('keydown', (e) => {
                     if (e.keyCode === 13) checkButton();
-                    if (e.keyCode === 27) $scope.$apply($ctrl.user.sign = false);
+                    if (e.keyCode === 27) { $ctrl.close(); $scope.$apply($ctrl.user.sign = false); }
                 });
             }
             else $('html').off('keydown');

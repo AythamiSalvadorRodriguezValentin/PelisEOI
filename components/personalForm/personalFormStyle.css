@@ -50,6 +50,9 @@
     background-color: #1b2126;
     cursor: pointer;
 }
+.component-view-container-close{
+    cursor: pointer;
+}
 /*----Ng-Style----*/
 /*--Error--Valid--*/
 input.ng-touched.ng-dirty.ng-invalid.ng-not-empty{

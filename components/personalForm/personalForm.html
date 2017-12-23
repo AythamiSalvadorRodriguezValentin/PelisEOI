@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/components/personalForm/personalFormStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
 <div class="component-view-container" ng-model-options="{allowInvalid: true, debounce: 200}" ng-cloak>
+    <div class="component-view-container-close" ng-click="$ctrl.user.register = false; $ctrl.close();">x</div>
     <form novalidate name="$ctrl.form" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <label>Nombre completo: </label>
         <input type="text" ng-required="true" ng-model="$ctrl.user.create.name" ng-minlength="5" ng-maxlength="30"

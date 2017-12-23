@@ -265,22 +265,6 @@
     border-radius:  5px 5px 5px 5px;
     font-size: 20px;
 }
-.user-form-container-close{
-    cursor: pointer;
-    position: fixed;
-    margin-left: 330px;
-    color: rgba(128, 128, 128);
-    display: flex;
-    justify-content: flex-end;
-}
-.user-form-register-container-close{
-    cursor: pointer;
-    position: fixed;
-    margin-left: 480px;
-    color: rgba(128, 128, 128);
-    display: flex;
-    justify-content: flex-end;
-}
 .user-form-container-register{
     background-color: #5c6269;
     border-radius: 6px 6px 6px 6px;

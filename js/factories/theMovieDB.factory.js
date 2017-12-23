@@ -161,7 +161,7 @@
                     DB.data[i].poster = (DB.data[i].poster_path) ? ('https://image.tmdb.org/t/p/w640' + DB.data[i].poster_path) : '/img/no-image-peli.gif';
                 }
             } else if ((response.config.url.indexOf(vm.movieDB.typeDB.genres) != -1)) {
-                /* genres */ return response.data.genres;
+                /* genres */ return (response.data.genres != null) ? response.data.genres : [];
             } else {
                 /* id */
                 DB = response.data;
@@ -170,7 +170,7 @@
                 DB.date = calDate(response.data.release_date);
                 DB.year = DB.date[0];
             }
-            return DB;
+            return (DB != null) ? DB : {};
         }
         //////////////////////// FUCTION ORDER /////////////////////
         /**

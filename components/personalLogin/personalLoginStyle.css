@@ -56,6 +56,9 @@
     cursor: pointer;
     color: white;
 }
+.component-login-button-container-close{
+    cursor: pointer;
+}
 .component-login-form-colum{
     display: flex;
     flex-flow: column;

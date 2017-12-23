@@ -176,9 +176,14 @@
             vm.timeout.message = setTimeout(() => $scope.$apply(vm.view.message = false), 5000);
         };
         ////////////////////// FUCTION REGISTER ///////////////////////
-        function pushRegistrer() {
-            vm.user.sign = false;
-            vm.user.register = true;
+        function pushRegistrer(bool) {
+            if (bool) {
+                vm.user.sign = false;
+                vm.user.register = true;
+            } else {
+                vm.user.register = false;
+                scrollPagePrincipal(true);
+            }
         };
         ///////////////////// FUCTION LOGIN USER //////////////////////
         function currentUser() {
@@ -205,7 +210,10 @@
                         vm.user.anonimo = true;
                         $scope.$apply(changeView(vm.navList[0]));
                     }).catch(e => messageDisplay(e, 'error'))
-            } else vm.user.sign = true;
+            } else {
+                vm.user.sign = true;
+                scrollPagePrincipal(false);
+            }
         };
         ///////////////////// FUCTION SHOW VIEW ///////////////////////
         function showFilm(film) {
