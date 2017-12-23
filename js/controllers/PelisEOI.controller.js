@@ -137,12 +137,12 @@
             vm.search.genre = [];
             vm.search.order = vm.orderBy[1].name;
             vm.slider.minYear = 1950;
-            vm.slider.maxYear = 2018;
-            vm.slider.minYearValue = 1973;
-            vm.slider.maxYearValue = 1997;
+            vm.slider.maxYear = 2020;
+            vm.slider.minYearValue = 1980;
+            vm.slider.maxYearValue = 2018;
             if (vm.search.resetFilter) return;
             else vm.search.resetFilter = true;
-            if (popular) fuctionMovie(vm.search, 'popular', true);
+            if (popular) { vm.films = []; fuctionMovie(vm.search, 'popular', true); }
         };
         //////////////// FUCTION ELEMENTS USER ///////////////////////
         function elementsUser(object, type, clase) {
@@ -242,6 +242,7 @@
             InterSF
                 .getMoviesData(object, type)
                 .then(loaded => {
+                    console.log(loaded);
                     vm.films.data = InterSF.addArrayInArray(vm.films, loaded.data);
                     if (animated) animate('container-films', 'fadeIn');
                     vm.films.total = loaded.total;
