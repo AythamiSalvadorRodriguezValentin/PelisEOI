@@ -68,7 +68,7 @@
 <div class="form-login-user-general animated fadeInRight" ng-click="$films.iconUserClick()">
     <div ng-if="!$films.user.auth" class="form-login-user-text"> Entrar </div>
     <div ng-if="$films.user.auth" class="form-login-user-text">
-        <img class="form-login-user-img" ng-if="$films.user.auth" src="{{$films.user.data.photoURL}}" onerror="this.src='/PelisEOI/img/no-image.png'">
+        <img class="form-login-user-img" ng-if="$films.user.auth" ng-src="{{$films.user.data.photoURL}}" onerror="this.src='/PelisEOI/img/no-image.png'">
         <div class="form-login-user-exit"> Salir </div>
     </div>
 </div>
