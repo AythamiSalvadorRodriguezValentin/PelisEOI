@@ -178,7 +178,7 @@
         ////////////////////// FUCTION REGISTER ///////////////////////
         function pushRegistrer() {
             vm.user.sign = false;
-            messageDisplay('Rellena el formulario para registrarte');
+            vm.user.register = true;
         };
         ///////////////////// FUCTION LOGIN USER //////////////////////
         function currentUser() {

@@ -1,5 +1,5 @@
 /*_personal_form_style_container_*/
-.component__view__container{
+.component-view-container{
     width: 100%;
     min-height: 600px;
     max-height: 1000px;
@@ -7,8 +7,11 @@
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
+    font-family: NunitoSans Regular;
+    font-weight: 200;
+    font-size: 15px;
 }
-.component__view__container form{
+.component-view-container form{
     padding: 20px;
     border-radius: 3px 3px 3px 3px;
     display: flex;
@@ -16,44 +19,39 @@
     justify-content: space-around;
     align-items: flex-start;
 }
-.component__view__container form input{
-    width: 300px;
+.component-view-container form input{
+    width: 350px;
     height: 25px;
-    box-sizing: content-box;
-    background-color: white;
-    border-radius: 5px 5px 5px 5px;
-    border: 1px solid rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 2px 2px 2px 2px;
+    background-color: #5c6269;
+    border-width: 0px;
 }
-.component__view__container form input::-webkit-input-placeholder{
-    color: black;
-    padding-left: 5px;
-}
-.component__view__container--button{
+.component-view-container-button{
     width: 50%;
-    height: 100px;
+    height: 50px;
     display: flex;
     flex-flow: row;
     justify-content: center;
     align-items: flex-end;
 }
-.component__view__button{
+.component-view-button{
     width: 150px;
     height: 37px;
     margin: 20px;
     border-radius: 6px 6px 6px 6px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
-    background-color: #1b2126;
+    background-color: #5c6269;
     color: white;
     cursor: none;
 }
-.cursorPointer{
+.component-view-button:hover{
+    background-color: #1b2126;
     cursor: pointer;
-    font-weight: bold;
-    color: white;
 }
-/*_______Ng-Style_______*/
-/*_Error_Valid_*/
+/*----Ng-Style----*/
+/*--Error--Valid--*/
 input.ng-touched.ng-dirty.ng-invalid.ng-not-empty{
     border: 1px solid red;
 }

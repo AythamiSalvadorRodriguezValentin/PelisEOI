@@ -244,72 +244,6 @@
     font-size: 17px;
     color: white;
 }
-/*---------footer--films-----------*/
-.footer-page-films{
-    width: 100%;
-    height: 50px;
-    background-color: white;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
-    margin: auto;
-    display: flex;
-    flex-flow: row;
-    justify-content: space-between;
-    align-items: center;
-}
-.footer-page-registrate{
-    cursor: pointer;
-    font-family: NunitoSans Regular;
-    font-size: 16px;
-    color: black;
-}
-.footer-page-registrate:hover{
-    text-decoration: none;
-    font-weight: 500;
-    color: black;
-}
-.footer-page-anonimo{
-    cursor: pointer;
-    font-family: NunitoSans Regular;
-    font-size: 16px;
-    color: black;
-}
-.footer-page-anonimo:hover{
-    text-decoration: none;
-    font-weight: 500;
-    color: black;
-}
-.footer-page-coprit{
-    cursor: default;
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    font-weight: 100;
-    font-family: NunitoSans Regular;
-    font-size: 13px;
-    color: black;
-}
-/*--------Random-Style---------*/
-.markedStyleButton{
-    border: 2px solid #2883d8;
-    color: #2883d8;
-}
-.navBarTopSelected{
-    color: burlywood;
-}
-.messageBoxStyle{
-    background-color: rgba(0, 128, 0, 0.8);
-}
-a, input, button{
-    outline: none;
-}
-.notWidthAllContainer{
-    transition: 0.7s ease;
-    width: 70%;
-}
-.widthAllContainer{
-    transition: 0.7s ease;
-    width: 100%;
-}
 /*-----show--form--user-----*/
 .user-form-general{
     background-color: rgba(0, 0, 0, 0.6);
@@ -329,19 +263,41 @@ a, input, button{
     height: 250px;
     background-color: white;
     border-radius:  5px 5px 5px 5px;
+    font-size: 20px;
 }
 .user-form-container-close{
     cursor: pointer;
     position: fixed;
     margin-left: 330px;
     color: rgba(128, 128, 128);
-    font-size: 20px;
     display: flex;
     justify-content: flex-end;
 }
-.user-form-container-close:hover{
-    font-weight: 600;
-    font-size: 20px;
+.user-form-register-container-close{
+    cursor: pointer;
+    position: fixed;
+    margin-left: 480px;
+    color: rgba(128, 128, 128);
+    display: flex;
+    justify-content: flex-end;
+}
+.user-form-container-register{
+    background-color: #5c6269;
+    border-radius: 6px 6px 6px 6px;
+    margin-top: 2px;
+    border: 1px solid white;
+    color: white;
+    width: 350px;
+    height: 50px;
+}
+.user-form-container-register:hover{
+    background-color: #1b2126;
+}
+/*--------Register--container-----------*/
+.user-form-register-container{
+    width: 500px;
+    height: 600px;
+    background-color: white;
 }
 /*-----------Login--container-------------*/
 .login-button-container{
@@ -412,4 +368,58 @@ a, input, button{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+/*---------footer--films-----------*/
+.footer-page-films{
+    width: 50%;
+    height: 50px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+    margin: auto;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-page-registrate{
+    cursor: pointer;
+    font-family: NunitoSans Regular;
+    font-size: 16px;
+    color: black;
+}
+.footer-page-registrate:hover{
+    text-decoration: none;
+    font-weight: 500;
+    color: black;
+}
+.footer-page-coprit{
+    cursor: default;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    font-weight: 100;
+    font-family: NunitoSans Regular;
+    font-size: 13px;
+    color: black;
+}
+/*--------Random-Style---------*/
+.markedStyleButton{
+    border: 2px solid #2883d8;
+    color: #2883d8;
+}
+.navBarTopSelected{
+    color: burlywood;
+}
+.messageBoxStyle{
+    background-color: rgba(0, 128, 0, 0.8);
+}
+a, input, button{
+    outline: none;
+}
+.notWidthAllContainer{
+    transition: 0.7s ease;
+    width: 70%;
+}
+.widthAllContainer{
+    transition: 0.7s ease;
+    width: 100%;
 }

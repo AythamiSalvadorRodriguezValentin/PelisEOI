@@ -72,21 +72,19 @@
         <div class="form-login-user-exit"> Salir </div>
     </div>
 </div>
-<div class="user-form-general" ng-if="$films.user.sign" ng-cloak>
+<div ng-if="$films.user.sign" class="user-form-general" ng-cloak>
     <div class="user-form-container">
         <div class="user-form-container-close" ng-click="$films.scrollPagePrincipal(true); $films.user.sign = false">x</div>
         <personal-login message="$films.messageDisplay(e,type)" users="$films.users" user="$films.user"></personal-login>
+        <button class="user-form-container-register" ng-click="$films.pushRegistrer()"> Registrarse </button>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- ///////////////////// SHOW FORM REGISTER USER ///////////////////////// -->
 <div ng-if="$films.user.register" class="user-form-general" ng-cloak>
-    <personal-form class="user-form-container" user="$films.user" message="$films.messageDisplay(e,type)"></personal-form>
-    <div class="wrapper">
-        <footer class="footer-page-films">
-            <a class="footer-page-registrate" ng-click="$films.pushRegistrer()">Regístrate gratis</a>
-            <h5 class="footer-page-coprit">Pelis EOI © 2017</h5>
-        </footer>
+    <div class="user-form-register-container user-form-container">
+        <div class="user-form-register-container-close" ng-click="$films.scrollPagePrincipal(true); $films.user.register = false">x</div>
+        <personal-form user="$films.user" message="$films.messageDisplay(e,type)"></personal-form>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->

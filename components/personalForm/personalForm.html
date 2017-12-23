@@ -1,33 +1,33 @@
 <link rel="stylesheet" href="/components/personalForm/personalFormStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
-<div class="component__view__container" ng-model-options="{allowInvalid: true, debounce: 200}" ng-cloak>
+<div class="component-view-container" ng-model-options="{allowInvalid: true, debounce: 200}" ng-cloak>
     <form novalidate name="$ctrl.form" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <label>Nombre completo: </label>
-        <input type="text" placeholder="Nombre y apellidos" ng-required="true" ng-model="$ctrl.user.create.name" ng-minlength="5" ng-maxlength="30"
+        <input type="text" ng-required="true" ng-model="$ctrl.user.create.name" ng-minlength="5" ng-maxlength="30"
             ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <br>
         <label>Correo: </label>
-        <input name="$ctrl.form.email" type="email" placeholder="Introduce tu correo" ng-required="true" ng-model="$ctrl.user.create.email"
+        <input name="$ctrl.form.email" type="email" ng-required="true" ng-model="$ctrl.user.create.email"
             ng-maxlength="35" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <br>
         <label>Contraseña: </label>
-        <input name="$ctrl.form.password" type="password" placeholder="Introduce contraseña" ng-required="true" ng-model="$ctrl.user.create.password"
+        <input name="$ctrl.form.password" type="password" ng-required="true" ng-model="$ctrl.user.create.password"
             ng-minlength="8" ng-maxlength="16" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <br>
         <label>Repite contraseña: </label>
-        <input name="$ctrl.form.password" type="password" placeholder="Introduce la contraseña de nuevo" ng-required="true" ng-model="$ctrl.user.create.password"
+        <input name="$ctrl.form.password" type="password" ng-required="true" ng-model="$ctrl.user.create.password"
             ng-minlength="8" ng-maxlength="16" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <br>
         <label>Teléfono (opcional): </label>
-        <input type="number" placeholder="Teléfono" ng-required="true" ng-model="$ctrl.user.create.phone" ng-minlength="9" ng-maxlength="9"
+        <input type="number" ng-required="true" ng-model="$ctrl.user.create.phone" ng-minlength="9" ng-maxlength="9"
             ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <br>
         <label>Foto (opcional): </label>
-        <input type="text" placeholder="Url de la foto" ng-required="true" ng-model="$ctrl.user.create.photo" ng-minlength="5" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
+        <input type="text" ng-required="true" ng-model="$ctrl.user.create.photo" ng-minlength="5" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}">
         <br>
     </form>
-    <div class="component__view__container--button">
-        <button class="component__view__button" ng-click="$ctrl.signCreateUser()" ng-class="{cursorPointer:$ctrl.form.$valid,borderGreenStyle:$ctrl.form.$valid}"
+    <div class="component-view-container-button">
+        <button class="component-view-button" ng-click="$ctrl.signCreateUser()" ng-class="{borderGreenStyle:$ctrl.form.$valid}"
             ng-disabled="$ctrl.form.$invalid">
             Terminado
         </button>
