@@ -95,12 +95,9 @@
             vm.timeout.search = setTimeout(searchMovies, 350);
         };
         function searchMovies(more) {
-            if (more === 'Y') vm.search.page++;
-            else {
-                vm.search.page = 1;
-                resetFilter(false);
-            }
             vm.load = true;
+            if (more === 'Y') vm.search.page++;
+            else { vm.search.page = 1; resetFilter(false); }
             if (vm.search.title.length > 0) vm.view.view = vm.navList[0];
             fuctionMovie(vm.search, (vm.search.title.length > 0) ? 'search' : 'popular', (more != 'Y') ? true : false);
         }
@@ -140,9 +137,9 @@
             vm.search.genre = [];
             vm.search.order = vm.orderBy[1].name;
             vm.slider.minYear = 1950;
-            vm.slider.maxYear = 2050;
-            vm.slider.minYearValue = 1970;
-            vm.slider.maxYearValue = 2020;
+            vm.slider.maxYear = 2018;
+            vm.slider.minYearValue = 1973;
+            vm.slider.maxYearValue = 1097;
             if (vm.search.resetFilter) return;
             else vm.search.resetFilter = true;
             if (popular) fuctionMovie(vm.search, 'popular', true);
