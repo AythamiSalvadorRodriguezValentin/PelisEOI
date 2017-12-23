@@ -1,23 +1,26 @@
 <link rel="stylesheet" href="/components/personalLogin/personalLoginStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
-<div class="component-login-button-container" ng-model-options="{ allowInvalid: true, debounce: 200 }">
-    <form name="$ctrl.formLogin" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" novalidate>
+<div ng-if="!$ctrl.load" class="component-login-button-container" ng-model-options="{ allowInvalid: true, debounce: 200 }">
+    <form name="$ctrl.user.formLogin" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" novalidate>
         <div class="component-login-form-colum">
             <label>Correo: </label>
             <input name="$ctrl.formLogin.email" type="email" ng-required="true" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}"
-                ng-class="{borderRed:$ctrl.push, withoutBorder:!$ctrl.push}" ng-model="$ctrl.user.login.email"
-                ng-maxlength="35" ng-keyup="$ctrl.push = false">
+                ng-class="{borderRed:$ctrl.push, withoutBorder:!$ctrl.push}" ng-model="$ctrl.user.login.email" ng-maxlength="35"
+                ng-keydown="$ctrl.push = false">
             <br>
         </div>
         <div class="component-login-form-colum">
             <label>Contraseña: </label>
             <input name="$ctrl.formLogin.password" type="password" ng-required="true" ng-model="$ctrl.user.login.password" ng-minlength="8"
                 ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-class="{borderRed:$ctrl.push, withoutBorder:!$ctrl.push}"
-                ng-maxlength="16" ng-keyup="$ctrl.push = false">
+                ng-maxlength="16" ng-keydown="$ctrl.push = false">
             <br>
         </div>
     </form>
     <button ng-class="{buttonValid:$ctrl.formLogin.$valid}" ng-click="$ctrl.checkButton()">
         Entrar
     </button>
+</div>
+<div ng-if="$ctrl.load" class="component-login-load-container">
+    <img src="/img/load.gif" alt="cargando...">
 </div>

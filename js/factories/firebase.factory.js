@@ -122,7 +122,7 @@
                         var uid = user.uid;
                         var providerData = user.providerData;
                         resolve(user);
-                    }
+                    } else reject(null);
                 });
             });
             return promise;

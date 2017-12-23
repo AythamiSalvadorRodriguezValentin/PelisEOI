@@ -11,7 +11,6 @@
         </ul>
         <div class="nav-bar-top nav-end">
             <input placeholder="Encuentra tu pelicula favorita" ng-model="$films.search.title" ng-keyup="$films.getMovies('N')" type="text">
-            <button ng-if="$films.user.auth" ng-click="$films.signOutUser()">Salir</button>
         </div>
     </div>
 </nav>
@@ -66,20 +65,40 @@
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- ////////////////////////// FORM LOGIN USER //////////////////////////// -->
-<div class="form-login-user-general animated fadeInRight">
-    {{$ctrl.user.signText}}
+<div class="form-login-user-general animated fadeInRight" ng-click="$films.iconUserClick()">
+    <div ng-if="!$films.user.auth" class="form-login-user-text"> Entrar </div>
+    <div ng-if="$films.user.auth" class="form-login-user-text">
+        <img class="form-login-user-img" ng-if="$films.user.auth" src="{{$films.user.data.photoURL}}" onerror="this.src='/img/no-image.png'">
+        <div class="form-login-user-exit"> Salir </div>
+    </div>
+</div>
+<div class="user-form-general" ng-if="$films.user.sign" ng-cloak>
+    <div class="user-form-container">
+        <div class="user-form-container-close" ng-click="$films.scrollPagePrincipal(true); $films.user.sign = false">x</div>
+        <personal-login message="$films.messageDisplay(e,type)" users="$films.users" user="$films.user"></personal-login>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////////// -->
+<!-- ///////////////////// SHOW FORM REGISTER USER ///////////////////////// -->
+<div ng-if="$films.user.register" class="user-form-general" ng-cloak>
+    <personal-form class="user-form-container" user="$films.user" message="$films.messageDisplay(e,type)"></personal-form>
+    <div class="wrapper">
+        <footer class="footer-page-films">
+            <a class="footer-page-registrate" ng-click="$films.pushRegistrer()">Regístrate gratis</a>
+            <h5 class="footer-page-coprit">Pelis EOI © 2017</h5>
+        </footer>
+    </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////// SHOW FILM SELECTED /////////////////////////// -->
-<div ng-if="$films.view.film == true" class="film-selected-general animated fadeInRight" ng-cloak>
+<div ng-if="$films.view.film" class="film-selected-general animated fadeInRight" ng-cloak>
     <div class="film-selected-container">
         <film-description film="$films.film" close="$films.showFilm()" show-film="$films.showFilm(film)"></film-description>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////////// SHOW MESSAGE ///////////////////////////// -->
-<div ng-if="$films.view.message == true" class="message-box animated fadeIn" ng-class="{messageBoxStyle:$films.message.type}"
-    ng-cloak>
+<div ng-if="$films.view.message" class="message-box animated fadeIn" ng-class="{messageBoxStyle:$films.message.type}" ng-cloak>
     <p class="message-box--title"> {{$films.message.mssg}} </p>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->

@@ -16,7 +16,6 @@
             controllerAs: '$ctrl',
             bindings: {
                 user: '=',
-                form: '=',
                 message: '&',
             },
         });

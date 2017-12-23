@@ -35,24 +35,25 @@
         vm.elementsUser = elementsUser;
         vm.messageDisplay = messageDisplay;
         vm.pushRegistrer = pushRegistrer;
-        vm.signOutUser = signOutUser;
-        vm.anonimoUser = anonimoUser;
+        vm.iconUserClick = iconUserClick;
         vm.showFilm = showFilm;
         vm.showHideBarLeft = showHideBarLeft;
+        vm.scrollPagePrincipal = scrollPagePrincipal;
         /////////////////////////// INIT //////////////////////////////
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
             vm.search = { title: '', year: '', type: '', language: 'en-EN', order: '', sort_by: '', genre: [], page: 1, resetFilter: false };
+            vm.user = { anonimo: false, auth: false, register: false, sign: false, data: null, database: null };
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
-            vm.user = { anonimo: false, auth: false, sign: true, data: null, database: null }
             vm.view = { view: vm.navList[0], film: false, barLeft: true, message: false };
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
             configAnimatedJQuery();
+            resetFilter(true);
             lazyLoad(true);
-            anonimoUser();
-            teclado();
+            currentUser();
+            teclado(true);
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
@@ -172,15 +173,29 @@
             vm.view.message = true;
             vm.message.type = (type == 'error') ? false : true;
             clearTimeout(vm.timeout.show);
-            vm.timeout.message = setTimeout(() => $scope.$apply(vm.view.message = false), 3000);
+            vm.timeout.message = setTimeout(() => $scope.$apply(vm.view.message = false), 5000);
         };
         ////////////////////// FUCTION REGISTER ///////////////////////
         function pushRegistrer() {
             vm.user.sign = false;
             messageDisplay('Rellena el formulario para registrarte');
         };
-        //////////////////////// FUCTION SIGN /////////////////////////
-        function signOutUser() {
+        ///////////////////// FUCTION LOGIN USER //////////////////////
+        function currentUser() {
+            setTimeout(() => {
+                InterSF
+                    .firebaseSign(vm.user, 'now')
+                    .then(loaded => {
+                        vm.user.data = loaded;
+                        $scope.$apply(vm.user.auth = true);
+                    }).catch(e => {
+                        vm.user.anonimo = true;
+                        vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
+                        if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
+                    });
+            }, 500);
+        }
+        function iconUserClick() {
             if (vm.user.auth) {
                 InterSF
                     .firebaseSign(vm.user, 'out')
@@ -190,21 +205,14 @@
                         vm.user.anonimo = true;
                         $scope.$apply(changeView(vm.navList[0]));
                     }).catch(e => messageDisplay(e, 'error'))
-            }
+            } else vm.user.sign = true;
         };
-        ////////////////// FUCTION ANONIMO USER ///////////////////////
-        function anonimoUser() {
-            resetFilter(true);
-            vm.user.anonimo = true;
-            vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
-            if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
-        }
         ///////////////////// FUCTION SHOW VIEW ///////////////////////
         function showFilm(film) {
             if (!film) {
                 animate('film', 'fadeOutRight');
                 animate('all', 'fadeIn');
-                ScrollPagePrincipal(true);
+                scrollPagePrincipal(true);
                 lazyLoad(true);
                 setTimeout(() => $scope.$apply(vm.view.film = false), 550);
                 return;
@@ -215,7 +223,7 @@
             filmsSaw(film);
             lazyLoad(false);
             fuctionFullMovie(film);
-            ScrollPagePrincipal(false);
+            scrollPagePrincipal(false);
         };
         ////////////////// FUCTION BAR LEFT HIDE //////////////////////
         function showHideBarLeft(nav) {
@@ -259,9 +267,9 @@
             if (vm.view.view == vm.navList[2] || vm.view.view == vm.navList[3] || vm.view.view == vm.navList[4] || vm.films.total.split('.').join() <= 20) return;
             if ($(window).scrollTop() + $('html')[0].clientHeight == $('html').innerHeight()) (vm.search.resetFilter) ? searchMovies('Y') : getMovieFilter('Y');
         };
-        function ScrollPagePrincipal(view) {
-            if (view) $('html').css('overflow', 'scroll');
-            else $('html').css('overflow', 'hidden');
+        function scrollPagePrincipal(view) {
+            if (view) { $('html').css('overflow', 'scroll'); }
+            else { $('html').css('overflow', 'hidden'); }
         };
         function animate(type, animate) {
             if (type == 'all') $('.films-all-general').animateCss(animate);
@@ -269,10 +277,12 @@
             else if (type == 'film') $('.film-selected-general').animateCss(animate);
             else $('.films-all-container').animateCss(animate);
         };
-        function teclado() {
-            $('html').keydown((e) => {
-                if (e.keyCode === 27) { if (vm.view.film) $scope.$apply(vm.view.film = false); }
-            });
+        function teclado(bool) {
+            if (bool) {
+                $('html').on('keydown', (e) => {
+                    if (e.keyCode === 27) { if (vm.view.film) showFilm(); }
+                });
+            } else $('html').off('keydown');
         };
         function configAnimatedJQuery() {
             $.fn.extend({
