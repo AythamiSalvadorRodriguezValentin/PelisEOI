@@ -170,7 +170,7 @@
                 DB.date = calDate(response.data.release_date);
                 DB.year = DB.date[0];
             }
-            return (DB) ? DB : {};
+            return (DB != null) ? DB : {};
         }
         //////////////////////// FUCTION ORDER /////////////////////
         /**

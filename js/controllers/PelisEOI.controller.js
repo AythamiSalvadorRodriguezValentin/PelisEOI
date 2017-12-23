@@ -139,7 +139,7 @@
             vm.slider.minYear = 1950;
             vm.slider.maxYear = 2018;
             vm.slider.minYearValue = 1973;
-            vm.slider.maxYearValue = 1097;
+            vm.slider.maxYearValue = 1997;
             if (vm.search.resetFilter) return;
             else vm.search.resetFilter = true;
             if (popular) fuctionMovie(vm.search, 'popular', true);
