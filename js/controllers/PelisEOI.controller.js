@@ -193,11 +193,11 @@
                                 readUser();
                             }).catch(e => vm.message({ e: vm.mssg, type: 'error' }));
                     }).catch(e => {
+                        vm.user.anonimo = true;
                         vm.user.auth = false;
                         vm.user.data = null;
-                        vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
+                        $scope.$apply(vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get'));
                         if(!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
-                        $scope.$apply(vm.user.anonimo = true);
                     });
             }, 500);
         }
