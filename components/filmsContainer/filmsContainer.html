@@ -4,7 +4,7 @@
     <div class="component-card-films-general">
         <div class="component-card-films-container" ng-repeat="film in $ctrl.films.data | filter:$ctrl.filter track by film.id">
             <div class="omponent-card-films-container">
-                <img class="component-card-films-img" ng-click="$ctrl.showFilm({film:film})" ng-src="{{film.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.gif'">
+                <img class="component-card-films-img" ng-click="$ctrl.showFilm({film:film})" ng-src="{{film.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'">
                 <div class="component-card-films-overlay">
                     <div class="component-card-films-text">
                         <div class="component-align">
