@@ -26,9 +26,11 @@
         var $ctrl = this;
         $ctrl.load = false;
         $ctrl.push = false;
+        $ctrl.passwordCheck = false;
         $ctrl.signCreateUser = signCreateUser;
         $ctrl.closeWindows = closeWindows;
         $ctrl.changeSign = changeSign;
+        $ctrl.checkPass = checkPass;
         $ctrl.mssg = 'Ups, ha ocurrido algo, vuelve a intentarlo :)';
         ////////////////////////////////////////////////////////////
         $ctrl.$onInit = function () {
@@ -41,9 +43,15 @@
         //////////////////////// FUCTION CREATE /////////////////////////
         function signCreateUser() {
             if ($ctrl.user.form.$invalid) {
-                $ctrl.message({ e: 'Ups, los argumentos no son válidos', type: 'error' });
                 $ctrl.push = true;
+                $ctrl.message({ e: 'Ups, los argumentos no son válidos', type: 'error' });
                 return;
+            } if (!$ctrl.passwordCheck){
+                $ctrl.push = true;
+                $ctrl.user.create.password = "";
+                $ctrl.user.create.passwordRepit = "";
+                $ctrl.message({ e: 'Ups, las contraseñas no coinciden', type: 'error' });
+                return ;
             }
             $ctrl.load = true;
             InterSF
@@ -90,9 +98,14 @@
             $ctrl.close();
         }
         /////////////////////// FUCTION SIGN //////////////////////////
-        function changeSign(){
+        function changeSign() {
             $ctrl.user.register = false;
             $ctrl.user.sign = true;
+        }
+        ////////////////////// FUCTION CHECK //////////////////////////
+        function checkPass() {
+            if ($ctrl.user.create.password == $ctrl.user.create.passwordRepit) $ctrl.passwordCheck = true;
+            else $ctrl.passwordCheck = false;
         }
         //////////////////////// FUCTION KEY //////////////////////////
         function teclado(bool) {

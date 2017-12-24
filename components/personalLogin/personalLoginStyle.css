@@ -58,11 +58,18 @@
     cursor: pointer;
     color: white;
 }
-.component-login-button-container-close{
-    cursor: pointer;
-}
 .component-login-form-colum{
     display: flex;
     flex-flow: column;
     margin-right: 13px;
+}
+.component-login-close-container{
+    width: 70%;
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+.component-login-close{
+    cursor: pointer;
 }

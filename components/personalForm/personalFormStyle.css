@@ -49,7 +49,14 @@
     background-color: #1b2126;
     cursor: pointer;
 }
-.component-view-container-close{
+.component-view-close-container{
+    width: 70%;
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+.component-view-close{
     cursor: pointer;
 }
 .component-form-load-container{

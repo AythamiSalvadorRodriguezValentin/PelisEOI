@@ -1,7 +1,11 @@
 <link rel="stylesheet" href="/components/personalLogin/personalLoginStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
 <div ng-if="!$ctrl.load" class="component-login-button-container" ng-model-options="{ allowInvalid: true, debounce: 200 }">
-    <div class="component-login-button-container-close" ng-click="$ctrl.closeWindows()">x</div>
+    <div class="component-login-close-container">
+        <div class="component-login-close" ng-click="$ctrl.closeWindows()">
+            <b>Cerrar</b>
+        </div>
+    </div>
     <form name="$ctrl.user.formLogin" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" novalidate>
         <div class="component-login-form-colum">
             <label>Correo: </label>

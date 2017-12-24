@@ -1,7 +1,11 @@
 <link rel="stylesheet" href="/components/personalForm/personalFormStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
 <div ng-if="!$ctrl.load" class="component-view-container" ng-model-options="{allowInvalid: true, debounce: 200}" ng-cloak>
-    <div class="component-view-container-close" ng-click="$ctrl.closeWindows()">x</div>
+    <div class="component-view-close-container">
+        <div class="component-view-close" ng-click="$ctrl.closeWindows()">
+            <b>Cerrar</b>
+        </div>
+    </div>
     <form name="$ctrl.user.form" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" novalidate>
         <label>Nombre completo: </label>
         <input name="names" type="text" ng-model="$ctrl.user.create.name" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}"
@@ -16,13 +20,13 @@
         <label>Contraseña: </label>
         <input name="password" type="password" ng-required="true" ng-model="$ctrl.user.create.password" ng-minlength="8" ng-maxlength="16"
             ng-class="{borderRed:($ctrl.push && $ctrl.user.form.password.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.password.$valid)}"
-            ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-keydown="$ctrl.push = false">
+            ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-keydown="$ctrl.push = false" ng-change="$ctrl.checkPass()">
         <br>
         <label>Repite contraseña: </label>
         <input name="passwordRepit" type="password" ng-required="true" ng-class="{borderRed:$ctrl.push,withoutBorder:!$ctrl.push}"
             ng-minlength="8" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-model="$ctrl.user.create.passwordRepit"
             ng-class="{borderRed:($ctrl.push && $ctrl.user.form.passwordRepit.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.passwordRepit.$valid)}"
-            ng-maxlength="16" ng-keydown="$ctrl.push = false">
+            ng-maxlength="16" ng-keydown="$ctrl.push = false" ng-change="$ctrl.checkPass()">
         <br>
         <label>Teléfono (opcional): </label>
         <input name="phone" type="number" ng-required="true" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}"
