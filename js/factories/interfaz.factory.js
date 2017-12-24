@@ -74,13 +74,13 @@
                 switch (type) {
                     case 'create':
                         FSP
-                            .createUserWithEmailAndPasswordUser(user)
+                            .createUserWithEmailAndPasswordUser(user.emailNew, user.passwordNew)
                             .then(loaded => resolve(loaded))
                             .catch(e => reject(e));
                         break;
                     case 'up':
                         FSP
-                            .signInWithEmailAndPasswordUser(user)
+                            .signInWithEmailAndPasswordUser(user.email, user.password)
                             .then(loaded => resolve(loaded))
                             .catch(e => reject(e));
                         break;

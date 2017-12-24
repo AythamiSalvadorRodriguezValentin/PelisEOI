@@ -48,7 +48,7 @@
                 return;
             } if (!$ctrl.passwordCheck){
                 $ctrl.push = true;
-                $ctrl.user.create.password = "";
+                $ctrl.user.create.passwordNew = "";
                 $ctrl.user.create.passwordRepit = "";
                 $ctrl.message({ e: 'Ups, las contraseñas no coinciden', type: 'error' });
                 return ;
@@ -104,7 +104,7 @@
         }
         ////////////////////// FUCTION CHECK //////////////////////////
         function checkPass() {
-            if ($ctrl.user.create.password == $ctrl.user.create.passwordRepit) $ctrl.passwordCheck = true;
+            if ($ctrl.user.create.passwordNew == $ctrl.user.create.passwordRepit) $ctrl.passwordCheck = true;
             else $ctrl.passwordCheck = false;
         }
         //////////////////////// FUCTION KEY //////////////////////////

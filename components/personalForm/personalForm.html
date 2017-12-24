@@ -13,13 +13,13 @@
             ng-minlength="5" ng-required="true" ng-maxlength="30" ng-keydown="$ctrl.push = false">
         <br>
         <label>Correo: </label>
-        <input name="email" type="email" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-required="true" ng-model="$ctrl.user.create.email"
-            ng-class="{borderRed:($ctrl.push && $ctrl.user.form.email.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.email.$valid)}"
+        <input name="emailNew" type="email" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-required="true" ng-model="$ctrl.user.create.emailNew"
+            ng-class="{borderRed:($ctrl.push && $ctrl.user.form.emailNew.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.emailNew.$valid)}"
             ng-maxlength="35" ng-keydown="$ctrl.push = false">
         <br>
         <label>Contraseña: </label>
-        <input name="password" type="password" ng-required="true" ng-model="$ctrl.user.create.password" ng-minlength="8" ng-maxlength="16"
-            ng-class="{borderRed:($ctrl.push && $ctrl.user.form.password.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.password.$valid)}"
+        <input name="passwordNew" type="password" ng-required="true" ng-model="$ctrl.user.create.passwordNew" ng-minlength="8" ng-maxlength="16"
+            ng-class="{borderRed:($ctrl.push && $ctrl.user.form.passwordNew.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.passwordNew.$valid)}"
             ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-keydown="$ctrl.push = false" ng-change="$ctrl.checkPass()">
         <br>
         <label>Repite contraseña: </label>

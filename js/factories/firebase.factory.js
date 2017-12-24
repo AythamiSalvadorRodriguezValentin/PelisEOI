@@ -87,22 +87,22 @@
             });
         };
         ///////////////////////////// Registra usuarios nuevos ///////////////////////////////
-        function createUserWithEmailAndPasswordUser(user) {
+        function createUserWithEmailAndPasswordUser(email, password) {
             let promise = new Promise((resolve, reject) => {
                 firebase
                     .auth()
-                    .createUserWithEmailAndPassword(user.email, user.password)
+                    .createUserWithEmailAndPassword(email, password)
                     .then(loaded => resolve('created'))
                     .catch(e => reject(e));
             });
             return promise;
         };
         ///////////////////////////// Acceso de usuarios existentes ///////////////////////////////
-        function signInWithEmailAndPasswordUser(user) {
+        function signInWithEmailAndPasswordUser(email, password) {
             let promise = new Promise((resolve, reject) => {
                 firebase
                     .auth()
-                    .signInWithEmailAndPassword(user.email, user.password)
+                    .signInWithEmailAndPassword(email, password)
                     .then(loaded => resolve(loaded))
                     .catch(e => reject(e));
             });
