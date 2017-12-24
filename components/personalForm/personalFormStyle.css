@@ -66,7 +66,9 @@
     justify-content: center;
     align-items: center;
 }
-.component-form-load-container img{
+.component-form-load-img{
     width: 150px;
     height: 150px;
+    background-image: url('../../img/load.gif');
+    background-repeat: no-repeat;
 }

@@ -18,9 +18,11 @@
     justify-content: center;
     align-items: center;
 }
-.component-login-load-container img{
+.component-login-load-img{
     width: 150px;
     height: 150px;
+    background-image: url('../../img/load.gif');
+    background-repeat: no-repeat;
 }
 .component-login-button-container form{
     display: inline-flex;
