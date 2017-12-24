@@ -16,7 +16,7 @@
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
             vm.apiKey = '&apikey=3370463f';
-            vm.url = 'http://www.omdbapi.com/?';
+            vm.url = 'https://www.omdbapi.com/?';
         }
         ///////////////// FUCTION FILM SERVICE /////////////////////
         var service = {
