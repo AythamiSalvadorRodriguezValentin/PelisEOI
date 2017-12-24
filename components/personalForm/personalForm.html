@@ -36,8 +36,11 @@
         <br>
     </form>
     <div class="component-view-container-button">
-        <button class="component-view-button" ng-click="$ctrl.signCreateUser()" ng-class="{borderGreenStyle:$ctrl.user.form.$valid}">
+        <button class="component-view-button" ng-click="$ctrl.signCreateUser()" ng-class="{borderGreenStyle:$ctrl.user.form.$valid,withoutBorder:true}">
             Terminado
+        </button>
+        <button class="component-view-button" ng-click="$ctrl.changeSign()" ng-class="{borderGreenStyle:$ctrl.user.form.$valid,withoutBorder:true}">
+            Inicia Sesión
         </button>
     </div>
 </div>

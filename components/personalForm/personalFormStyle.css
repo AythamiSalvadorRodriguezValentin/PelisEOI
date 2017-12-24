@@ -27,11 +27,11 @@
     background-color: #5c6269;
 }
 .component-view-container-button{
-    width: 50%;
+    width: 75%;
     height: 50px;
     display: flex;
-    flex-flow: row;
-    justify-content: center;
+    flex-flow: row nowrap;
+    justify-content: space-between;
     align-items: flex-end;
 }
 .component-view-button{

@@ -28,6 +28,7 @@
         $ctrl.push = false;
         $ctrl.signCreateUser = signCreateUser;
         $ctrl.closeWindows = closeWindows;
+        $ctrl.changeSign = changeSign;
         $ctrl.mssg = 'Ups, ha ocurrido algo, vuelve a intentarlo :)';
         ////////////////////////////////////////////////////////////
         $ctrl.$onInit = function () {
@@ -87,6 +88,11 @@
             $ctrl.user.register = false;
             $ctrl.user.login = {};
             $ctrl.close();
+        }
+        /////////////////////// FUCTION SIGN //////////////////////////
+        function changeSign(){
+            $ctrl.user.register = false;
+            $ctrl.user.sign = true;
         }
         //////////////////////// FUCTION KEY //////////////////////////
         function teclado(bool) {

@@ -17,6 +17,7 @@
     position: relative;
 }
 .component-card-films-img{
+    background-color: lightgrey;
     transition: .6s ease;
     width: 260px;
     height: 400px;
