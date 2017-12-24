@@ -191,13 +191,13 @@
                             .then(loaded => {
                                 vm.users = loaded;
                                 readUser();
-                            }).catch(e => vm.message({ e: vm.mssg, type: 'error' }));
+                            }).catch(e => messageDisplay('Ups, ha habido un error :)', 'error'));
                     }).catch(e => {
                         vm.user.anonimo = true;
                         vm.user.auth = false;
                         vm.user.data = null;
                         vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get')
-                        if(!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
+                        if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
                         $scope.$apply();
                     });
             }, 500);
@@ -213,8 +213,8 @@
                 InterSF
                     .firebaseUser(user, 'user')
                     .then(loaded => $scope.$apply(vm.user.database = loaded))
-                    .catch(e => vm.message({ e: vm.mssg, type: 'error' }));
-            } else vm.message({ e: 'No se encuentra al usuario en la base de datos', type: 'error' });
+                    .catch(e => messageDisplay('Ups, ha habido un error :)', 'error'));
+            } else messageDisplay('Ups, ha habido un error :)', 'error');
         };
         function iconUserClick() {
             if (vm.user.auth) {
@@ -224,7 +224,7 @@
                         vm.user.auth = false;
                         vm.user.anonimo = true;
                         vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
-                        if(!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
+                        if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
                         $scope.$apply(changeView(vm.navList[0]));
                     }).catch(e => messageDisplay(e, 'error'))
             } else {
