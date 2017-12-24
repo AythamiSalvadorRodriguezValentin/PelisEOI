@@ -194,10 +194,10 @@
                             }).catch(e => vm.message({ e: vm.mssg, type: 'error' }));
                     }).catch(e => {
                         vm.user.auth = false;
-                        vm.user.anonimo = true;
                         vm.user.data = null;
                         vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
                         if(!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
+                        $scope.$apply(vm.user.anonimo = true);
                     });
             }, 500);
         }
@@ -220,9 +220,10 @@
                 InterSF
                     .firebaseSign(vm.user, 'out')
                     .then(loaded => {
-                        vm.user.database = { fav: [], see: [], saw: [] };
                         vm.user.auth = false;
                         vm.user.anonimo = true;
+                        vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
+                        if(!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
                         $scope.$apply(changeView(vm.navList[0]));
                     }).catch(e => messageDisplay(e, 'error'))
             } else {
