@@ -17,7 +17,6 @@
                 films: '<',
                 filter: '<',
                 boolLoad: '<',
-                srcLoad: '@',
                 showFilm: '&',
                 elementsUser: '&',
             },

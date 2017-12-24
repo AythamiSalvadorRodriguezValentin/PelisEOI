@@ -124,6 +124,8 @@ element22{
     justify-content: center;
 }
 .component-loading-films-img{
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
+    background-image: url('../../img/load.gif');
+    background-repeat: no-repeat;
 }
