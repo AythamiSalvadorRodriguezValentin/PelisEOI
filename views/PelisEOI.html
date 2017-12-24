@@ -2,7 +2,7 @@
 <nav class="nav-bar-top-general animated fadeIn" ng-cloak>
     <div class="wrapper-nav">
         <div class="nav-bar-top nav-start">
-            <img src="../../img/logo.png" alt="logotipo">
+            <div class="nav-bar-top-img"></div>
         </div>
         <ul class="nav-bar-top nav-middle">
             <li ng-repeat="nav in $films.navList track by $index" ng-class="{navBarTopSelected:$films.checkView(nav)}" ng-click="$films.changeView(nav)">
@@ -20,7 +20,7 @@
     <div class="films-all-general animated">
         <aside ng-if="$films.view.barLeft == true" class="aside-filter-general animated fadeInLeft">
             <div class="filter-edit">
-                <img class="filter-img" src="../../img/filter.png" alt="filter">
+                <div class="filter-img"></div>
                 <span class="filter-span">Filtros</span>
                 <span class="filter-span-delete" ng-click="$films.resetFilter(true)">Borrar</span>
             </div>

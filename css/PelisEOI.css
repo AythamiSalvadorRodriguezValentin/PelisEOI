@@ -37,8 +37,11 @@
     justify-content: flex-end;
     align-items: center;
 }
-.nav-bar-top img{
-    object-fit: contain;
+.nav-bar-top-img{
+    width: 142px;
+    height: 68px;
+    background-image: url('../img/logo.png');
+    background-repeat: no-repeat;
 }
 .nav-bar-top li{
     cursor: pointer;
@@ -97,6 +100,12 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: flex-end;
+}
+.filter-img{
+    width: 25px;
+    height: 25px;
+    background-image: url("../img/filter.png");
+    background-repeat: no-repeat;
 }
 .filter-span{
     cursor: default;
