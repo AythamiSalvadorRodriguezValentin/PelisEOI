@@ -110,8 +110,8 @@
                     $ctrl.user.auth = false;
                     $ctrl.user.anonimo = true;
                     $ctrl.user.data = null;
-                    $ctrl.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
-                    if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
+                    $ctrl.user.database = InterSF.anonimoUserLocalStorage($ctrl.user, 'get');
+                    if (!$ctrl.user.database) $ctrl.user.database = { fav: [], see: [], saw: [] };
                     $scope.$apply($ctrl.user.sign = true);
                 });
         }
