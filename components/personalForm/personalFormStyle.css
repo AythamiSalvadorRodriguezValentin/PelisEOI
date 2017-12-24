@@ -25,7 +25,6 @@
     color: white;
     border-radius: 2px 2px 2px 2px;
     background-color: #5c6269;
-    border-width: 0px;
 }
 .component-view-container-button{
     width: 50%;
@@ -53,18 +52,14 @@
 .component-view-container-close{
     cursor: pointer;
 }
-/*----Ng-Style----*/
-/*--Error--Valid--*/
-input.ng-touched.ng-dirty.ng-invalid.ng-not-empty{
-    border: 1px solid red;
+.component-form-load-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-input.ng-touched.ng-pristine.ng-valid-required.ng-invalid.ng-not-empty{
-    border: 1px solid red;
-}
-input.ng-untouched.ng-pristine.ng-valid-required.ng-invalid.ng-not-empty{
-    border: 1px solid red;
-}
-/*_Accept_Valid_*/
-.borderGreenStyle{
-    border: 1px solid rgb(70, 209, 15);
+.component-form-load-container img{
+    width: 150px;
+    height: 150px;
 }

@@ -321,7 +321,8 @@
 .form-login-user-img{
     width: 90px;
     height: 90px;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 50%;
 }
 .form-login-user-img:hover{
     opacity: 0;
@@ -406,4 +407,26 @@ a, input, button{
 .widthAllContainer{
     transition: 0.7s ease;
     width: 100%;
+}
+/*----Ng-Style----*/
+/*--Error--Valid--*/
+input.ng-touched.ng-dirty.ng-invalid.ng-not-empty{
+    border: 1px solid red;
+}
+input.ng-touched.ng-pristine.ng-valid-required.ng-invalid.ng-not-empty{
+    border: 1px solid red;
+}
+input.ng-untouched.ng-pristine.ng-valid-required.ng-invalid.ng-not-empty{
+    border: 1px solid red;
+}
+/*_Accept_Valid_*/
+.borderGreenStyle{
+    border: 1px solid rgb(70, 209, 15);
+}
+/*---Others-Style----*/
+.borderRed{
+    border: 1px solid red;
+}
+.withoutBorder{
+    border-width: 0px;
 }

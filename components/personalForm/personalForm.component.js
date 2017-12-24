@@ -24,7 +24,11 @@
     PersonalUserController.$inject = ['$scope', 'InterfazServerFactory'];
     function PersonalUserController($scope, InterSF) {
         var $ctrl = this;
+        $ctrl.load = false;
+        $ctrl.push = false;
         $ctrl.signCreateUser = signCreateUser;
+        $ctrl.closeWindows = closeWindows;
+        $ctrl.mssg = 'Ups, ha ocurrido algo, vuelve a intentarlo :)';
         ////////////////////////////////////////////////////////////
         $ctrl.$onInit = function () {
             teclado(true);
@@ -33,38 +37,47 @@
         $ctrl.$onDestroy = function () {
             teclado(false);
         };
-        //////////////////////// FUCTION USER /////////////////////////
-        function createUser() {
-            InterSF
-                .firebaseUser($ctrl.user.create, 'create')
-                .catch(e => $ctrl.message({ e: e, type: 'error' }));
-        };
         //////////////////////// FUCTION CREATE /////////////////////////
         function signCreateUser() {
             InterSF
                 .firebaseSign($ctrl.user.create, 'create')
                 .then(loaded => {
-                    $ctrl.user.auth = false;
-                    $ctrl.user.sign = true;
                     createUser();
                     signUpdateUser();
-                }).catch(e => $ctrl.message({ e: e, type: 'error' }));
+                }).catch(e => {
+                    $ctrl.message({ e: $ctrl.mssg, type: 'error' });
+                    $scope.$apply($ctrl.push = true);
+                });
         };
         function signUpdateUser() {
             InterSF
                 .firebaseSign($ctrl.user.create, 'update')
                 .then(loaded => {
+                    $ctrl.close()
                     $ctrl.user.create = {};
                     $ctrl.user.login = {};
-                    $scope.$apply($ctrl.message({ e: 'Registro completado. Inicia Sesion' }));
-                }).catch(e => $ctrl.message({ e: e, type: 'error' }));
+                    $ctrl.user.auth = true;
+                    $scope.$apply($ctrl.user.register = false);
+                }).catch(e => $ctrl.message({ e: $ctrl.mssg, type: 'error' }));
         };
+        //////////////////////// FUCTION USER /////////////////////////
+        function createUser() {
+            InterSF
+                .firebaseUser($ctrl.user.create, 'create')
+                .catch(e => $ctrl.message({ e: $ctrl.mssg, type: 'error' }));
+        };
+        /////////////////////// FUCTION CLOSE /////////////////////////
+        function closeWindows() {
+            $ctrl.user.register = false;
+            $ctrl.user.login = {};
+            $ctrl.close();
+        }
         //////////////////////// FUCTION KEY //////////////////////////
         function teclado(bool) {
             if (bool) {
                 $('html').on('keydown', (e) => {
                     /* if (e.keyCode === 13) createUser(); */
-                    if (e.keyCode === 27) { $ctrl.close(); $scope.$apply($ctrl.user.register = false); }
+                    if (e.keyCode === 27) $scope.$apply(closeWindows);
                 });
             }
             else $('html').off('keydown');

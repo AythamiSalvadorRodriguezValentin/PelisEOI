@@ -43,7 +43,7 @@
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
         function activate() {
-            vm.search = { title: '', year: '', type: '', language: 'en-EN', order: '', sort_by: '', genre: [], page: 1, resetFilter: false };
+            vm.search = { title: '', year: '', type: '', language: 'es-ES', order: '', sort_by: '', genre: [], page: 1, resetFilter: false };
             vm.user = { anonimo: false, auth: false, register: false, sign: false, data: null, database: null };
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
             vm.view = { view: vm.navList[0], film: false, barLeft: true, message: false };
@@ -193,10 +193,10 @@
                                 readUser();
                             }).catch(e => vm.message({ e: vm.mssg, type: 'error' }));
                     }).catch(e => {
+                        vm.user.database = { fav: [], see: [], saw: [] };
                         vm.user.auth = false;
+                        vm.user.anonimo = true;
                         vm.user.data = null;
-                        vm.user.database = null;
-                        vm.user.anonimo = false;
                     });
             }, 500);
         }

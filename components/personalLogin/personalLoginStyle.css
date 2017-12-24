@@ -43,13 +43,15 @@
     color: #24292c;
 }
 .component-login-button-container button{
-    width: 55px;
-    height: 25px;
-    border-width: 0px;
-    border-radius: 2px 2px 2px 2px;
-    margin-bottom: 4px;
+    width: 150px;
+    height: 37px;
+    margin: 20px;
+    border-radius: 6px 6px 6px 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
     background-color: #5c6269;
     color: white;
+    cursor: none;
 }
 .component-login-button-container button:hover{
     background-color: #1b2126;
@@ -63,10 +65,4 @@
     display: flex;
     flex-flow: column;
     margin-right: 13px;
-}
-.borderRed{
-    border: 1px solid red;
-}
-.withoutBorder{
-    border-width: 0px;
 }

@@ -26,7 +26,8 @@
         $ctrl.push = false;
         $ctrl.load = false;
         $ctrl.checkButton = checkButton;
-        $ctrl.mssg = 'No es posible establecer la conexión con la base de datos';
+        $ctrl.closeWindows = closeWindows;
+        $ctrl.mssg = 'Ups, ha ocurrido algo, vuelve a intentarlo :)';
         ////////////////////////////////////////////////////////////
         $ctrl.$onInit = function () {
             teclado(true);
@@ -38,14 +39,8 @@
         };
         ////////////////////////////////////////////////////////////
         function checkButton() {
-            if ($ctrl.user.formLogin.$valid) {
-                $ctrl.load = true;
-                signUser();
-            } else {
-                $ctrl.push = true;
-                $ctrl.user.login = {};
-                $ctrl.message({ e: 'Introduce el correo y la contraseña', type: 'error' });
-            }
+            $ctrl.load = true;
+            signUser();
         };
         //////////////////////// FUCTION SIGN /////////////////////////
         function signUser() {
@@ -53,12 +48,21 @@
                 .firebaseSign($ctrl.user.login, 'up')
                 .then(loaded => init())
                 .catch(e => {
+                    if (e.message.indexOf('A network error') != -1)
+                        $ctrl.message({ e: 'Ups, no hay conexión a internet', type: 'error' });
+                    else if (e.message.indexOf('The password is invalid') != -1)
+                        $ctrl.message({ e: 'Ups, la contraseña no es válida', type: 'error' });
+                    else if (e.message.indexOf('The email address is badly formatted') != -1)
+                        $ctrl.message({ e: 'Ups, el correo no es válido', type: 'error' });
+                    else if (e.message.indexOf("Cannot read property 'email' of undefined") != -1)
+                        $ctrl.message({ e: 'Introduce el correo y la contraseña', type: 'error' });
+                    else if (e.message.indexOf("signInWithEmailAndPassword failed: First argument " + '"email"' + " must be a valid string.") != -1)
+                        $ctrl.message({ e: 'Ups, el correo no es válida', type: 'error' });
+                    else if (e.message.indexOf("signInWithEmailAndPassword failed: Second argument " + '"password"' + " must be a valid string.") != -1)
+                        $ctrl.message({ e: 'Ups, la contraseña no es válida', type: 'error' });
+                    else $ctrl.message({ e: e.message, type: 'error' });
                     $ctrl.user.login = {};
                     $ctrl.push = true;
-                    if (e.message.indexOf('A network error') != -1) $ctrl.message({ e: 'No hay conexión a internet', type: 'error' });
-                    else if (e.message.indexOf('The password is invalid') != -1) $ctrl.message({ e: 'La contraseña no es válida', type: 'error' });
-                    else if (e.message.indexOf('The email address is badly formatted') != -1) $ctrl.message({ e: 'El correo no es válido', type: 'error' });
-                    else $ctrl.message({ e: e.message, type: 'error' });
                     $scope.$apply($ctrl.load = false);
                 });
         };
@@ -104,18 +108,24 @@
                 }).catch(e => {
                     $ctrl.load = false;
                     $ctrl.user.auth = false;
+                    $ctrl.user.anonimo = true;
                     $ctrl.user.data = null;
-                    $ctrl.user.database = null;
-                    $ctrl.user.anonimo = false;
+                    $ctrl.user.database = { fav: [], see: [], saw: [] };
                     $scope.$apply($ctrl.user.sign = true);
                 });
+        }
+        /////////////////////// FUCTION CLOSE /////////////////////////
+        function closeWindows() {
+            $ctrl.user.sign = false;
+            $ctrl.user.login = {};
+            $ctrl.close();
         }
         //////////////////////// FUCTION KEY //////////////////////////
         function teclado(bool) {
             if (bool) {
                 $('html').on('keydown', (e) => {
                     if (e.keyCode == 13) $scope.$apply(checkButton);
-                    if (e.keyCode == 27) { $ctrl.close(); $scope.$apply($ctrl.user.sign = false); }
+                    if (e.keyCode == 27) $scope.$apply(closeWindows);
                 });
             }
             else $('html').off('keydown');
