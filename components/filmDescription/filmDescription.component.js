@@ -9,7 +9,7 @@
     angular
         .module('PelisEOI')
         .component('filmDescription', {
-            templateUrl: '/components/filmDescription/filmDescription.html',
+            templateUrl: '/PelisEOI/components/filmDescription/filmDescription.html',
             controller: FilmDescriptionController,
             controllerAs: '$ctrl',
             bindings: {
