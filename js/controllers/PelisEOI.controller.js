@@ -193,10 +193,11 @@
                                 readUser();
                             }).catch(e => vm.message({ e: vm.mssg, type: 'error' }));
                     }).catch(e => {
-                        vm.user.database = { fav: [], see: [], saw: [] };
                         vm.user.auth = false;
                         vm.user.anonimo = true;
                         vm.user.data = null;
+                        vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get');
+                        if(!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
                     });
             }, 500);
         }
