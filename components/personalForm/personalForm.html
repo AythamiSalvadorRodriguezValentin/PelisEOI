@@ -18,7 +18,7 @@
             ng-maxlength="35" ng-keydown="$ctrl.push = false">
         <br>
         <label>Contraseña: </label>
-        <input name="passwordNew" type="password" ng-required="true" ng-model="$ctrl.user.create.passwordNew" ng-minlength="8" ng-maxlength="16"
+        <input name="passwordNew" type="password" ng-required="true" ng-model="$ctrl.user.create.passwordNew" ng-minlength="8" ng-maxlength="22"
             ng-class="{borderRed:($ctrl.push && $ctrl.user.form.passwordNew.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.passwordNew.$valid)}"
             ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-keydown="$ctrl.push = false" ng-change="$ctrl.checkPass()">
         <br>
@@ -26,10 +26,10 @@
         <input name="passwordRepit" type="password" ng-required="true" ng-class="{borderRed:$ctrl.push,withoutBorder:!$ctrl.push}"
             ng-minlength="8" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-model="$ctrl.user.create.passwordRepit"
             ng-class="{borderRed:($ctrl.push && $ctrl.user.form.passwordRepit.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.passwordRepit.$valid)}"
-            ng-maxlength="16" ng-keydown="$ctrl.push = false" ng-change="$ctrl.checkPass()">
+            ng-maxlength="22" ng-keydown="$ctrl.push = false" ng-change="$ctrl.checkPass()">
         <br>
         <label>Teléfono (opcional): </label>
-        <input name="phone" type="number" ng-required="true" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}"
+        <input name="phone" type="number" ng-required="false" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}"
             ng-class="{borderRed:($ctrl.push && $ctrl.user.form.phone.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.phone.$valid)}"
             ng-model="$ctrl.user.create.phone" ng-minlength="9" ng-maxlength="9" ng-keydown="$ctrl.push = false">
         <br>
@@ -49,5 +49,5 @@
     </div>
 </div>
 <div ng-if="$ctrl.load" class="component-form-load-container">
-    <div class="component-form-load-img"></div>="" alt="cargando...">
+    <div class="component-form-load-img"></div>
 </div>
