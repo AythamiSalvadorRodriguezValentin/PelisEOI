@@ -196,8 +196,9 @@
                         vm.user.anonimo = true;
                         vm.user.auth = false;
                         vm.user.data = null;
-                        $scope.$apply(vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get'));
+                        vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get')
                         if(!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
+                        $scope.$apply();
                     });
             }, 500);
         }
