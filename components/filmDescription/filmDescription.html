@@ -51,7 +51,7 @@
         <div class="selected-films-similar-title">Películas similares</div>
         <div class="selected-films-similar-container">
             <div class="selected-films-similar-container-films" ng-repeat="similar in $ctrl.film.similar.data">
-                <img class="selected-films-similar-container-films-img" ng-src="{{similar.poster}}" onerror="this.src='../../img/no-image-peli.gif'"
+                <img class="selected-films-similar-container-films-img" ng-src="{{similar.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'"
                     alt="photo similar film" ng-click="$ctrl.showFilm({film:similar})">
             </div>
         </div>
