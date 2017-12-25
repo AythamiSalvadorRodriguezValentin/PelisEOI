@@ -209,7 +209,10 @@
             let user = {};
             let isIn = false;
             for (let i = 0; i < vm.users.length; i++) {
-                if (vm.users[i].email == vm.user.data.email) { user = vm.users[i]; isIn = true; }
+                if (vm.users[i].id == vm.user.data.id) { 
+                    user = vm.users[i]; 
+                    isIn = true; 
+                }
             }
             if (isIn) {
                 InterSF

@@ -71,7 +71,7 @@
             let user = {};
             let isIn = false;
             for (let i = 0; i < $ctrl.users.length; i++) {
-                if ($ctrl.users[i].email == $ctrl.user.data.email) {
+                if ($ctrl.users[i].id == $ctrl.user.data.id) {
                     user = $ctrl.users[i];
                     isIn = true;
                 }
