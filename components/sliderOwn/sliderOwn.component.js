@@ -9,7 +9,7 @@
     angular
         .module('PelisEOI')
         .component('ngSliderOwn', {
-            templateUrl: '/PelisEOI/components/sliderOwn/sliderOwn.html',
+            templateUrl: '/components/sliderOwn/sliderOwn.html',
             controller: NgSliderOwnController,
             controllerAs: '$ctrl',
             bindings: {

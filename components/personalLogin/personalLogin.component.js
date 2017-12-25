@@ -9,7 +9,7 @@
     angular
         .module('PelisEOI')
         .component('personalLogin', {
-            templateUrl: '/PelisEOI/components/personalLogin/personalLogin.html',
+            templateUrl: '/components/personalLogin/personalLogin.html',
             controller: PersonalLoginController,
             controllerAs: '$ctrl',
             bindings: {
