@@ -30,6 +30,7 @@
         function readAllUser() {
             let promise = new Promise(function (resolve, reject) {
                 firebase.database().ref('users').on('value', (u) => {
+                    if (!u.val()) resolve({});
                     let users = Object.keys(u.val()).map((val, index) => { return u.val()[val]; });
                     resolve(users);
                 });
@@ -51,29 +52,35 @@
             let promise = new Promise((resolve, reject) => {
                 user.id = randId();
                 firebase.database().ref('users/' + user.id).set({
-                    id: (user.id) ? user.id : 'desconocido',
                     name: (user.name) ? user.name : 'null',
                     email: (user.email) ? user.email : 'null',
                     phone: (user.phone) ? user.phone : 'null',
                     photo: (user.photo) ? user.photo : 'null',
+                    id: (user.id) ? user.id : 'desconocido',
                     fav: (user.fav) ? user.fav : [],
                     see: (user.see) ? user.see : [],
                     saw: (user.saw) ? user.saw : [],
-                }).catch(e => reject(e));
+                }).then(loaded => resolve('created'))
+                    .catch(e => reject(e));
             })
             return promise;
         };
         ///////////////////////////// Actualiza datos database ///////////////////////////////
         function updateUserData(user) {
-            firebase.database().ref('users/' + user.id).update({
-                name: (user.name) ? user.name : 'null',
-                email: (user.email) ? user.email : 'null',
-                phone: (user.phone) ? user.phone : 'null',
-                photo: (user.photo) ? user.photo : 'null',
-                fav: (user.fav) ? user.fav : [],
-                see: (user.see) ? user.see : [],
-                saw: (user.saw) ? user.saw : [],
-            });
+            let promise = new Promise((resolve, reject) => {
+                firebase
+                    .database().ref('users/' + user.id).update({
+                        name: (user.name) ? user.name : 'null',
+                        email: (user.email) ? user.email : 'null',
+                        phone: (user.phone) ? user.phone : 'null',
+                        photo: (user.photo) ? user.photo : 'null',
+                        fav: (user.fav) ? user.fav : [],
+                        see: (user.see) ? user.see : [],
+                        saw: (user.saw) ? user.saw : [],
+                    }).then(loaded => resolve('updated'))
+                    .catch(e => reject(e));
+            })
+            return promise;
         };
         ///////////////////////////// Elimina datos database ///////////////////////////////
         function deleteUserData(id) {
@@ -143,7 +150,7 @@
                         displayName: user.name,
                         photoURL: user.photo,
                         /* phoneNumber: user.phone, */
-                    }).then(loaded => resolve('update correct'))
+                    }).then(loaded => resolve('updated'))
                     .catch(e => reject(e))
             });
             return promise;

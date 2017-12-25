@@ -31,7 +31,6 @@
         ////////////////////////////////////////////////////////////
         $ctrl.$onInit = function () {
             teclado(true);
-            init();
         };
         $ctrl.$onChanges = function (changesObj) { };
         $ctrl.$onDestroy = function () {
@@ -46,7 +45,7 @@
         function signUser() {
             InterSF
                 .firebaseSign($ctrl.user.login, 'up')
-                .then(loaded => init())
+                .then(loaded => initUser())
                 .catch(e => {
                     if (e.message.indexOf('A network error') != -1)
                         $ctrl.message({ e: 'Ups, no hay conexión a internet', type: 'error' });
@@ -60,18 +59,41 @@
                         $ctrl.message({ e: 'Ups, el correo no es válida', type: 'error' });
                     else if (e.message.indexOf("signInWithEmailAndPassword failed: Second argument " + '"password"' + " must be a valid string.") != -1)
                         $ctrl.message({ e: 'Ups, la contraseña no es válida', type: 'error' });
-                    else $ctrl.message({ e: e.message, type: 'error' });
+                    else $ctrl.message({ e: $ctrl.mssg, type: 'error' });
                     $ctrl.user.login = {};
                     $ctrl.push = true;
                     $scope.$apply($ctrl.load = false);
                 });
         };
+        ///////////////////// FUCTION INIT USER ///////////////////////
+        function initUser() {
+            Promise.all
+                ([InterSF.firebaseUser($ctrl.user, 'all'),
+                InterSF.firebaseSign($ctrl.user, 'now')])
+                .then(loaded => {
+                    $ctrl.user.login = {};
+                    $ctrl.user.auth = true;
+                    $ctrl.user.anonimo = false;
+                    $ctrl.users = loaded[0];
+                    $ctrl.user.data = loaded[1];
+                    readUser();
+                }).catch(e => {
+                    $ctrl.user.login = {};
+                    $ctrl.user.auth = false;
+                    $ctrl.user.anonimo = true;
+                    $ctrl.user.data = null;
+                    $ctrl.push = true;
+                    $ctrl.user.database = InterSF.anonimoUserLocalStorage($ctrl.user, 'get');
+                    if (!$ctrl.user.database) $ctrl.user.database = { fav: [], see: [], saw: [] };
+                    $scope.$apply($ctrl.load = false);
+                });
+        }
         //////////////////////// FUCTION USER /////////////////////////
         function readUser() {
             let user = {};
             let isIn = false;
             for (let i = 0; i < $ctrl.users.length; i++) {
-                if ($ctrl.users[i].id == $ctrl.user.data.id) {
+                if ($ctrl.users[i].email == $ctrl.user.data.email) {
                     user = $ctrl.users[i];
                     isIn = true;
                 }
@@ -80,45 +102,16 @@
                 InterSF
                     .firebaseUser(user, 'user')
                     .then(loaded => {
-                        $ctrl.close();
-                        $ctrl.load = false;
-                        $ctrl.user.sign = false;
-                        $scope.$apply($ctrl.user.database = loaded);
+                        $ctrl.user.database = loaded;
+                        $scope.$apply(closeWindows);
                     }).catch(e => $ctrl.message({ e: $ctrl.mssg, type: 'error' }));
-            } else $ctrl.message({ e: 'No se encuentra al usuario en la base de datos', type: 'error' });
+            } else $ctrl.message({ e: $ctrl.mssg, type: 'error' });
         };
-        //////////////////////// FUCTION INIT /////////////////////////
-        function init() {
-            InterSF
-                .firebaseSign($ctrl.user, 'now')
-                .then(loaded => {
-                    $ctrl.user.login = {};
-                    $ctrl.user.data = loaded;
-                    $ctrl.user.auth = true;
-                    $ctrl.user.anonimo = false;
-                    InterSF
-                        .firebaseUser($ctrl.user, 'all')
-                        .then(loaded => {
-                            $ctrl.users = loaded;
-                            readUser();
-                        }).catch(e => {
-                            $ctrl.load = false;
-                            $ctrl.message({ e: $ctrl.mssg, type: 'error' })
-                        });
-                }).catch(e => {
-                    $ctrl.load = false;
-                    $ctrl.user.auth = false;
-                    $ctrl.user.anonimo = true;
-                    $ctrl.user.data = null;
-                    $ctrl.user.database = InterSF.anonimoUserLocalStorage($ctrl.user, 'get');
-                    if (!$ctrl.user.database) $ctrl.user.database = { fav: [], see: [], saw: [] };
-                    $scope.$apply($ctrl.user.sign = true);
-                });
-        }
         /////////////////////// FUCTION CLOSE /////////////////////////
         function closeWindows() {
             $ctrl.user.sign = false;
             $ctrl.user.login = {};
+            $ctrl.load = false;
             $ctrl.close();
         }
         //////////////////////// FUCTION KEY //////////////////////////

@@ -5,7 +5,7 @@
         .module('PelisEOI')
         .factory('InterfazServerFactory', InterfazServerFactory);
 
-    InterfazServerFactory.$inject = ['TheMovieDBServerProvider', 'OmdbIDServerProvider', 'FirebaseServiceProvider','UsersLocalProvider'];
+    InterfazServerFactory.$inject = ['TheMovieDBServerProvider', 'OmdbIDServerProvider', 'FirebaseServiceProvider', 'UsersLocalProvider'];
     function InterfazServerFactory(TMDBSP, OIDSP, FSP, ULP) {
         let vm = this;
         vm.data = {};
@@ -16,13 +16,13 @@
             getOrderDataBy: getOrderDataBy,
             firebaseSign: firebaseSign,
             firebaseUser: firebaseUser,
-            anonimoUserLocalStorage:anonimoUserLocalStorage,
+            anonimoUserLocalStorage: anonimoUserLocalStorage,
             addRemoveIDArray: addRemoveIDArray,
-            addRemoveObjectArray:addRemoveObjectArray,
+            addRemoveObjectArray: addRemoveObjectArray,
             addIDArray: addIDArray,
             indexIDArray: indexIDArray,
-            indexArray:indexArray,
-            addArrayInArray:addArrayInArray
+            indexArray: indexArray,
+            addArrayInArray: addArrayInArray
         };
         return service;
         ////////////////////////////////////////////////////////////
@@ -74,7 +74,7 @@
                 switch (type) {
                     case 'create':
                         FSP
-                            .createUserWithEmailAndPasswordUser(user.emailNew, user.passwordNew)
+                            .createUserWithEmailAndPasswordUser(user.email, user.password)
                             .then(loaded => resolve(loaded))
                             .catch(e => reject(e));
                         break;
@@ -142,14 +142,22 @@
                             .catch(e => reject(e));
                         break;
                     case 'create':
-                        FSP.createUserData(user)
+                        FSP
+                            .createUserData(user)
+                            .then(loaded => resolve(loaded))
                             .catch(e => reject(e));
                         break;
                     case 'update':
-                        FSP.updateUserData(user);
+                        FSP
+                            .updateUserData(user)
+                            .then(loaded => resolve(loaded))
+                            .catch(e => reject(e));
                         break;
                     case 'delete':
-                        FSP.deleteUserData(user.id);
+                        FSP
+                            .deleteUserData(user.id)
+                            .then(loaded => resolve(loaded))
+                            .catch(e => reject(e));
                         break;
                     default:
                         break;
@@ -168,7 +176,7 @@
          * 'remove' --> delete one user of local storage, need to 'id'.
          * 
          */
-        function anonimoUserLocalStorage(object, type){
+        function anonimoUserLocalStorage(object, type) {
             switch (type) {
                 case 'get':
                     return ULP.getAnon();
@@ -308,7 +316,7 @@
             if (typeof array == 'undefined') array = [];
             let a = Object.assign(array);
             for (let i = 0; i < object.length; i++) {
-                if(!indexIDArray(a, object[i])) a.push(object[i]);
+                if (!indexIDArray(a, object[i])) a.push(object[i]);
             }
             return a;
         };

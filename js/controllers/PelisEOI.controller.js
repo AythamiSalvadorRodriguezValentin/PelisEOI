@@ -47,6 +47,7 @@
             vm.user = { anonimo: false, auth: false, register: false, sign: false, data: null, database: null };
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
             vm.view = { view: vm.navList[0], film: false, barLeft: true, message: false };
+            vm.message.errormssg = 'Ups, ha habido un error :)';
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
             configAnimatedJQuery();
@@ -153,7 +154,7 @@
                     let resp = prompt("¿ Estas seguro que deseas eliminar esta película de la lista ? Introduce 'Y' para borrarla.");
                     if (resp == 'Y') vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
                 } else vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
-                if (!vm.user.anonimo) InterSF.firebaseUser(vm.user.database, 'update');
+                if (!vm.user.anonimo && vm.user.data != null) InterSF.firebaseUser(vm.user.database, 'update');
                 InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
             }
         };
@@ -161,7 +162,7 @@
             let newObject = { id: object.id, poster: object.poster };
             if (vm.user.database == null) return;
             vm.user.database.saw = InterSF.addIDArray(vm.user.database.saw, newObject);
-            if (!vm.user.anonimo) InterSF.firebaseUser(vm.user.database, 'update');
+            if (!vm.user.anonimo && vm.user.data != null) InterSF.firebaseUser(vm.user.database, 'update');
             InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
         }
         ///////////////////////// MESSAGE /////////////////////////////
@@ -180,27 +181,25 @@
         /////////////////// FUCTION CURRENT USER ////////////////////
         function currentUser() {
             setTimeout(() => {
-                InterSF
-                    .firebaseSign(vm.user, 'now')
+                Promise.all
+                    ([InterSF.firebaseUser(vm.user, 'all'),
+                    InterSF.firebaseSign(vm.user, 'now')])
                     .then(loaded => {
-                        vm.user.data = loaded;
                         vm.user.auth = true;
                         vm.user.anonimo = false;
                         vm.user.sign = false;
                         vm.user.register = false;
-                        InterSF
-                            .firebaseUser(vm.user, 'all')
-                            .then(loaded => {
-                                vm.users = loaded;
-                                readUser();
-                            }).catch(e => messageDisplay('Ups, ha habido un error :)', 'error'));
-                        $scope.$apply(vm.user.database = loaded);
-                    }).catch(e => {
+                        vm.users = loaded[0];
+                        vm.user.data = loaded[1];
+                        readUser();
+                    })
+                    .catch(e => {
                         vm.user.auth = false;
                         vm.user.data = null;
+                        vm.user.anonimo = true;
                         vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get')
                         if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
-                        $scope.$apply(vm.user.anonimo = true);
+                        $scope.$apply(messageDisplay(vm.message.errormssg, 'error'));
                     });
             }, 500);
         }
@@ -209,17 +208,17 @@
             let user = {};
             let isIn = false;
             for (let i = 0; i < vm.users.length; i++) {
-                if (vm.users[i].id == vm.user.data.id) { 
-                    user = vm.users[i]; 
-                    isIn = true; 
+                if (vm.users[i].email == vm.user.data.email) {
+                    user = vm.users[i];
+                    isIn = true;
                 }
             }
             if (isIn) {
                 InterSF
                     .firebaseUser(user, 'user')
                     .then(loaded => $scope.$apply(vm.user.database = loaded))
-                    .catch(e => messageDisplay('Ups, ha habido un error :)', 'error'));
-            } else messageDisplay('Ups, ha habido un error :)', 'error');
+                    .catch(e => messageDisplay(vm.message.errormssg, 'error'));
+            } else messageDisplay(vm.message.errormssg, 'error');
         };
         function iconUserClick() {
             if (vm.user.auth) {

@@ -15,10 +15,10 @@
         <label>Correo: </label>
         <input name="emailNew" type="email" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-required="true"
             ng-class="{borderRed:($ctrl.push && $ctrl.user.form.emailNew.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.emailNew.$valid)}"
-            ng-keydown="$ctrl.push = false" ng-maxlength="35" ng-model="$ctrl.user.create.emailNew">
+            ng-keydown="$ctrl.push = false" ng-maxlength="35" ng-model="$ctrl.user.create.email">
         <br>
         <label>Contraseña: </label>
-        <input name="passwordNew" type="password" ng-required="true" ng-model="$ctrl.user.create.passwordNew" ng-minlength="8" ng-maxlength="22"
+        <input name="passwordNew" type="password" ng-required="true" ng-model="$ctrl.user.create.password" ng-minlength="8" ng-maxlength="22"
             ng-class="{borderRed:($ctrl.push && $ctrl.user.form.passwordNew.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.passwordNew.$valid)}"
             ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-keydown="$ctrl.push = false" ng-change="$ctrl.checkPass()">
         <br>
