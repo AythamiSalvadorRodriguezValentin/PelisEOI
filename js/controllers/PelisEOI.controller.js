@@ -186,6 +186,8 @@
                         vm.user.data = loaded;
                         vm.user.auth = true;
                         vm.user.anonimo = false;
+                        vm.user.sign = false;
+                        vm.user.register = false;
                         InterSF
                             .firebaseUser(vm.user, 'all')
                             .then(loaded => {
