@@ -30,7 +30,7 @@
         function readAllUser() {
             let promise = new Promise(function (resolve, reject) {
                 firebase.database().ref('users').on('value', (u) => {
-                    let users = Object.keys(u.val()).map((val, index) => { ids[index] = val; return u.val()[val]; });
+                    let users = Object.keys(u.val()).map((val, index) => { return u.val()[val]; });
                     resolve(users);
                 });
             });
