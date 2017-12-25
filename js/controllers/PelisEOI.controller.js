@@ -154,7 +154,7 @@
                     if (resp == 'Y') vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
                 } else vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
                 if (!vm.user.anonimo) InterSF.firebaseUser(vm.user.database, 'update');
-                else InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
+                InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
             }
         };
         function filmsSaw(object) {
@@ -162,14 +162,14 @@
             if (vm.user.database == null) return;
             vm.user.database.saw = InterSF.addIDArray(vm.user.database.saw, newObject);
             if (!vm.user.anonimo) InterSF.firebaseUser(vm.user.database, 'update');
-            else InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
+            InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
         }
         ///////////////////////// MESSAGE /////////////////////////////
         function messageDisplay(e, type) {
             vm.message.mssg = e;
             vm.view.message = true;
-            vm.message.type = (type == 'error') ? false : true;
             clearTimeout(vm.timeout.show);
+            vm.message.type = (type == 'error') ? false : true;
             vm.timeout.message = setTimeout(() => $scope.$apply(vm.view.message = false), 5000);
         };
         ////////////////////// FUCTION REGISTER ///////////////////////

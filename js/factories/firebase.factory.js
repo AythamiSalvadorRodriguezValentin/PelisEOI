@@ -30,9 +30,7 @@
         function readAllUser() {
             let promise = new Promise(function (resolve, reject) {
                 firebase.database().ref('users').on('value', (u) => {
-                    let ids = [];
                     let users = Object.keys(u.val()).map((val, index) => { ids[index] = val; return u.val()[val]; });
-                    for (let i = 0; i < users.length; i++) users[i].id = ids[i];
                     resolve(users);
                 });
             });
@@ -43,7 +41,6 @@
             let promise = new Promise(function (resolve, reject) {
                 firebase.database().ref('users/' + id).on('value', function (u) {
                     let user = u.val();
-                    user.id = id;
                     resolve(u.val());
                 });
             });
@@ -54,6 +51,7 @@
             let promise = new Promise((resolve, reject) => {
                 user.id = randId();
                 firebase.database().ref('users/' + user.id).set({
+                    id: (user.id) ? user.id : 'desconocido',
                     name: (user.name) ? user.name : 'null',
                     email: (user.email) ? user.email : 'null',
                     phone: (user.phone) ? user.phone : 'null',

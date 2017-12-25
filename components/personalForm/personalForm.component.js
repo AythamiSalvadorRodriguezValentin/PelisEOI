@@ -83,6 +83,7 @@
                     $ctrl.user.auth = true;
                     $ctrl.load = false;
                     $scope.$apply($ctrl.user.register = false);
+                    init();
                 }).catch(e => $ctrl.message({ e: $ctrl.mssg, type: 'error' }));
         };
         //////////////////////// FUCTION USER /////////////////////////
@@ -107,6 +108,54 @@
             if ($ctrl.user.create.passwordNew == $ctrl.user.create.passwordRepit) $ctrl.passwordCheck = true;
             else $ctrl.passwordCheck = false;
         }
+        /////////////////// FUCTION CURRENT USER //////////////////////
+        function init() {
+            InterSF
+                .firebaseSign($ctrl.user, 'now')
+                .then(loaded => {
+                    $ctrl.user.data = loaded;
+                    $ctrl.user.auth = true;
+                    $ctrl.user.anonimo = false;
+                    InterSF
+                        .firebaseUser($ctrl.user, 'all')
+                        .then(loaded => {
+                            $ctrl.users = loaded;
+                            readUser();
+                        }).catch(e => {
+                            $ctrl.load = false;
+                            $ctrl.message({ e: $ctrl.mssg, type: 'error' })
+                        });
+                }).catch(e => {
+                    $ctrl.load = false;
+                    $ctrl.user.auth = false;
+                    $ctrl.user.anonimo = true;
+                    $ctrl.user.data = null;
+                    $ctrl.user.database = InterSF.anonimoUserLocalStorage($ctrl.user, 'get');
+                    if (!$ctrl.user.database) $ctrl.user.database = { fav: [], see: [], saw: [] };
+                    $scope.$apply($ctrl.user.sign = true);
+                });
+        }
+        //////////////////////// FUCTION USER /////////////////////////
+        function readUser() {
+            let user = {};
+            let isIn = false;
+            for (let i = 0; i < $ctrl.users.length; i++) {
+                if ($ctrl.users[i].email == $ctrl.user.data.email) {
+                    user = $ctrl.users[i];
+                    isIn = true;
+                }
+            }
+            if (isIn) {
+                InterSF
+                    .firebaseUser(user, 'user')
+                    .then(loaded => {
+                        $ctrl.close();
+                        $ctrl.load = false;
+                        $ctrl.user.sign = false;
+                        $scope.$apply($ctrl.user.database = loaded);
+                    }).catch(e => $ctrl.message({ e: $ctrl.mssg, type: 'error' }));
+            } else $ctrl.message({ e: 'No se encuentra al usuario en la base de datos', type: 'error' });
+        };
         //////////////////////// FUCTION KEY //////////////////////////
         function teclado(bool) {
             if (bool) {
