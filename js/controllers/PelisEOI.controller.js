@@ -192,13 +192,13 @@
                                 vm.users = loaded;
                                 readUser();
                             }).catch(e => messageDisplay('Ups, ha habido un error :)', 'error'));
+                        $scope.$apply(vm.user.database = loaded);
                     }).catch(e => {
-                        vm.user.anonimo = true;
                         vm.user.auth = false;
                         vm.user.data = null;
                         vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get')
                         if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
-                        $scope.$apply();
+                        $scope.$apply(vm.user.anonimo = true);
                     });
             }, 500);
         }
