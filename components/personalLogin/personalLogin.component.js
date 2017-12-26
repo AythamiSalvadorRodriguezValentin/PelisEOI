@@ -90,8 +90,11 @@
         }
         //////////////////////// FUCTION USER /////////////////////////
         function readUser() {
-            let user = {};
-            let isIn = false;
+            if (vm.users.length == 0) {
+                messageDisplay('Bienvenido!!!');
+                return;
+            }
+            let user = {}, isIn = false;
             for (let i = 0; i < $ctrl.users.length; i++) {
                 if ($ctrl.users[i].email == $ctrl.user.data.email) {
                     user = $ctrl.users[i];

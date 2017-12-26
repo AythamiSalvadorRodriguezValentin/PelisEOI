@@ -205,20 +205,22 @@
         }
         //////////////////////// FUCTION USER ////////////////////////
         function readUser() {
-            let user = {};
-            let isIn = false;
+            if (vm.users.length == 0) {
+                messageDisplay('Bienvenido!!!');
+                return;
+            }
+            let user = {}, isIn = false;
             for (let i = 0; i < vm.users.length; i++) {
                 if (vm.users[i].email == vm.user.data.email) {
                     user = vm.users[i];
                     isIn = true;
                 }
-            }
-            if (isIn) {
+            } if (isIn) {
                 InterSF
                     .firebaseUser(user, 'user')
                     .then(loaded => $scope.$apply(vm.user.database = loaded))
                     .catch(e => messageDisplay(vm.message.errormssg, 'error'));
-            } else messageDisplay(vm.message.errormssg, 'error');
+            } else $ctrl.message(vm.message.errormssg, 'error');
         };
         function iconUserClick() {
             if (vm.user.auth) {
