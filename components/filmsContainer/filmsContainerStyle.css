@@ -28,16 +28,16 @@
     transition: .6s ease;
     background-color: rgba(0, 0, 0, 0.85);
     position: absolute;
-    top: 200;
     bottom: 0;
-    left: 0px;
-    right: 0;
+    left: 0;
     width: 260px;
     height: 40px;
     opacity: 0;
 }
 .component-card-films-container:hover{
     cursor: pointer;
+    position: relative;
+    top: -1px;
 }
 .component-card-films-container:hover .component-card-films-img{
     opacity: 0.3;
@@ -93,6 +93,7 @@
     background-image: url('../../img/stadistic-icon.png');
     background-position-x: -25px;
     background-position-y: -25px;
+    margin-bottom: 2px;
 }
 element22{
     background-image: url('../../img/stadistic-icon.png');
@@ -103,11 +104,13 @@ element22{
     background-image: url('../../img/stadistic-icon.png');
     background-position-x: -25px;
     background-position-y: -50px;
+    margin-bottom: 2.5px;
 }
 .element4{
     background-image: url('../../img/stadistic-icon.png');
     background-position-x: -50px;
     background-position-y: -25px;
+    margin-top: 3px;
 }
 .element5{
     background-image: url('../../img/stadistic-icon.png');
