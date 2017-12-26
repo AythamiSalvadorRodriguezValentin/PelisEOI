@@ -4,12 +4,12 @@ function config($routeProvider) {
     $routeProvider
         .when('/', {
             controller: 'PelisEOIController',
-            templateUrl: '/views/PelisEOI.html',
+            templateUrl: '/PelisEOI/views/PelisEOI.html',
             controllerAs: '$films'
         })
         .when('/user', {
             controller: 'PerfilUserController',
-            templateUrl: '/views/PerfilUser.html',
+            templateUrl: '/PelisEOI/views/PerfilUser.html',
             controllerAs: '$user'
         })
         .otherwise({ redirectTo: '/' });
