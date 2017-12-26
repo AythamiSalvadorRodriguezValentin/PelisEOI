@@ -25,7 +25,7 @@
         var $ctrl = this;
         $ctrl.push = false;
         $ctrl.load = false;
-        $ctrl.checkButton = checkButton;
+        $ctrl.signUser = signUser;
         $ctrl.closeWindows = closeWindows;
         $ctrl.mssg = 'Ups, ha ocurrido algo, vuelve a intentarlo :)';
         ////////////////////////////////////////////////////////////
@@ -36,13 +36,9 @@
         $ctrl.$onDestroy = function () {
             teclado(false);
         };
-        ////////////////////////////////////////////////////////////
-        function checkButton() {
-            $ctrl.load = true;
-            signUser();
-        };
         //////////////////////// FUCTION SIGN /////////////////////////
         function signUser() {
+            $ctrl.load = true;
             InterSF
                 .firebaseSign($ctrl.user.login, 'up')
                 .then(loaded => initUser())
@@ -90,25 +86,16 @@
         }
         //////////////////////// FUCTION USER /////////////////////////
         function readUser() {
-            if (vm.users.length == 0) {
-                messageDisplay('Bienvenido!!!');
-                return;
-            }
-            let user = {}, isIn = false;
+            if ($ctrl.users.length == 0) return;
+            let isIn = false;
             for (let i = 0; i < $ctrl.users.length; i++) {
                 if ($ctrl.users[i].email == $ctrl.user.data.email) {
-                    user = $ctrl.users[i];
+                    $ctrl.user.database = $ctrl.users[i]; 
                     isIn = true;
                 }
-            }
-            if (isIn) {
-                InterSF
-                    .firebaseUser(user, 'user')
-                    .then(loaded => {
-                        $ctrl.user.database = loaded;
-                        $scope.$apply(closeWindows);
-                    }).catch(e => $ctrl.message({ e: $ctrl.mssg, type: 'error' }));
-            } else $ctrl.message({ e: $ctrl.mssg, type: 'error' });
+            } if (!isIn) $ctrl.message({ e: $ctrl.mssg, type: 'error' });
+            else $scope.$apply($ctrl.message({ e: '¡Bienvenido ' + $ctrl.user.data.displayName + '!' }));
+            $scope.$apply(closeWindows);
         };
         /////////////////////// FUCTION CLOSE /////////////////////////
         function closeWindows() {
@@ -121,7 +108,7 @@
         function teclado(bool) {
             if (bool) {
                 $('html').on('keydown', (e) => {
-                    if (e.keyCode == 13) $scope.$apply(checkButton);
+                    if (e.keyCode == 13) $scope.$apply(signUser);
                     if (e.keyCode == 27) $scope.$apply(closeWindows);
                 });
             }

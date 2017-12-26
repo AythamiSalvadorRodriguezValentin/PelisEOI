@@ -182,7 +182,7 @@
                 { trans: 'popularity.desc', name: 'Más Populares' },
                 { trans: 'release_date.asc', name: 'Primeras películas' },
                 { trans: 'release_date.desc', name: 'Últimas películas' },
-                { trans: 'revenue.asc', name: 'Primeros ingrsos' },
+                { trans: 'revenue.asc', name: 'Primeros ingresos' },
                 { trans: 'revenue.desc', name: 'Últimos ingresos' },
                 { trans: 'primary_release_date.asc', name: 'Primeras películas realizadas' },
                 { trans: 'primary_release_date.desc', name: 'Últimas películas realizadas' },

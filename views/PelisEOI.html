@@ -82,14 +82,14 @@
 <!-- ///////////////////// SHOW FORM REGISTER USER ///////////////////////// -->
 <div ng-if="$films.user.register" class="user-form-general" ng-cloak>
     <div class="user-form-register-container user-form-container">
-        <personal-form user="$films.user" message="$films.messageDisplay(e,type)" close="$films.scrollPagePrincipal(true)"></personal-form>
+        <personal-form user="$films.user" users="$films.users" message="$films.messageDisplay(e,type)" close="$films.scrollPagePrincipal(true)"></personal-form>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- //////////////////////// SHOW FILM SELECTED /////////////////////////// -->
 <div ng-if="$films.view.film" class="film-selected-general animated fadeInRight" ng-cloak>
     <div class="film-selected-container">
-        <film-description film="$films.film" close="$films.showFilm()" show-film="$films.showFilm(film)"></film-description>
+        <film-description film="$films.film" close="$films.showFilm()" elements-user="$films.elementsUser(object, clase, type)" show-film="$films.showFilm(film)"></film-description>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->

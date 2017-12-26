@@ -11,8 +11,22 @@
         </a>
     </div>
     <div class="selected-container">
-        <div class="component-film-img">
-            <img ng-src="{{$ctrl.film.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'" alt="photo film">
+        <div class="selected-film-poster">
+            <div class="element-all-container">
+                <div class="element-all element-cursor" ng-click="$ctrl.elementsUser({object:$ctrl.film, clase:'fav', type:'click'})">
+                    <div class="element-size element2-no-fav" ng-class="{element3Fav:$ctrl.elementsUser({object:$ctrl.film, clase:'fav', type:'class'})}"></div>
+                    <div ng-if="!$ctrl.elementsUser({object:$ctrl.film, clase:'fav', type:'class'})"> No me gusta </div>
+                    <div class="element1Color" ng-if="$ctrl.elementsUser({object:$ctrl.film, clase:'fav', type:'class'})"> Me gusta </div>
+                </div>
+                <div class="element-all element-cursor" ng-click="$ctrl.elementsUser({object:$ctrl.film, clase:'see', type:'click'})">
+                    <div class="element-size element4-no-see" ng-class="{element5See:$ctrl.elementsUser({object:$ctrl.film, clase:'see', type:'class'})}"></div>
+                    <div ng-if="!$ctrl.elementsUser({object:$ctrl.film, clase:'see', type:'class'})"> No lo veré </div>
+                    <div class="element1Color" ng-if="$ctrl.elementsUser({object:$ctrl.film, clase:'see', type:'class'})"> Lo veré mas tarde </div>
+                </div>
+            </div>
+            <div class="component-film-img">
+                <img ng-src="{{$ctrl.film.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'" alt="photo film">
+            </div>
         </div>
         <div class="component-film-description">
             <div class="description-title">

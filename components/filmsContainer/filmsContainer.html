@@ -13,15 +13,13 @@
                                 <p class="element-text">{{film.vote_average}}</p>
                             </div>
                             <div class="component-element">
-                                <div ng-click="$ctrl.elementsUser({object:film, clase:'fav', type:'click'})" ng-class="{element3:$ctrl.elementsUser({object:film, clase:'fav', type:'class'})}"
-                                    class="element element2"></div>
+                                <div class="element element2" ng-class="{element3:$ctrl.elementsUser({object:film, clase:'fav', type:'class'})}" ng-click="$ctrl.elementsUser({object:film, clase:'fav', type:'click'})"></div>
                             </div>
                             <div class="component-element">
-                                <div ng-click="$ctrl.elementsUser({object:film, clase:'see', type:'click'})" ng-class="{element5:$ctrl.elementsUser({object:film, clase:'see', type:'class'})}"
-                                    class="element element4"></div>
+                                <div class="element element4" ng-class="{element5:$ctrl.elementsUser({object:film, clase:'see', type:'class'})}" ng-click="$ctrl.elementsUser({object:film, clase:'see', type:'click'})"></div>
                             </div>
                             <div class="component-element">
-                                <div ng-class="{element6:$ctrl.elementsUser({object:film, clase:'saw', type:'class'})}" class="element"></div>
+                                <div class="element" ng-class="{element6:$ctrl.elementsUser({object:film, clase:'saw', type:'class'})}"></div>
                             </div>
                         </div>
                     </div>

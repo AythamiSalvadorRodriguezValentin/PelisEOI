@@ -23,10 +23,9 @@
             ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-keydown="$ctrl.push = false" ng-change="$ctrl.checkPass()">
         <br>
         <label>Repite contraseña: </label>
-        <input name="passwordRepit" type="password" ng-required="true" ng-class="{borderRed:$ctrl.push,withoutBorder:!$ctrl.push}"
+        <input name="passwordRepit" type="password" ng-required="true" ng-maxlength="22" ng-keydown="$ctrl.push = false" ng-change="$ctrl.checkPass()"
             ng-minlength="8" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-model="$ctrl.user.create.passwordRepit"
-            ng-class="{borderRed:($ctrl.push && $ctrl.user.form.passwordRepit.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.passwordRepit.$valid)}"
-            ng-maxlength="22" ng-keydown="$ctrl.push = false" ng-change="$ctrl.checkPass()">
+            ng-class="{borderRed:($ctrl.push && $ctrl.user.form.passwordRepit.$invalid),withoutBorder:(!$ctrl.push || $ctrl.user.form.passwordRepit.$valid)}">
         <br>
         <label>Foto (url): </label>
         <input name="photo" type="text" ng-model-options="{updateOn: 'default', allowInvalid : '$inherit'}" ng-required="true" ng-model="$ctrl.user.create.photo"

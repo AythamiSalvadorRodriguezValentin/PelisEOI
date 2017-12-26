@@ -148,22 +148,23 @@
         //////////////// FUCTION ELEMENTS USER ///////////////////////
         function elementsUser(object, type, clase) {
             if (vm.user.database == null) return;
-            if (clase == 'class') return (InterSF.indexIDArray(vm.user.database[type], object)) ? true : false;
+            let newObject = { id: object.id, poster: object.poster };
+            if (clase == 'class') return (InterSF.indexIDArray(vm.user.database[type], newObject)) ? true : false;
             else if (clase == 'click') {
-                if (InterSF.indexIDArray(vm.user.database[type], object) && vm.view.view != vm.navList[2] && vm.view.view != vm.navList[3]) {
-                    let resp = prompt("¿ Estas seguro que deseas eliminar esta película de la lista ? Introduce 'Y' para borrarla.");
-                    if (resp == 'Y') vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
-                } else vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], object);
+                if (vm.view.view == vm.navList[2] || vm.view.view == vm.navList[3]) {
+                    let question = prompt("¿Estas seguro que deseas eliminarlo de la lista? Introduce 'Y' o cancela");
+                    if (question == 'Y') vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], newObject);
+                } else vm.user.database[type] = InterSF.addRemoveIDArray(vm.user.database[type], newObject);
                 if (!vm.user.anonimo && vm.user.data != null) InterSF.firebaseUser(vm.user.database, 'update');
-                InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
+                if (vm.user.anonimo) InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
             }
         };
         function filmsSaw(object) {
-            let newObject = { id: object.id, poster: object.poster };
             if (vm.user.database == null) return;
+            let newObject = { id: object.id, poster: object.poster };
             vm.user.database.saw = InterSF.addIDArray(vm.user.database.saw, newObject);
             if (!vm.user.anonimo && vm.user.data != null) InterSF.firebaseUser(vm.user.database, 'update');
-            InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
+            if (vm.user.anonimo) InterSF.anonimoUserLocalStorage(vm.user.database, 'update');
         }
         ///////////////////////// MESSAGE /////////////////////////////
         function messageDisplay(e, type) {
@@ -199,28 +200,20 @@
                         vm.user.anonimo = true;
                         vm.user.database = InterSF.anonimoUserLocalStorage(vm.user, 'get')
                         if (!vm.user.database) vm.user.database = { fav: [], see: [], saw: [] };
-                        $scope.$apply(messageDisplay(vm.message.errormssg, 'error'));
                     });
             }, 500);
         }
         //////////////////////// FUCTION USER ////////////////////////
         function readUser() {
-            if (vm.users.length == 0) {
-                messageDisplay('Bienvenido!!!');
-                return;
-            }
-            let user = {}, isIn = false;
+            if (vm.users.length == 0) return;
+            let isIn = false;
             for (let i = 0; i < vm.users.length; i++) {
                 if (vm.users[i].email == vm.user.data.email) {
-                    user = vm.users[i];
+                    vm.user.database = vm.users[i];
                     isIn = true;
                 }
-            } if (isIn) {
-                InterSF
-                    .firebaseUser(user, 'user')
-                    .then(loaded => $scope.$apply(vm.user.database = loaded))
-                    .catch(e => messageDisplay(vm.message.errormssg, 'error'));
-            } else $ctrl.message(vm.message.errormssg, 'error');
+            } if (!isIn) $scope.$apply(messageDisplay(vm.message.errormssg, 'error'));
+            else $scope.$apply(messageDisplay('¡Bienvenido ' + vm.user.data.displayName + '!'));
         };
         function iconUserClick() {
             if (vm.user.auth) {

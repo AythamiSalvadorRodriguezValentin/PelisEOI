@@ -1,6 +1,7 @@
 /*----Container-Films---*/
 .component-films-general{
     width: 100%;
+    font-family: NunitoSans Regular;
 }
 .component-card-films-general{
     background-color: white;

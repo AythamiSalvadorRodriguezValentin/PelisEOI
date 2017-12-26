@@ -16,6 +16,7 @@
             controllerAs: '$ctrl',
             bindings: {
                 user: '=',
+                users: '=',
                 close: '&',
                 message: '&',
             },
@@ -101,31 +102,27 @@
                     $ctrl.user.data = null;
                     $ctrl.user.database = InterSF.anonimoUserLocalStorage($ctrl.user, 'get');
                     if (!$ctrl.user.database) $ctrl.user.database = { fav: [], see: [], saw: [] };
-                    $scope.$apply($ctrl.user.sign = true);
                 });
         }
         ////////////////////// FUCTION USER ///////////////////////
         function readUser() {
-            if (vm.users.length == 0) {
-                messageDisplay('Bienvenido!!!');
-                return;
-            }
-            let user = {}, isIn = false;
+            if ($ctrl.users.length == 0) return;
+            $scope.$apply($ctrl.message({ e: '¡Bienvenido ' + $ctrl.user.data.displayName + '!' }));
             for (let i = 0; i < $ctrl.users.length; i++) {
                 if ($ctrl.users[i].email == $ctrl.user.data.email) {
-                    user = $ctrl.users[i];
-                    isIn = true;
+                    $ctrl.user.database = $ctrl.users[i];
+                    let database = InterSF.anonimoUserLocalStorage($ctrl.user, 'get');
+                    if (!database) database = { fav: [], see: [], saw: [] };
+                    $ctrl.user.database.fav = database.fav;
+                    $ctrl.user.database.see = database.see;
+                    $ctrl.user.database.saw = database.saw;
+                    InterSF
+                        .firebaseUser($ctrl.user.database, 'update')
+                        .then(loaded => $scope.$apply(closeWindows))
+                        .catch(e => $scope.$apply($ctrl.message({ e: $ctrl.mssg, type: 'error' })));
+                    break;
                 }
-            } if (isIn) {
-                InterSF
-                    .firebaseUser(user, 'user')
-                    .then(loaded => {
-                        $ctrl.user.database = loaded;
-                        $scope.$apply(closeWindows);
-                    }).catch(e => {
-                        $scope.$apply($ctrl.message({ e: $ctrl.mssg, type: 'error' }));
-                    });
-            } else $ctrl.message({ e: $ctrl.mssg, type: 'error' });
+            }
         };
         ////////////////////// FUCTION CHECK //////////////////////////
         function checkPass() {

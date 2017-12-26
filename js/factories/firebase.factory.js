@@ -52,11 +52,11 @@
             let promise = new Promise((resolve, reject) => {
                 user.id = randId();
                 firebase.database().ref('users/' + user.id).set({
-                    name: (user.name) ? user.name : 'null',
-                    email: (user.email) ? user.email : 'null',
-                    phone: (user.phone) ? user.phone : 'null',
-                    photo: (user.photo) ? user.photo : 'null',
-                    id: (user.id) ? user.id : 'desconocido',
+                    name: (user.name) ? user.name : '',
+                    email: (user.email) ? user.email : '',
+                    phone: (user.phone) ? user.phone : '',
+                    photo: (user.photo) ? user.photo : '',
+                    id: (user.id) ? user.id : '',
                     fav: (user.fav) ? user.fav : [],
                     see: (user.see) ? user.see : [],
                     saw: (user.saw) ? user.saw : [],
@@ -70,10 +70,10 @@
             let promise = new Promise((resolve, reject) => {
                 firebase
                     .database().ref('users/' + user.id).update({
-                        name: (user.name) ? user.name : 'null',
-                        email: (user.email) ? user.email : 'null',
-                        phone: (user.phone) ? user.phone : 'null',
-                        photo: (user.photo) ? user.photo : 'null',
+                        name: (user.name) ? user.name : '',
+                        email: (user.email) ? user.email : '',
+                        phone: (user.phone) ? user.phone : '',
+                        photo: (user.photo) ? user.photo : '',
                         fav: (user.fav) ? user.fav : [],
                         see: (user.see) ? user.see : [],
                         saw: (user.saw) ? user.saw : [],
