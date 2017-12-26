@@ -178,6 +178,9 @@
          */
         function anonimoUserLocalStorage(object, type) {
             switch (type) {
+                case 'empty':
+                    return ULP.emptyAnom();
+                    break;
                 case 'get':
                     return ULP.getAnon();
                     break;

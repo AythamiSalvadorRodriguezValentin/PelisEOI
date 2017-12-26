@@ -14,6 +14,7 @@
             updateUser: updateUser,
             addUser: addUser,
             removeUser: removeUser,
+            emptyAnom:emptyAnom,
             getAnon: getAnon,
             updateAnom: updateAnom,
             removeAnom: removeAnom,
@@ -66,15 +67,18 @@
             }
             localStorage.setItem('listUsers', JSON.stringify(users));
         };
+        function emptyAnom(){
+            localStorage.setItem('anomUser', JSON.stringify({}));
+        };
         function getAnon() {
             return ('anomUser' in localStorage) ? JSON.parse(localStorage.getItem('anomUser')) : {};
-        }
+        };
         function updateAnom(anom) {
             localStorage.setItem('anomUser', JSON.stringify(anom));
-        }
+        };
         function removeAnom() {
             if ('anomUser' in localStorage) JSON.parse(localStorage.setItem('anomUser', {}));
-        }
+        };
         ///////////////////////////////// EDITOR USER ///////////////////////////
         function getEditUser() {
             if ('editUser' in localStorage) {

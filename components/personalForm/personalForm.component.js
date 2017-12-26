@@ -112,6 +112,7 @@
                 if ($ctrl.users[i].email == $ctrl.user.data.email) {
                     $ctrl.user.database = $ctrl.users[i];
                     let database = InterSF.anonimoUserLocalStorage($ctrl.user, 'get');
+                    InterSF.anonimoUserLocalStorage($ctrl.user, 'empty');
                     if (!database) database = { fav: [], see: [], saw: [] };
                     $ctrl.user.database.fav = database.fav;
                     $ctrl.user.database.see = database.see;
