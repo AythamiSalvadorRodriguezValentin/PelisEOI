@@ -54,6 +54,7 @@
             configAnimatedJQuery();
             resetFilter(true);
             lazyLoad(true);
+            arrowUp(true);
             currentUser();
             teclado(true);
         };
@@ -239,6 +240,7 @@
                 animate('all', 'fadeIn');
                 scrollPagePrincipal(true);
                 lazyLoad(true);
+                arrowUp(true);
                 setTimeout(() => $scope.$apply(vm.view.film = false), 550);
                 return;
             }
@@ -247,6 +249,7 @@
             film.language = vm.search.language;
             filmsSaw(film);
             lazyLoad(false);
+            arrowUp(false);
             fuctionFullMovie(film);
             scrollPagePrincipal(false);
         };
@@ -287,7 +290,6 @@
         function lazyLoad(start) {
             if (start) $(window).on('scroll', lazyLoadScroll);
             else $(window).off('scroll', lazyLoadScroll);
-            arrowUp(start);
         };
         function lazyLoadScroll() {
             if (vm.view.view == vm.navList[2] || vm.view.view == vm.navList[3] || vm.view.view == vm.navList[4] || vm.films.total.split('.').join() <= 20) return;
