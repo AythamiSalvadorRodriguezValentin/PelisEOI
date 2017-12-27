@@ -56,7 +56,6 @@
             lazyLoad(true);
             currentUser();
             teclado(true);
-            arrowUp();
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
@@ -287,24 +286,27 @@
         /////////////////////// FUCTION CSS /////////////////////////
         function lazyLoad(start) {
             if (start) $(window).on('scroll', lazyLoadScroll);
-            else $(window).off('scroll');
+            else $(window).off('scroll', lazyLoadScroll);
+            arrowUp(start);
         };
         function lazyLoadScroll() {
             if (vm.view.view == vm.navList[2] || vm.view.view == vm.navList[3] || vm.view.view == vm.navList[4] || vm.films.total.split('.').join() <= 20) return;
             if ($(window).scrollTop() + $('html')[0].clientHeight == $('html').innerHeight()) (vm.search.resetFilter) ? searchMovies('Y') : getMovieFilter('Y');
         };
-        function arrowUp() {
-            $(window).on('scroll', () => {
-                if ($(window).scrollTop() > $('html')[0].clientHeight) { if (!vm.view.arrowUp) $scope.$apply(vm.view.arrowUp = true); }
-                else {
-                    if (vm.view.arrowUp) {
-                        animate('arrowUp', 'fadeOut');
-                        clearInterval(vm.timeout.arrowUp);
-                        vm.timeout.arrowUp = setTimeout(() => $scope.$apply(vm.view.arrowUp = false), 100);
-                    }
+        function arrowUp(start) {
+            if (start) $(window).on('scroll', arrowUpScroll);
+            else $(window).off('scroll', arrowUpScroll);
+        };
+        function arrowUpScroll() {
+            if ($(window).scrollTop() > $('html')[0].clientHeight) { if (!vm.view.arrowUp) $scope.$apply(vm.view.arrowUp = true); }
+            else {
+                if (vm.view.arrowUp) {
+                    animate('arrowUp', 'fadeOut');
+                    clearInterval(vm.timeout.arrowUp);
+                    vm.timeout.arrowUp = setTimeout(() => $scope.$apply(vm.view.arrowUp = false), 90);
                 }
-            });
-        }
+            }
+        };
         function moveScroll() {
             $("html, body").animate({ scrollTop: 0 }, "slow");
         };
