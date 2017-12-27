@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/PelisEOI/components/filmDescription/filmDescriptionStyle.css">
+<link rel="stylesheet" href="/components/filmDescription/filmDescriptionStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
 <div class="selected-general" ng-cloak>
     <div class="component-film-topbar">
@@ -13,7 +13,7 @@
     <div class="selected-container">
         <div class="selected-film-poster">
             <div class="component-film-img">
-                <img ng-src="{{$ctrl.film.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'" alt="photo film">
+                <img class="skeleton-film" ng-src="{{$ctrl.film.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'" alt="photo film">
                 <div class="element-all-container">
                     <div class="element-all element-cursor" ng-click="$ctrl.elementsUser({object:$ctrl.film, clase:'fav', type:'click'})">
                         <div class="element-size element2-no-fav" ng-class="{element3Fav:$ctrl.elementsUser({object:$ctrl.film, clase:'fav', type:'class'})}"></div>
@@ -65,7 +65,7 @@
         <div class="selected-films-similar-title">Películas similares</div>
         <div class="selected-films-similar-container">
             <div class="selected-films-similar-container-films" ng-repeat="similar in $ctrl.film.similar.data">
-                <img class="selected-films-similar-container-films-img" ng-src="{{similar.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'"
+                <img class="skeleton-film selected-films-similar-container-films-img" ng-src="{{similar.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'"
                     alt="photo similar film" ng-click="$ctrl.showFilm({film:similar})">
             </div>
         </div>

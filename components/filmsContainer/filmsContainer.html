@@ -1,10 +1,11 @@
-<link rel="stylesheet" href="/PelisEOI/components/filmsContainer/filmsContainerStyle.css">
+<link rel="stylesheet" href="/components/filmsContainer/filmsContainerStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
 <div class="component-films-general" ng-cloak>
     <div class="component-card-films-general">
         <div class="component-card-films-container" ng-repeat="film in $ctrl.films.data | filter:$ctrl.filter track by film.id">
             <div class="component-card-films-container">
-                <img class="component-card-films-img" ng-click="$ctrl.showFilm({film:film})" ng-src="{{film.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'">
+                <img class="skeleton-film component-card-films-img" ng-src="{{film.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'"
+                    ng-click="$ctrl.showFilm({film:film})">
                 <div class="component-card-films-overlay">
                     <div class="component-card-films-text">
                         <div class="component-align">

@@ -98,3 +98,7 @@
     <p class="message-box--title"> {{$films.message.mssg}} </p>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////// ARROW UP ////////////////////////////// -->
+<div ng-if="$films.view.arrowUp" class="arrow-up-container animated fadeIn" ng-class="{messageBoxStyle:$films.message.type}"
+    ng-click="$films.moveScroll()" ng-cloak></div>
+<!-- /////////////////////////////////////////////////////////////////////// -->

@@ -39,6 +39,7 @@
         vm.showFilm = showFilm;
         vm.showHideBarLeft = showHideBarLeft;
         vm.scrollPagePrincipal = scrollPagePrincipal;
+        vm.moveScroll = moveScroll;
         /////////////////////////// INIT //////////////////////////////
         activate();
         /////////////////////// FUCTION $INIT /////////////////////////
@@ -55,6 +56,7 @@
             lazyLoad(true);
             currentUser();
             teclado(true);
+            arrowUp();
         };
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
@@ -291,6 +293,21 @@
             if (vm.view.view == vm.navList[2] || vm.view.view == vm.navList[3] || vm.view.view == vm.navList[4] || vm.films.total.split('.').join() <= 20) return;
             if ($(window).scrollTop() + $('html')[0].clientHeight == $('html').innerHeight()) (vm.search.resetFilter) ? searchMovies('Y') : getMovieFilter('Y');
         };
+        function arrowUp() {
+            $(window).on('scroll', () => {
+                if ($(window).scrollTop() > $('html')[0].clientHeight) { if (!vm.view.arrowUp) $scope.$apply(vm.view.arrowUp = true); }
+                else {
+                    if (vm.view.arrowUp) {
+                        animate('arrowUp', 'fadeOut');
+                        clearInterval(vm.timeout.arrowUp);
+                        vm.timeout.arrowUp = setTimeout(() => $scope.$apply(vm.view.arrowUp = false), 100);
+                    }
+                }
+            });
+        }
+        function moveScroll() {
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+        };
         function scrollPagePrincipal(view) {
             if (view) { $('html').css('overflow', 'scroll'); }
             else { $('html').css('overflow', 'hidden'); }
@@ -299,6 +316,7 @@
             if (type == 'all') $('.films-all-general').animateCss(animate);
             else if (type == 'container-films') $('.films-container-directive').animateCss(animate);
             else if (type == 'film') $('.film-selected-general').animateCss(animate);
+            else if (type == 'arrowUp') $('.arrow-up-container').animateCss(animate);
             else $('.films-all-container').animateCss(animate);
         };
         function teclado(bool) {
