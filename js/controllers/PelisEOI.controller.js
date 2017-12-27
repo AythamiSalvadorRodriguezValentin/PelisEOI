@@ -300,7 +300,7 @@
             else $(window).off('scroll', arrowUpScroll);
         };
         function arrowUpScroll() {
-            if ($(window).scrollTop() > $('html')[0].clientHeight) { if (!vm.view.arrowUp) $scope.$apply(vm.view.arrowUp = true); }
+            if ($(window).scrollTop() > ($('html')[0].clientHeight * 2)) { if (!vm.view.arrowUp) $scope.$apply(vm.view.arrowUp = true); }
             else {
                 if (vm.view.arrowUp) {
                     animate('arrowUp', 'fadeOut');
