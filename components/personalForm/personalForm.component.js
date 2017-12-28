@@ -11,7 +11,7 @@
     angular
         .module('PelisEOI')
         .component('personalForm', {
-            templateUrl: '/components/personalForm/personalForm.html',
+            templateUrl: '/PelisEOI/components/personalForm/personalForm.html',
             controller: PersonalUserController,
             controllerAs: '$ctrl',
             bindings: {
