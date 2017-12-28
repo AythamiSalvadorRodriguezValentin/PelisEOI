@@ -2,19 +2,23 @@
 .component-films-general{
     width: 100%;
     font-family: NunitoSans Regular;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: flex-start;
 }
 .component-card-films-general{
     background-color: white;
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: space-between;
 }
 .component-card-films-container{
     width: 260px;
     height: 400px;
     background-color: transparent;
-    margin-bottom: 30px;
+    margin: 11px;
     position: relative;
 }
 .component-card-films-img{

@@ -24,6 +24,7 @@
         vm.formUser = true;
         vm.message = {};
         /////////////////////// FUCTION VM ////////////////////////
+        vm.menu = menu;
         vm.changeView = changeView;
         vm.checkView = checkView;
         vm.getMovies = getMovies;
@@ -37,6 +38,7 @@
         vm.pushRegistrer = pushRegistrer;
         vm.iconUserClick = iconUserClick;
         vm.showFilm = showFilm;
+        vm.menuClick = menuClick;
         vm.showHideBarLeft = showHideBarLeft;
         vm.scrollPagePrincipal = scrollPagePrincipal;
         vm.moveScroll = moveScroll;
@@ -47,10 +49,12 @@
             vm.search = { title: '', year: '', type: '', language: 'es-ES', order: '', sort_by: '', genre: [], page: 1, resetFilter: false };
             vm.user = { anonimo: false, auth: false, register: false, sign: false, data: null, database: null };
             vm.navList = ['Descubrir', 'Próximamente', 'Mis favoritas', 'Para más tarde', 'Vistas'];
-            vm.view = { view: vm.navList[0], film: false, barLeft: true, message: false };
+            vm.view = { view: vm.navList[0], film: false, barLeft: false, message: false, menu: { menu: false, filter: false } };
+            if ($('html')[0].clientWidth > 992) vm.view.barLeft = true;
             vm.message.errormssg = 'Ups, ha habido un error :)';
             vm.orderBy = InterSF.getOrderDataBy();
             fuctionGenres(vm.search, 'genres');
+            $(window).resize(onsizeScreen);
             configAnimatedJQuery();
             resetFilter(true);
             lazyLoad(true);
@@ -58,8 +62,16 @@
             currentUser();
             teclado(true);
         };
+        /////////////////////// FUCTION $MENU /////////////////////////
+        function menu(object) {
+            vm.view.menu.menu = false, vm.view.menu.search = false, vm.view.menu.filter = false;
+            if (object == 'init') vm.view.menu.logo = true;
+            else if (object == 'search') vm.view.menu.search = true;
+            else if (object == 'filter') vm.view.menu.filter = true;
+        }
         /////////////////////// FUCTION $VIEW /////////////////////////
         function changeView(nav) {
+            vm.view.menu.menu = false, vm.view.menu.search = false, vm.view.menu.filter = false;
             if (vm.view.view == nav) return;
             vm.view.view = nav;
             showHideBarLeft(nav);
@@ -89,8 +101,9 @@
             }
         }
         function checkView(nav) {
+            if (vm.view.menu.search || vm.view.menu.filter) return false;
             return (vm.view.view == nav) ? true : false;
-        }
+        };
         /////////////////////// FUCTION $FILM /////////////////////////
         function getMovies() {
             showHideBarLeft(vm.view.view);
@@ -253,10 +266,15 @@
             fuctionFullMovie(film);
             scrollPagePrincipal(false);
         };
+        ///////////////// FUCTION MENU CLICK LEFT /////////////////////
+        function menuClick() {
+            if (vm.view.menu.menu) vm.view.menu.menu = false;
+            else vm.view.menu.menu = true;
+        }
         ////////////////// FUCTION BAR LEFT HIDE //////////////////////
         function showHideBarLeft(nav) {
             if (nav != vm.navList[0] || vm.search.title.length > 0) vm.view.barLeft = false;
-            else vm.view.barLeft = true;
+            else { if ($('html')[0].clientWidth > 768) vm.view.barLeft = true; }
         }
         ////////////////////// OTHER FUCTION //////////////////////////
         function fuctionGenres(object, type) {
@@ -285,6 +303,17 @@
                     if (!vm.view.film) animate('all', 'fadeOut');
                     $scope.$apply(vm.view.film = true);
                 }).catch(e => messageDisplay(e, 'error'));
+        };
+        function onsizeScreen(e) {
+            e.preventDefault;
+            if (e.target.innerWidth > 992) {
+                vm.view.menu.menu = false;
+                if (vm.search.title.length == 0) vm.view.barLeft = true;
+                else vm.view.barLeft = false;
+                vm.view.menu.filter = false;
+            } else if (e.target.innerWidth < 992) {
+                vm.view.barLeft = false;
+            } $scope.$apply();
         };
         /////////////////////// FUCTION CSS /////////////////////////
         function lazyLoad(start) {

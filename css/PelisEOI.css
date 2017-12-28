@@ -1,5 +1,11 @@
+body{
+    margin: 0;
+    padding: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 .wrapper{
-    width: 1170px;
+    max-width: 1170px;
     margin: 0 auto;
 }
 .wrapper-nav{
@@ -8,6 +14,62 @@
     display: inline-flex;
     flex-flow: row;
     align-items: center;
+}
+/*--------Menu-movil----------*/
+.menu-movil{
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-image: url('../img/menu.png');
+    background-repeat: no-repeat;
+}
+.menu-left-general{
+    transition: all 0.6s;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    top: 68px;
+    left: -1200px;
+}
+.menu-left-container{
+    transition: all 0.6s;
+    background-color: #5c6269;
+    position: absolute;
+    width: 250px;
+    height: 100%;
+    color: white;
+    top: 0;
+    left: 0;
+}
+.menu-left-container ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.menu-left-container li{
+    box-sizing: content-box;
+    border-bottom: 1px solid #1b2126;
+    transition: 0.3s;
+    padding: 10px;
+}
+.menu-left-container li:hover{
+    background-color: #1b2126;
+    border-left: 4px solid white;
+}
+.menu-left-container a{
+    display: block;
+    text-decoration: none;
+}
+.menuOpen{
+    transition: all 0.6s;
+    left: 0;
+}
+.search-menu{
+    box-sizing: content-box;
+    outline: 1px solid white;
 }
 /*--------Navegador-----------*/
 .nav-bar-top-general{
@@ -51,8 +113,8 @@
     font-family: NunitoSans Regular;
     font-size: 14px;
 }
-.nav-bar-top input{
-    width: 300px;
+.nav-bar-top-input{
+    width: 100%;
     height: 38px;
     border-width: 0px;
     padding-left: 50px;
@@ -66,7 +128,7 @@
     font-size: 14px;
     color: whitesmoke;
 }
-.nav-bar-top input::-webkit-input-placeholder{
+.nav-bar-top-input::-webkit-input-placeholder{
     color: #1b2126;
 }
 .nav-bar-top button{
@@ -88,6 +150,10 @@
 /*------Barra lateral---------*/
 .films-all-general{
     font-family: NunitoSans Regular;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 .aside-filter-general{
     cursor: default;
@@ -95,11 +161,11 @@
     height: 100%;
     border-right: 1px solid #e9ecee;
     font-family: NunitoSans Semibold;
-    float: left;
 }
 .filter-edit{
-    width: 240px;
+    width: 100%;
     height: 50px;
+    max-width: 250px;
     display: inline-flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -119,7 +185,8 @@
     color: #E06646;
 }
 .year-text-container{
-    width: 240px;
+    width: 100%;
+    max-width: 250px;
     height: 50px;
     display: inline-flex;
     flex-flow: row nowrap;
@@ -140,31 +207,18 @@
     border-radius: 12px 12px 12px 12px;
 }
 .slider-year-general{
-    width: 240px;
     height: 50px;
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
 }
 .slider-year-container{
-    width: 100%;
-    height: 100%;
-}
-.slider-imdb{
-    width: 240px;
-    height: 50px;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-}
-.slider-imdb-own{
-    width: 100%;
+    width: 85%;
+    max-width: 250px;
     height: 100%;
 }
 .genres-text-container{
-    width: 240px;
     height: 50px;
     display: flex;
     flex-flow: row nowrap;
@@ -194,12 +248,10 @@
 /*---Barra Superior----*/
 .bar-top-films{
     width: 100%;
-    height: 50px;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
+    min-height: 50px;
+    padding-top: 15px;
     align-items: center;
-    margin-bottom: 20px;
+    padding-left: 2.3%;
 }
 .films-find{
     cursor: default;
@@ -213,23 +265,23 @@
     font-weight: 200;
 }
 .films-selected{
+    height: 22px;
     cursor: pointer;
 }
 /*----------Films--Container-------------*/
 .films-all-container{
     width: 70%;
-    float: right;
 }
 /*-----Show-Film-----*/
 .film-selected-general{
-    z-index: 50;
     background-color: rgba(0, 0, 0, 0.7);
-    position: fixed;
+    z-index: 200;
     overflow-y: scroll;
     height: 100%;
     width: 100%;
-    left: 0px;
-    top: 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 .film-selected-container{
     background-color: white;
@@ -263,13 +315,13 @@
     z-index: 150;
     width: 100%;
     height: 100%;
-    z-index: 150;
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
     top: 0;
+    left: 0;
 }
 .user-form-container{
     width: 350px;
@@ -398,6 +450,38 @@
     border-bottom: 1px solid #E8ECEF;
 }
 /*--------Random-Style---------*/
+.displayOn{
+    transition: 0.5s ease;
+    display: initial;
+}
+.displayOff{
+    transition: 0.5s ease;
+    display: none;
+}
+.maxWidthBar{
+    width: 100%;
+    max-width: 250px;
+}
+.space-between{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+.center{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.left{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+.right{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+}
 .markedStyleButton{
     border: 2px solid #2883d8;
     color: #2883d8;
@@ -424,6 +508,9 @@ a, input, button{
 }
 .withoutBorder{
     border-width: 0px;
+}
+.cursorPointer{
+    cursor: pointer;
 }
 /*----Ng-Style----*/
 /*--Error--Valid--*/

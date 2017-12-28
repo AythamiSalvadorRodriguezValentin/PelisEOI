@@ -1,66 +1,82 @@
 <!-- ///////////////////////////// NAVEGATOR /////////////////////////////// -->
-<nav class="nav-bar-top-general animated fadeIn" ng-cloak>
+<nav class="row nav-bar-top-general animated fadeIn" ng-cloak>
     <div class="wrapper-nav">
-        <div class="nav-bar-top nav-start">
+        <div class="col-xs-8 col-sm-10 col-md-4 col-lg-2 nav-bar-top nav-start">
             <div class="nav-bar-top-img"></div>
         </div>
-        <ul class="nav-bar-top nav-middle">
+        <ul class="hidden-xs hidden-sm col-md-7 col-lg-6 nav-bar-top nav-middle">
             <li ng-repeat="nav in $films.navList track by $index" ng-class="{navBarTopSelected:$films.checkView(nav)}" ng-click="$films.changeView(nav)">
                 {{::nav}}
             </li>
         </ul>
-        <div class="nav-bar-top nav-end">
-            <input placeholder="Encuentra tu pelicula favorita" ng-model="$films.search.title" ng-keyup="$films.getMovies()" type="text">
+        <div class="hidden-xs hidden-sm hidden-md col-lg-4 nav-bar-top nav-end">
+            <input class="nav-bar-top-input" placeholder="Encuentra tu pelicula favorita" ng-model="$films.search.title" ng-keyup="$films.getMovies()"
+                type="text">
+        </div>
+        <div class="hidden-lg col-xs-3 col-sm-2 col-md-1">
+            <div class="menu-movil cursorPointer" ng-click="$films.menuClick()"></div>
         </div>
     </div>
 </nav>
 <!-- /////////////////////////////////////////////////////////////////////// -->
 <!-- ////////////////////////////// DISCOVER /////////////////////////////// -->
-<div class="wrapper">
-    <div class="films-all-general animated">
-        <aside ng-if="$films.view.barLeft == true" class="aside-filter-general animated fadeInLeft">
-            <div class="filter-edit">
-                <div class="filter-img"></div>
-                <span class="filter-span">Filtros</span>
-                <span class="filter-span-delete" ng-click="$films.resetFilter(true)">Borrar</span>
-            </div>
-            <div class="year-text-container">
-                <span class="year-span">Año</span>
-                <span class="year-span-text">{{$films.slider.minYearValue}} - {{$films.slider.maxYearValue}}</span>
-            </div>
-            <div class="slider-year-general">
-                <ng-slider-own class="slider-year-container" min="$films.slider.minYear" max="$films.slider.maxYear" min-value="$films.slider.minYearValue"
-                    max-value="$films.slider.maxYearValue" ng-change-slider="$films.changeSliderYear(min,max)"></ng-slider-own>
-            </div>
-            <div class="genres-text-container">
-                <span class="genres-text-title">Géneros</span>
-            </div>
-            <div class="genres-button-general">
-                <div class="genres-button-container" ng-repeat="genre in $films.genreList">
-                    <button class="genres-button" ng-class="{markedStyleButton:$films.checkGenreButton(genre.id)}" ng-click="$films.selectGenre(genre.id)">
-                        {{genre.name}}
-                    </button>
+<div class="row">
+    <div class="wrapper">
+        <div class="films-all-general animated">
+            <section class="col-xs-12 col-sm-12 col-md-3 wrapper aside-filter-general animated fadeInLeft" ng-if="($films.view.barLeft || $films.view.menu.filter)">
+                <div class="center">
+                    <div class="filter-edit maxWidthBar">
+                        <div class="filter-img"></div>
+                        <span class="filter-span">Filtros</span>
+                        <span class="filter-span-delete" ng-click="$films.resetFilter(true)">Borrar</span>
+                    </div>
                 </div>
-            </div>
-        </aside>
-        <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
-        <section ng-class="{widthAllContainer:($films.view.view != $films.navList[0] || $films.search.title.length > 0)}" class="films-all-container animated fadeIn">
-            <div class="bar-top-films">
-                <div class="films-find">{{$films.films.total}}
-                    <span ng-if="$films.films.total" class="films-find-text"> películas encontradas </span>
+                <div class="center">
+                    <div class="year-text-container maxWidthBar">
+                        <span class="year-span">Año</span>
+                        <span class="year-span-text">{{$films.slider.minYearValue}} - {{$films.slider.maxYearValue}}</span>
+                    </div>
                 </div>
-                <select ng-if="$films.view.view == $films.navList[0]" class="films-selected" ng-change="$films.changeFilter()" name="oderPelis"
-                    ng-model="$films.search.order">
-                    <option ng-repeat="orderBy in $films.orderBy track by $index">{{orderBy.name}}</option>
-                </select>
-            </div>
-            <div class="films-container-directive animated">
-                <films-container films="$films.films" elements-user="$films.elementsUser(object, clase, type)" nav="$films.view.view" bool-load="$films.load"
-                    show-film="$films.showFilm(film)" filter="$films.search.imdb">
-                </films-container>
-            </div>
-            <footer class="films-footer-general"></footer>
-        </section>
+                <div class="center">
+                    <div class="slider-year-general maxWidthBar">
+                        <ng-slider-own class="slider-year-container" min="$films.slider.minYear" max="$films.slider.maxYear" min-value="$films.slider.minYearValue"
+                            max-value="$films.slider.maxYearValue" ng-change-slider="$films.changeSliderYear(min,max)"></ng-slider-own>
+                    </div>
+                </div>
+                <div class="center">
+                    <div class="genres-text-container maxWidthBar">
+                        <span class="genres-text-title">Géneros</span>
+                    </div>
+                </div>
+                <div class="center">
+                    <div class="genres-button-general maxWidthBar">
+                        <div class="genres-button-container" ng-repeat="genre in $films.genreList">
+                            <button class="genres-button" ng-class="{markedStyleButton:$films.checkGenreButton(genre.id)}" ng-click="$films.selectGenre(genre.id)">
+                                {{genre.name}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ///////////////////////////// CONTAINER ALL FILM /////////////////////////////// -->
+            <section ng-if="(!$films.view.menu.filter)" class="col-xs-12 col-sm-12 col-md-9 wrapper films-all-container animated fadeIn" ng-class="{widthAllContainer:($films.view.view != $films.navList[0] || $films.search.title.length > 0)}">
+                <div class="bar-top-films space-between">
+                    <div ng-if="$films.films.total" class="films-find-text">
+                        <span class="films-find">{{$films.films.total}}</span> &nbsp películas encontradas
+                    </div>
+                    <select ng-if="$films.view.view == $films.navList[0]" class="films-selected" ng-change="$films.changeFilter()" name="oderPelis"
+                        ng-model="$films.search.order">
+                        <option ng-repeat="orderBy in $films.orderBy track by $index">{{orderBy.name}}</option>
+                    </select>
+                </div>
+                <div class="films-container-directive animated">
+                    <films-container films="$films.films" elements-user="$films.elementsUser(object, clase, type)" nav="$films.view.view" bool-load="$films.load"
+                        show-film="$films.showFilm(film)" filter="$films.search.imdb">
+                    </films-container>
+                </div>
+                <footer class="films-footer-general"></footer>
+            </section>
+        </div>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////////// -->
@@ -101,4 +117,25 @@
 <!-- /////////////////////////////// ARROW UP ////////////////////////////// -->
 <div ng-if="$films.view.arrowUp" class="arrow-up-container animated fadeIn" ng-class="{messageBoxStyle:$films.message.type}"
     ng-click="$films.moveScroll()" ng-cloak></div>
+<!-- /////////////////////////////////////////////////////////////////////// -->
+<!-- ////////////////////////////// MENU LEFT ////////////////////////////// -->
+<div class="row">
+    <div class="hidden-lg">
+        <div class="menu-left-general" ng-class="{menuOpen:$films.view.menu.menu}">
+            <div class="menu-left-container">
+                <div class="search-menu">
+                    <input class="nav-bar-top-input" placeholder="Encuentra tu pelicula favorita" ng-model="$films.search.title"
+                        ng-keyup="$films.getMovies()" type="text">
+                </div>
+                <ul>
+                    <li ng-click="$films.menu('search')" ng-class="{navBarTopSelected:$films.view.menu.search}">Buscar</li>
+                    <li ng-click="$films.menu('filter')" ng-class="{navBarTopSelected:$films.view.menu.filter}">Filtros</li>
+                    <li ng-repeat="nav in $films.navList track by $index" ng-class="{navBarTopSelected:$films.checkView(nav)}" ng-click="$films.changeView(nav)">
+                        {{::nav}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- /////////////////////////////////////////////////////////////////////// -->

@@ -1,19 +1,20 @@
-<link rel="stylesheet" href="/PelisEOI/components/filmDescription/filmDescriptionStyle.css">
+<link rel="stylesheet" href="/components/filmDescription/filmDescriptionStyle.css">
 <!-- //////////////////////////////////////////////////////////// -->
 <div class="selected-general" ng-cloak>
-    <div class="component-film-topbar">
-        <div class="component-film-title">
+    <div class="row component-film-topbar">
+        <div class="col-xs-9 col-sm-10 col-md-11 col-lg-11 component-film-title">
             <span>{{$ctrl.film.title}}</span>
             <span class="title-year">{{$ctrl.film.date[0]}}</span>
         </div>
-        <a class="component-film-button-return-page" ng-click="$ctrl.close()">
+        <a class="col-xs-3 col-sm-2 col-md-1 col-lg-1 component-film-button-return-page" ng-click="$ctrl.close()">
             <div class="component-button-return-page-icon">X</div>
         </a>
     </div>
-    <div class="selected-container">
-        <div class="selected-film-poster">
+    <div class="row selected-container">
+        <div class="col-xs-12 col-sm-7 col-md-5 col-lg-4 component-film-img-container">
             <div class="component-film-img">
-                <img class="skeleton-film" ng-src="{{$ctrl.film.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'" alt="photo film">
+                <img class="component-film-img-img skeleton-film" ng-src="{{$ctrl.film.poster}}" onerror="this.src='/PelisEOI/img/no-image-peli.png'"
+                    alt="photo film">
                 <div class="element-all-container">
                     <div class="element-all element-cursor" ng-click="$ctrl.elementsUser({object:$ctrl.film, clase:'fav', type:'click'})">
                         <div class="element-size element2-no-fav" ng-class="{element3Fav:$ctrl.elementsUser({object:$ctrl.film, clase:'fav', type:'class'})}"></div>
@@ -28,13 +29,13 @@
                 </div>
             </div>
         </div>
-        <div class="component-film-description">
+        <div class="col-xs-12 col-sm-5 col-md-7 col-lg-8 component-film-description">
             <div class="description-title">
                 <span class="description-title-">Sipnosis</span>
                 <span ng-if="$ctrl.film.runtime != '0h0m'" class="description-title-runtime">{{$ctrl.film.runtime}}</span>
             </div>
             <div class="description-calificacion">
-                <div class="description-calificacion">
+                <div class="description-calificacion-btn">
                     <div class="description-calificacion-genre" ng-repeat="genre in $ctrl.film.genres track by $index">{{genre.name}}
                     </div>
                 </div>

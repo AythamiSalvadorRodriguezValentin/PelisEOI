@@ -9,7 +9,7 @@
     angular
         .module('PelisEOI')
         .component('ngSliderOwn', {
-            templateUrl: '/PelisEOI/components/sliderOwn/sliderOwn.html',
+            templateUrl: '/components/sliderOwn/sliderOwn.html',
             controller: NgSliderOwnController,
             controllerAs: '$ctrl',
             bindings: {
@@ -40,7 +40,7 @@
         $ctrl.minValueDefault = 25;
         $ctrl.maxValueDefault = 75;
         ////////////////////////////////////////////////////////////
-        $ctrl.$onInit = () => { };
+        $ctrl.$onInit = () => { $(window).resize(configSlider) };
         $ctrl.$onChanges = (changes) => { configSlider(); };
         $ctrl.$onDestroy = () => { stopSlider(); };
         ////////////////////////////////////////////////////////////
